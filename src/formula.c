@@ -1,6 +1,9 @@
 #include <math.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <string.h>
+
+#include <ti/getcsc.h>
 
 #include "expr_calc.h"
 #include "formula.h"
@@ -219,6 +222,24 @@ static solve_result_t solve_t_from_phi_omega0_alpha(const double *in) {
 static solve_result_t solve_phi_from_n(const double *in) { return ok_result(2.0 * PHYSICS_PI * in[0]); }
 static solve_result_t solve_n_from_phi(const double *in) { return ok_result(in[0] / (2.0 * PHYSICS_PI)); }
 
+static solve_result_t solve_n_from_omega0_alpha_t(const double *in) {
+    double phi = in[0] * in[2] + 0.5 * in[1] * in[2] * in[2];
+    return ok_result(phi / (2.0 * PHYSICS_PI));
+}
+static solve_result_t solve_omega0_from_n_alpha_t(const double *in) {
+    if (!math_can_divide(in[2])) return error_result("t cannot be zero.");
+    return ok_result(((2.0 * PHYSICS_PI * in[0]) - 0.5 * in[1] * in[2] * in[2]) / in[2]);
+}
+static solve_result_t solve_alpha_from_n_omega0_t(const double *in) {
+    double denominator = in[2] * in[2];
+    if (!math_can_divide(denominator)) return error_result("t cannot be zero.");
+    return ok_result(2.0 * ((2.0 * PHYSICS_PI * in[0]) - in[1] * in[2]) / denominator);
+}
+static solve_result_t solve_t_from_n_omega0_alpha(const double *in) {
+    double phi = 2.0 * PHYSICS_PI * in[0];
+    return solve_t_from_phi_omega0_alpha((double[]){phi, in[1], in[2]});
+}
+
 static solve_result_t solve_force_from_dp_t(const double *in) {
     if (!math_can_divide(in[1])) return error_result("dt cannot be zero.");
     return ok_result(in[0] / in[1]);
@@ -346,6 +367,66 @@ static solve_result_t solve_x_from_f_k(const double *in) {
     return ok_result(in[0] / in[1]);
 }
 
+static formula_run_result_t run_force_linear_motion_solver(const formula_def_t *formula) {
+    double m = 0.0;
+    double f0 = 0.0;
+    double k = 0.0;
+    double v0 = 0.0;
+    double s0 = 0.0;
+    double t = 0.0;
+    double velocity = 0.0;
+    double displacement = 0.0;
+    char result_line[32];
+
+    if (!io_prompt_double(formula->expression, "Enter mass m [kg]:", &m)) {
+        return FORMULA_RUN_BACK;
+    }
+    if (!math_can_divide(m)) {
+        io_show_message("Solver Error", "Mass m cannot", "be zero.");
+        return FORMULA_RUN_BACK;
+    }
+    if (!io_prompt_double(formula->expression, "Enter force offset F0 [N]:", &f0)) {
+        return FORMULA_RUN_BACK;
+    }
+    if (!io_prompt_double(formula->expression, "Enter force slope k [N/s]:", &k)) {
+        return FORMULA_RUN_BACK;
+    }
+    if (!io_prompt_double(formula->expression, "Enter initial velocity v0 [m/s]:", &v0)) {
+        return FORMULA_RUN_BACK;
+    }
+    if (!io_prompt_double(formula->expression, "Enter initial position s0 [m]:", &s0)) {
+        return FORMULA_RUN_BACK;
+    }
+    if (!io_prompt_double(formula->expression, "Enter time t [s]:", &t)) {
+        return FORMULA_RUN_BACK;
+    }
+    if (math_is_negative(t)) {
+        io_show_message("Solver Error", "Time t must be", "non-negative.");
+        return FORMULA_RUN_BACK;
+    }
+
+    velocity = v0 + (f0 / m) * t + (k / (2.0 * m)) * t * t;
+    displacement = s0 + v0 * t + (f0 / (2.0 * m)) * t * t + (k / (6.0 * m)) * t * t * t;
+
+    io_clear_screen();
+    io_draw_title("Result");
+    io_draw_wrapped_text(1, formula->expression, 26);
+    snprintf(result_line, sizeof(result_line), "v(t) = %.8g m/s", velocity);
+    io_draw_wrapped_text(3, result_line, 26);
+    snprintf(result_line, sizeof(result_line), "s(t) = %.8g m", displacement);
+    io_draw_wrapped_text(5, result_line, 26);
+    io_draw_wrapped_text(7, formula->const_note, 26);
+    io_draw_footer("ENTER/CLEAR continue");
+
+    while (true) {
+        char key = os_GetCSC();
+        if (key == sk_Enter || key == sk_Clear) {
+            io_wait_for_key_release();
+            return FORMULA_RUN_BACK;
+        }
+    }
+}
+
 static const solve_option_t OPT_V_V0_A_T[] = {
     { VAR_V, 3, { VAR_V0, VAR_A, VAR_T }, solve_v_from_v0_a_t },
     { VAR_V0, 3, { VAR_V, VAR_A, VAR_T }, solve_v0_from_v_a_t },
@@ -445,6 +526,13 @@ static const solve_option_t OPT_PHI_N[] = {
     { VAR_N, 1, { VAR_PHI }, solve_n_from_phi }
 };
 
+static const solve_option_t OPT_N_OMEGA0_ALPHA_T[] = {
+    { VAR_N, 3, { VAR_OMEGA0, VAR_ALPHA, VAR_T }, solve_n_from_omega0_alpha_t },
+    { VAR_OMEGA0, 3, { VAR_N, VAR_ALPHA, VAR_T }, solve_omega0_from_n_alpha_t },
+    { VAR_ALPHA, 3, { VAR_N, VAR_OMEGA0, VAR_T }, solve_alpha_from_n_omega0_t },
+    { VAR_T, 3, { VAR_N, VAR_OMEGA0, VAR_ALPHA }, solve_t_from_n_omega0_alpha }
+};
+
 static const solve_option_t OPT_FORCE_DP_T[] = {
     { VAR_F, 2, { VAR_DP, VAR_T }, solve_force_from_dp_t },
     { VAR_DP, 2, { VAR_F, VAR_T }, solve_dp_from_force_t },
@@ -532,7 +620,7 @@ static const formula_def_t FORMULA_KIN_V = {
 };
 
 static const formula_def_t FORMULA_KIN_VAVG = {
-    "Average speed",
+    "v = s / t",
     "v_avg = s / t",
     "Use path or displacement",
     ARRAY_LEN(OPT_V_S_T),
@@ -540,7 +628,7 @@ static const formula_def_t FORMULA_KIN_VAVG = {
 };
 
 static const formula_def_t FORMULA_KIN_A = {
-    "Acceleration from velocity change",
+    "a = (v-v0) / t",
     "a = (v - v0) / t",
     "Straight-line motion",
     ARRAY_LEN(OPT_A_V_V0_T),
@@ -548,7 +636,7 @@ static const formula_def_t FORMULA_KIN_A = {
 };
 
 static const formula_def_t FORMULA_KIN_S = {
-    "Position at constant velocity",
+    "s = s0 + v*t",
     "s = s0 + v*t",
     "Condition: constant v",
     ARRAY_LEN(OPT_S_S0_V_T),
@@ -556,7 +644,7 @@ static const formula_def_t FORMULA_KIN_S = {
 };
 
 static const formula_def_t FORMULA_KIN_S2 = {
-    "Position with acceleration",
+    "s = v0*t + 0.5*a*t^2",
     "s = v0*t + 0.5*a*t^2",
     "Condition: constant a",
     ARRAY_LEN(OPT_S_V0_A_T2),
@@ -564,7 +652,7 @@ static const formula_def_t FORMULA_KIN_S2 = {
 };
 
 static const formula_def_t FORMULA_CIRC_V = {
-    "Tangential speed",
+    "v=r*omega",
     "v = r*omega",
     "Condition: constant r",
     ARRAY_LEN(OPT_V_R_OMEGA),
@@ -572,7 +660,7 @@ static const formula_def_t FORMULA_CIRC_V = {
 };
 
 static const formula_def_t FORMULA_CIRC_PHI = {
-    "Angular displacement",
+    "phi=omega*t",
     "phi = omega*t",
     "Condition: constant omega",
     ARRAY_LEN(OPT_PHI_OMEGA_T),
@@ -580,7 +668,7 @@ static const formula_def_t FORMULA_CIRC_PHI = {
 };
 
 static const formula_def_t FORMULA_CIRC_AT = {
-    "Tangential acceleration",
+    "a_t=r*alpha",
     "a_t = r*alpha",
     "Condition: constant r",
     ARRAY_LEN(OPT_AT_R_ALPHA),
@@ -588,7 +676,7 @@ static const formula_def_t FORMULA_CIRC_AT = {
 };
 
 static const formula_def_t FORMULA_CIRC_AC = {
-    "Centripetal acceleration",
+    "a_c=v^2/r",
     "a_c = v^2 / r",
     "Condition: constant r",
     ARRAY_LEN(OPT_AC_V_R),
@@ -596,7 +684,7 @@ static const formula_def_t FORMULA_CIRC_AC = {
 };
 
 static const formula_def_t FORMULA_CIRC_OMEGA_F = {
-    "Angular speed from frequency",
+    "omega=2*pi*f",
     "omega = 2*pi*f",
     "No extra condition",
     ARRAY_LEN(OPT_OMEGA_F),
@@ -604,7 +692,7 @@ static const formula_def_t FORMULA_CIRC_OMEGA_F = {
 };
 
 static const formula_def_t FORMULA_CIRC_OMEGA_T = {
-    "Angular speed from period",
+    "omega=2*pi/T",
     "omega = 2*pi / T",
     "No extra condition",
     ARRAY_LEN(OPT_OMEGA_T),
@@ -612,7 +700,7 @@ static const formula_def_t FORMULA_CIRC_OMEGA_T = {
 };
 
 static const formula_def_t FORMULA_CIRC_FREQ = {
-    "Frequency and period",
+    "f=1/T",
     "f = 1 / T",
     "No extra condition",
     ARRAY_LEN(OPT_FREQ_PERIOD),
@@ -620,7 +708,7 @@ static const formula_def_t FORMULA_CIRC_FREQ = {
 };
 
 static const formula_def_t FORMULA_CIRC_OMEGA_ALPHA = {
-    "Angular velocity change",
+    "omega=omega0+alpha*t",
     "omega = omega0 + alpha*t",
     "Condition: constant alpha",
     ARRAY_LEN(OPT_OMEGA_OMEGA0_ALPHA_T),
@@ -628,7 +716,7 @@ static const formula_def_t FORMULA_CIRC_OMEGA_ALPHA = {
 };
 
 static const formula_def_t FORMULA_CIRC_PHI_ALPHA = {
-    "Angular displacement with alpha",
+    "phi=omega0*t+0.5*alpha*t^2",
     "phi = omega0*t + 0.5*alpha*t^2",
     "Condition: constant alpha",
     ARRAY_LEN(OPT_PHI_OMEGA0_ALPHA_T),
@@ -636,15 +724,23 @@ static const formula_def_t FORMULA_CIRC_PHI_ALPHA = {
 };
 
 static const formula_def_t FORMULA_CIRC_N = {
-    "Revolutions",
+    "N=phi/(2*pi)",
     "phi = 2*pi*N",
     "No extra condition",
     ARRAY_LEN(OPT_PHI_N),
     OPT_PHI_N
 };
 
+static const formula_def_t FORMULA_CIRC_N_ALPHA = {
+    "N from omega0,alpha,t",
+    "N = (omega0*t + 0.5*alpha*t^2)/(2*pi)",
+    "Condition: constant alpha",
+    ARRAY_LEN(OPT_N_OMEGA0_ALPHA_T),
+    OPT_N_OMEGA0_ALPHA_T
+};
+
 static const formula_def_t FORMULA_DYN_P = {
-    "Momentum",
+    "p = m*v",
     "p = m*v",
     "Condition: constant m",
     ARRAY_LEN(OPT_P_M_V),
@@ -652,7 +748,7 @@ static const formula_def_t FORMULA_DYN_P = {
 };
 
 static const formula_def_t FORMULA_DYN_F = {
-    "Newton's second law",
+    "F = m*a",
     "F = m*a",
     "Condition: constant m",
     ARRAY_LEN(OPT_F_M_A),
@@ -660,7 +756,7 @@ static const formula_def_t FORMULA_DYN_F = {
 };
 
 static const formula_def_t FORMULA_DYN_A = {
-    "Acceleration from force",
+    "a = F / m",
     "a = F / m",
     "Condition: constant m",
     ARRAY_LEN(OPT_F_M_A),
@@ -668,7 +764,7 @@ static const formula_def_t FORMULA_DYN_A = {
 };
 
 static const formula_def_t FORMULA_DYN_I = {
-    "Impulse",
+    "I = F*t",
     "I = F*t",
     "Condition: constant F",
     ARRAY_LEN(OPT_I_F_T),
@@ -676,7 +772,7 @@ static const formula_def_t FORMULA_DYN_I = {
 };
 
 static const formula_def_t FORMULA_EN_EK = {
-    "Kinetic energy",
+    "Ek = 0.5*m*v^2",
     "Ek = 0.5*m*v^2",
     "Condition: constant m",
     ARRAY_LEN(OPT_EK_M_V),
@@ -684,7 +780,7 @@ static const formula_def_t FORMULA_EN_EK = {
 };
 
 static const formula_def_t FORMULA_EN_W = {
-    "Work",
+    "W = F*d",
     "W = F*d",
     "Constant F, F parallel d",
     ARRAY_LEN(OPT_W_F_D),
@@ -692,7 +788,7 @@ static const formula_def_t FORMULA_EN_W = {
 };
 
 static const formula_def_t FORMULA_EN_PAVG = {
-    "Average power",
+    "P_avg = W / t",
     "P_avg = W / t",
     "No extra condition",
     ARRAY_LEN(OPT_PAVG_W_T),
@@ -700,7 +796,7 @@ static const formula_def_t FORMULA_EN_PAVG = {
 };
 
 static const formula_def_t FORMULA_EN_P = {
-    "Instantaneous power",
+    "P = F*v",
     "P = F*v",
     "F parallel v",
     ARRAY_LEN(OPT_POWER_F_V),
@@ -708,7 +804,7 @@ static const formula_def_t FORMULA_EN_P = {
 };
 
 static const formula_def_t FORMULA_EN_EP = {
-    "Potential energy change",
+    "dEp = m*g*h",
     "delta Ep = m*g*h",
     "Condition: constant m and g",
     ARRAY_LEN(OPT_DELTA_EP_M_G_H),
@@ -716,7 +812,7 @@ static const formula_def_t FORMULA_EN_EP = {
 };
 
 static const formula_def_t FORMULA_EN_E = {
-    "Mechanical energy",
+    "E = Ep + Ek",
     "E = Ep + Ek",
     "No extra condition",
     ARRAY_LEN(OPT_E_TOTAL_EP_EK),
@@ -724,7 +820,7 @@ static const formula_def_t FORMULA_EN_E = {
 };
 
 static const formula_def_t FORMULA_EN_W_DEK = {
-    "Work-energy theorem",
+    "W = dEk",
     "W = delta Ek",
     "No extra condition",
     ARRAY_LEN(OPT_W_DELTA_EK),
@@ -732,7 +828,7 @@ static const formula_def_t FORMULA_EN_W_DEK = {
 };
 
 static const formula_def_t FORMULA_EN_SPRING = {
-    "Hooke's law",
+    "F = k*d",
     "F = k*d",
     "Condition: constant k",
     ARRAY_LEN(OPT_F_K_X),
@@ -740,7 +836,7 @@ static const formula_def_t FORMULA_EN_SPRING = {
 };
 
 static const formula_def_t FORMULA_KIN_V2 = {
-    "Velocity-displacement relation",
+    "v^2 = v0^2 + 2*a*s",
     "v^2 = v0^2 + 2*a*s",
     "Condition: constant a",
     ARRAY_LEN(OPT_V2_V0_A_S),
@@ -748,7 +844,7 @@ static const formula_def_t FORMULA_KIN_V2 = {
 };
 
 static const formula_def_t FORMULA_CALC_V = {
-    "Find velocity from dx and dt",
+    "v = dx / dt",
     "v = dx / dt",
     "Use change in position over time",
     ARRAY_LEN(OPT_V_S_T),
@@ -756,7 +852,7 @@ static const formula_def_t FORMULA_CALC_V = {
 };
 
 static const formula_def_t FORMULA_CALC_A = {
-    "Find acceleration from dv and dt",
+    "a = dv / dt",
     "a = dv / dt",
     "Use change in velocity over time",
     ARRAY_LEN(OPT_A_V_V0_T),
@@ -764,7 +860,7 @@ static const formula_def_t FORMULA_CALC_A = {
 };
 
 static const formula_def_t FORMULA_CALC_OMEGA = {
-    "Find angular speed from dphi and dt",
+    "omega = dphi / dt",
     "omega = dphi / dt",
     "Use change in angle over time",
     ARRAY_LEN(OPT_PHI_OMEGA_T),
@@ -772,7 +868,7 @@ static const formula_def_t FORMULA_CALC_OMEGA = {
 };
 
 static const formula_def_t FORMULA_CALC_ALPHA = {
-    "Find angular accel from domega,dt",
+    "alpha = domega / dt",
     "alpha = domega / dt",
     "Use change in omega over time",
     ARRAY_LEN(OPT_OMEGA_OMEGA0_ALPHA_T),
@@ -780,7 +876,7 @@ static const formula_def_t FORMULA_CALC_ALPHA = {
 };
 
 static const formula_def_t FORMULA_CALC_POWER = {
-    "Find power from dW and dt",
+    "P = dW / dt",
     "P = dW / dt",
     "Use work change over time",
     ARRAY_LEN(OPT_POWER_W_T),
@@ -788,7 +884,7 @@ static const formula_def_t FORMULA_CALC_POWER = {
 };
 
 static const formula_def_t FORMULA_CALC_FORCE = {
-    "Find force from dp and dt",
+    "F = dp / dt",
     "F = dp / dt",
     "Use momentum change over time",
     ARRAY_LEN(OPT_FORCE_DP_T),
@@ -796,55 +892,55 @@ static const formula_def_t FORMULA_CALC_FORCE = {
 };
 
 static const formula_def_t FORMULA_CALC_DISP = {
-    "Find dx from velocity and dt",
-    "dx = v * dt",
-    "Constant v over time interval",
+    "x = S v dt",
+    "x = S v dt",
+    "Constant v over the interval",
     ARRAY_LEN(OPT_V_S_T),
     OPT_V_S_T
 };
 
 static const formula_def_t FORMULA_CALC_DV = {
-    "Find dv from acceleration, dt",
-    "dv = a * dt",
-    "Constant a over time interval",
+    "v = S a dt",
+    "v = S a dt",
+    "Constant a over the interval",
     ARRAY_LEN(OPT_A_V_V0_T),
     OPT_A_V_V0_T
 };
 
 static const formula_def_t FORMULA_CALC_DPHI = {
-    "Find dphi from omega, dt",
-    "dphi = omega * dt",
-    "Constant omega over time",
+    "phi = S omega dt",
+    "phi = S omega dt",
+    "Constant omega over the interval",
     ARRAY_LEN(OPT_PHI_OMEGA_T),
     OPT_PHI_OMEGA_T
 };
 
 static const formula_def_t FORMULA_CALC_DOMEGA = {
-    "Find domega from alpha, dt",
-    "domega = alpha * dt",
-    "Constant alpha over time",
+    "omega = S alpha dt",
+    "omega = S alpha dt",
+    "Constant alpha over the interval",
     ARRAY_LEN(OPT_OMEGA_OMEGA0_ALPHA_T),
     OPT_OMEGA_OMEGA0_ALPHA_T
 };
 
 static const formula_def_t FORMULA_CALC_I = {
-    "Find impulse from force, dt",
-    "I = integral(F dt)",
+    "I = S F dt",
+    "I = S F dt",
     "F constant over dt",
     ARRAY_LEN(OPT_I_F_T),
     OPT_I_F_T
 };
 
 static const formula_def_t FORMULA_CALC_W = {
-    "Find work from force and dr",
-    "W = integral(F dr)",
+    "W = S F.dr",
+    "W = S F.dr",
     "F constant and parallel",
     ARRAY_LEN(OPT_W_F_D),
     OPT_W_F_D
 };
 
 static const formula_def_t FORMULA_CALC_EXPR = {
-    "Derivative / integral of expression",
+    "f(x), f(t), d/dx, S",
     "Enter polynomial in x or t",
     "Examples: 10t, 3t^2+2, x^3-x",
     0,
@@ -852,64 +948,75 @@ static const formula_def_t FORMULA_CALC_EXPR = {
     expr_calc_run
 };
 
+static const formula_def_t FORMULA_CALC_FORCE_LINEAR = {
+    "F(t) = F0 + k*t",
+    "F(t) = F0 + k*t",
+    "Find v(t) and s(t) for linear force",
+    0,
+    NULL,
+    run_force_linear_motion_solver
+};
+
 static category_def_t CATEGORIES[CATEGORY_COUNT];
 
 void formula_registry_init(void) {
     CATEGORIES[0].name = "1. Kinematics";
     CATEGORIES[0].formula_count = 6;
-    CATEGORIES[0].formulas[0] = &FORMULA_KIN_VAVG;
-    CATEGORIES[0].formulas[1] = &FORMULA_KIN_A;
-    CATEGORIES[0].formulas[2] = &FORMULA_KIN_V;
+    CATEGORIES[0].formulas[0] = &FORMULA_KIN_V;
+    CATEGORIES[0].formulas[1] = &FORMULA_KIN_S2;
+    CATEGORIES[0].formulas[2] = &FORMULA_KIN_V2;
     CATEGORIES[0].formulas[3] = &FORMULA_KIN_S;
-    CATEGORIES[0].formulas[4] = &FORMULA_KIN_S2;
-    CATEGORIES[0].formulas[5] = &FORMULA_KIN_V2;
+    CATEGORIES[0].formulas[4] = &FORMULA_KIN_VAVG;
+    CATEGORIES[0].formulas[5] = &FORMULA_KIN_A;
 
     CATEGORIES[1].name = "2. Circular Motion";
-    CATEGORIES[1].formula_count = 10;
-    CATEGORIES[1].formulas[0] = &FORMULA_CIRC_PHI;
-    CATEGORIES[1].formulas[1] = &FORMULA_CIRC_V;
+    CATEGORIES[1].formula_count = 11;
+    CATEGORIES[1].formulas[0] = &FORMULA_CIRC_V;
+    CATEGORIES[1].formulas[1] = &FORMULA_CIRC_AC;
     CATEGORIES[1].formulas[2] = &FORMULA_CIRC_AT;
-    CATEGORIES[1].formulas[3] = &FORMULA_CIRC_AC;
-    CATEGORIES[1].formulas[4] = &FORMULA_CIRC_FREQ;
-    CATEGORIES[1].formulas[5] = &FORMULA_CIRC_OMEGA_F;
-    CATEGORIES[1].formulas[6] = &FORMULA_CIRC_OMEGA_T;
-    CATEGORIES[1].formulas[7] = &FORMULA_CIRC_OMEGA_ALPHA;
-    CATEGORIES[1].formulas[8] = &FORMULA_CIRC_PHI_ALPHA;
-    CATEGORIES[1].formulas[9] = &FORMULA_CIRC_N;
+    CATEGORIES[1].formulas[3] = &FORMULA_CIRC_OMEGA_F;
+    CATEGORIES[1].formulas[4] = &FORMULA_CIRC_OMEGA_T;
+    CATEGORIES[1].formulas[5] = &FORMULA_CIRC_OMEGA_ALPHA;
+    CATEGORIES[1].formulas[6] = &FORMULA_CIRC_PHI_ALPHA;
+    CATEGORIES[1].formulas[7] = &FORMULA_CIRC_N_ALPHA;
+    CATEGORIES[1].formulas[8] = &FORMULA_CIRC_N;
+    CATEGORIES[1].formulas[9] = &FORMULA_CIRC_PHI;
+    CATEGORIES[1].formulas[10] = &FORMULA_CIRC_FREQ;
 
     CATEGORIES[2].name = "3. Dynamics";
     CATEGORIES[2].formula_count = 4;
-    CATEGORIES[2].formulas[0] = &FORMULA_DYN_P;
-    CATEGORIES[2].formulas[1] = &FORMULA_DYN_F;
-    CATEGORIES[2].formulas[2] = &FORMULA_DYN_A;
+    CATEGORIES[2].formulas[0] = &FORMULA_DYN_F;
+    CATEGORIES[2].formulas[1] = &FORMULA_DYN_A;
+    CATEGORIES[2].formulas[2] = &FORMULA_DYN_P;
     CATEGORIES[2].formulas[3] = &FORMULA_DYN_I;
 
     CATEGORIES[3].name = "4. Work / Energy / Power";
     CATEGORIES[3].formula_count = 8;
-    CATEGORIES[3].formulas[0] = &FORMULA_EN_EK;
-    CATEGORIES[3].formulas[1] = &FORMULA_EN_W;
-    CATEGORIES[3].formulas[2] = &FORMULA_EN_PAVG;
+    CATEGORIES[3].formulas[0] = &FORMULA_EN_W_DEK;
+    CATEGORIES[3].formulas[1] = &FORMULA_EN_EK;
+    CATEGORIES[3].formulas[2] = &FORMULA_EN_W;
     CATEGORIES[3].formulas[3] = &FORMULA_EN_P;
     CATEGORIES[3].formulas[4] = &FORMULA_EN_EP;
     CATEGORIES[3].formulas[5] = &FORMULA_EN_E;
-    CATEGORIES[3].formulas[6] = &FORMULA_EN_W_DEK;
+    CATEGORIES[3].formulas[6] = &FORMULA_EN_PAVG;
     CATEGORIES[3].formulas[7] = &FORMULA_EN_SPRING;
 
     CATEGORIES[4].name = "5. Derivatives / Integrals";
-    CATEGORIES[4].formula_count = 13;
+    CATEGORIES[4].formula_count = 14;
     CATEGORIES[4].formulas[0] = &FORMULA_CALC_EXPR;
-    CATEGORIES[4].formulas[1] = &FORMULA_CALC_V;
-    CATEGORIES[4].formulas[2] = &FORMULA_CALC_A;
-    CATEGORIES[4].formulas[3] = &FORMULA_CALC_FORCE;
-    CATEGORIES[4].formulas[4] = &FORMULA_CALC_OMEGA;
-    CATEGORIES[4].formulas[5] = &FORMULA_CALC_ALPHA;
+    CATEGORIES[4].formulas[1] = &FORMULA_CALC_FORCE_LINEAR;
+    CATEGORIES[4].formulas[2] = &FORMULA_CALC_V;
+    CATEGORIES[4].formulas[3] = &FORMULA_CALC_A;
+    CATEGORIES[4].formulas[4] = &FORMULA_CALC_DISP;
+    CATEGORIES[4].formulas[5] = &FORMULA_CALC_FORCE;
     CATEGORIES[4].formulas[6] = &FORMULA_CALC_POWER;
-    CATEGORIES[4].formulas[7] = &FORMULA_CALC_DISP;
-    CATEGORIES[4].formulas[8] = &FORMULA_CALC_DV;
-    CATEGORIES[4].formulas[9] = &FORMULA_CALC_DPHI;
-    CATEGORIES[4].formulas[10] = &FORMULA_CALC_DOMEGA;
-    CATEGORIES[4].formulas[11] = &FORMULA_CALC_I;
-    CATEGORIES[4].formulas[12] = &FORMULA_CALC_W;
+    CATEGORIES[4].formulas[7] = &FORMULA_CALC_I;
+    CATEGORIES[4].formulas[8] = &FORMULA_CALC_W;
+    CATEGORIES[4].formulas[9] = &FORMULA_CALC_OMEGA;
+    CATEGORIES[4].formulas[10] = &FORMULA_CALC_ALPHA;
+    CATEGORIES[4].formulas[11] = &FORMULA_CALC_DV;
+    CATEGORIES[4].formulas[12] = &FORMULA_CALC_DPHI;
+    CATEGORIES[4].formulas[13] = &FORMULA_CALC_DOMEGA;
 }
 
 const category_def_t *formula_get_categories(uint8_t *count_out) {
@@ -987,14 +1094,26 @@ static menu_result_t select_solve_option(const formula_def_t *formula, uint8_t *
         io_draw_wrapped_text(2, formula->const_note, 26);
 
         for (j = 0; j < visible_rows && (uint8_t)(scroll_offset + j) < formula->option_count; ++j) {
-            char line[28];
+            char line[27];
+            size_t label_len = 0;
             uint8_t option_index = (uint8_t)(scroll_offset + j);
 
-            if (option_index == *selected_index) {
-                snprintf(line, sizeof(line), "> Find %s", labels[option_index]);
-            } else {
-                snprintf(line, sizeof(line), "  Find %s", labels[option_index]);
+            line[0] = option_index == *selected_index ? '>' : ' ';
+            line[1] = ' ';
+            line[2] = 'F';
+            line[3] = 'i';
+            line[4] = 'n';
+            line[5] = 'd';
+            line[6] = ' ';
+
+            label_len = strlen(labels[option_index]);
+            if (label_len > sizeof(line) - 8) {
+                label_len = sizeof(line) - 8;
             }
+
+            memcpy(&line[7], labels[option_index], label_len);
+            line[7 + label_len] = '\0';
+
             io_draw_wrapped_text((uint8_t)(4 + j), line, 26);
         }
 

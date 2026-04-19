@@ -115,7 +115,7 @@ BB0_6:
 	ld	hl, (hl)
 	push	hl
 	push	bc
-	ld	hl, _.str.1.275
+	ld	hl, _.str.1.264
 	push	hl
 	ld	hl, 28
 	push	hl
@@ -167,7 +167,7 @@ BB0_6:
 	pop	ix
 	jp	BB0_3
 BB0_7:
-	ld	hl, _.str.2.276
+	ld	hl, _.str.2.265
 	push	hl
 	call	_io_draw_footer
 	pop	hl
@@ -1013,7 +1013,7 @@ BB0_69:
 	call	_show_text_result
 	jr	BB0_76
 BB0_73:
-	ld	hl, _.str.22.448
+	ld	hl, _.str.22.475
 	push	hl
 	ld	bc, -264
 	lea	hl, ix
@@ -1030,7 +1030,7 @@ BB0_74:
 	ld	a, 2
 	jp	BB0_1
 BB0_75:
-	ld	hl, _.str.22.448
+	ld	hl, _.str.22.475
 	push	hl
 	ld	bc, -264
 	lea	hl, ix
@@ -1295,7 +1295,7 @@ BB3_14:
 	bit	0, a
 	ld	hl, _.str.30
 	jr	nz, BB3_16
-	ld	hl, _.str.22.448
+	ld	hl, _.str.22.475
 BB3_16:
 	bit	0, a
 	ld	bc, _.str.31
@@ -1307,7 +1307,7 @@ BB3_18:
 	push	hl
 	pop	bc
 BB3_20:
-	ld	hl, _.str.22.448
+	ld	hl, _.str.22.475
 	push	hl
 	ld	hl, (ix - 44)
 	push	hl
@@ -1538,7 +1538,7 @@ _show_text_result:
 	pop	hl
 	pop	hl
 	pop	hl
-	ld	hl, _.str.228
+	ld	hl, _.str.219
 	push	hl
 	call	_io_draw_footer
 	pop	hl
@@ -1758,55 +1758,57 @@ BB6_9:
 _formula_registry_init:
 	ld	hl, _.str.37
 	ld	a, 6
-	ld	bc, _FORMULA_KIN_A
-	ld	iy, _FORMULA_KIN_V
-	ld	e, 10
-	ld	d, 13
+	ld	bc, _FORMULA_KIN_S2
+	ld	iy, _FORMULA_KIN_V2
+	ld	e, 11
+	ld	d, 14
 	ld	(_CATEGORIES), hl
 	ld	(_CATEGORIES+3), a
-	ld	hl, _FORMULA_KIN_VAVG
+	ld	hl, _FORMULA_KIN_V
 	ld	(_CATEGORIES+4), hl
 	ld	(_CATEGORIES+7), bc
 	ld	(_CATEGORIES+10), iy
 	ld	hl, _FORMULA_KIN_S
 	ld	(_CATEGORIES+13), hl
-	ld	hl, _FORMULA_KIN_S2
+	ld	hl, _FORMULA_KIN_VAVG
 	ld	(_CATEGORIES+16), hl
-	ld	hl, _FORMULA_KIN_V2
+	ld	hl, _FORMULA_KIN_A
 	ld	(_CATEGORIES+19), hl
 	ld	hl, _.str.1.38
 	ld	(_CATEGORIES+46), hl
 	ld	a, e
 	ld	(_CATEGORIES+49), a
-	ld	hl, _FORMULA_CIRC_PHI
-	ld	(_CATEGORIES+50), hl
 	ld	hl, _FORMULA_CIRC_V
+	ld	(_CATEGORIES+50), hl
+	ld	hl, _FORMULA_CIRC_AC
 	ld	(_CATEGORIES+53), hl
 	ld	hl, _FORMULA_CIRC_AT
 	ld	(_CATEGORIES+56), hl
-	ld	hl, _FORMULA_CIRC_AC
-	ld	(_CATEGORIES+59), hl
-	ld	hl, _FORMULA_CIRC_FREQ
-	ld	(_CATEGORIES+62), hl
 	ld	hl, _FORMULA_CIRC_OMEGA_F
-	ld	(_CATEGORIES+65), hl
+	ld	(_CATEGORIES+59), hl
 	ld	hl, _FORMULA_CIRC_OMEGA_T
-	ld	(_CATEGORIES+68), hl
+	ld	(_CATEGORIES+62), hl
 	ld	hl, _FORMULA_CIRC_OMEGA_ALPHA
-	ld	(_CATEGORIES+71), hl
+	ld	(_CATEGORIES+65), hl
 	ld	hl, _FORMULA_CIRC_PHI_ALPHA
-	ld	(_CATEGORIES+74), hl
+	ld	(_CATEGORIES+68), hl
+	ld	hl, _FORMULA_CIRC_N_ALPHA
+	ld	(_CATEGORIES+71), hl
 	ld	hl, _FORMULA_CIRC_N
+	ld	(_CATEGORIES+74), hl
+	ld	hl, _FORMULA_CIRC_PHI
 	ld	(_CATEGORIES+77), hl
+	ld	hl, _FORMULA_CIRC_FREQ
+	ld	(_CATEGORIES+80), hl
 	ld	hl, _.str.2.39
 	ld	(_CATEGORIES+92), hl
 	ld	a, 4
 	ld	(_CATEGORIES+95), a
-	ld	hl, _FORMULA_DYN_P
-	ld	(_CATEGORIES+96), hl
 	ld	hl, _FORMULA_DYN_F
-	ld	(_CATEGORIES+99), hl
+	ld	(_CATEGORIES+96), hl
 	ld	hl, _FORMULA_DYN_A
+	ld	(_CATEGORIES+99), hl
+	ld	hl, _FORMULA_DYN_P
 	ld	(_CATEGORIES+102), hl
 	ld	hl, _FORMULA_DYN_I
 	ld	(_CATEGORIES+105), hl
@@ -1814,11 +1816,11 @@ _formula_registry_init:
 	ld	(_CATEGORIES+138), hl
 	ld	a, 8
 	ld	(_CATEGORIES+141), a
-	ld	hl, _FORMULA_EN_EK
+	ld	hl, _FORMULA_EN_W_DEK
 	ld	(_CATEGORIES+142), hl
-	ld	hl, _FORMULA_EN_W
+	ld	hl, _FORMULA_EN_EK
 	ld	(_CATEGORIES+145), hl
-	ld	hl, _FORMULA_EN_PAVG
+	ld	hl, _FORMULA_EN_W
 	ld	(_CATEGORIES+148), hl
 	ld	hl, _FORMULA_EN_P
 	ld	(_CATEGORIES+151), hl
@@ -1826,7 +1828,7 @@ _formula_registry_init:
 	ld	(_CATEGORIES+154), hl
 	ld	hl, _FORMULA_EN_E
 	ld	(_CATEGORIES+157), hl
-	ld	hl, _FORMULA_EN_W_DEK
+	ld	hl, _FORMULA_EN_PAVG
 	ld	(_CATEGORIES+160), hl
 	ld	hl, _FORMULA_EN_SPRING
 	ld	(_CATEGORIES+163), hl
@@ -1836,268 +1838,32 @@ _formula_registry_init:
 	ld	(_CATEGORIES+187), a
 	ld	hl, _FORMULA_CALC_EXPR
 	ld	(_CATEGORIES+188), hl
-	ld	hl, _FORMULA_CALC_V
+	ld	hl, _FORMULA_CALC_FORCE_LINEAR
 	ld	(_CATEGORIES+191), hl
-	ld	hl, _FORMULA_CALC_A
+	ld	hl, _FORMULA_CALC_V
 	ld	(_CATEGORIES+194), hl
-	ld	hl, _FORMULA_CALC_FORCE
+	ld	hl, _FORMULA_CALC_A
 	ld	(_CATEGORIES+197), hl
-	ld	hl, _FORMULA_CALC_OMEGA
+	ld	hl, _FORMULA_CALC_DISP
 	ld	(_CATEGORIES+200), hl
-	ld	hl, _FORMULA_CALC_ALPHA
+	ld	hl, _FORMULA_CALC_FORCE
 	ld	(_CATEGORIES+203), hl
 	ld	hl, _FORMULA_CALC_POWER
 	ld	(_CATEGORIES+206), hl
-	ld	hl, _FORMULA_CALC_DISP
-	ld	(_CATEGORIES+209), hl
-	ld	hl, _FORMULA_CALC_DV
-	ld	(_CATEGORIES+212), hl
-	ld	hl, _FORMULA_CALC_DPHI
-	ld	(_CATEGORIES+215), hl
-	ld	hl, _FORMULA_CALC_DOMEGA
-	ld	(_CATEGORIES+218), hl
 	ld	hl, _FORMULA_CALC_I
-	ld	(_CATEGORIES+221), hl
+	ld	(_CATEGORIES+209), hl
 	ld	hl, _FORMULA_CALC_W
+	ld	(_CATEGORIES+212), hl
+	ld	hl, _FORMULA_CALC_OMEGA
+	ld	(_CATEGORIES+215), hl
+	ld	hl, _FORMULA_CALC_ALPHA
+	ld	(_CATEGORIES+218), hl
+	ld	hl, _FORMULA_CALC_DV
+	ld	(_CATEGORIES+221), hl
+	ld	hl, _FORMULA_CALC_DPHI
 	ld	(_CATEGORIES+224), hl
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_w_from_f_d
-_solve_w_from_f_d:
-	call	__frameset0
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	hl, (iy + 4)
-	ld	a, (iy + 3)
-	ld	e, (iy + 7)
-	call	__fmul
-	ld	iy, (ix + 6)
-	ld	(iy), 1
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	hl, 0
-	ld	(iy + 5), hl
-	lea	hl, iy
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_f_from_w_d
-_solve_f_from_w_d:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, -7770017
-	ld	e, -80
-	ld	bc, (iy + 4)
-	ld	d, (iy + 7)
-	push	hl
-	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB9_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
-	lea	bc, iy
-	call	__fcmp
-	jp	m, BB9_3
-BB9_2:
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	a, (iy + 3)
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB9_4
-BB9_3:
-	ld	de, _.str.161
-	ld	l, 0
-	ld	a, l
-	ld	bc, 0
-BB9_4:
-	ld	iy, (ix + 6)
-	ld	(iy), l
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_d_from_w_f
-_solve_d_from_w_f:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, -7770017
-	ld	e, -80
-	ld	bc, (iy + 4)
-	ld	d, (iy + 7)
-	push	hl
-	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB10_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
-	lea	bc, iy
-	call	__fcmp
-	jp	m, BB10_3
-BB10_2:
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	a, (iy + 3)
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB10_4
-BB10_3:
-	ld	de, _.str.155
-	ld	l, 0
-	ld	a, l
-	ld	bc, 0
-BB10_4:
-	ld	iy, (ix + 6)
-	ld	(iy), l
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_i_from_f_t
-_solve_i_from_f_t:
-	call	__frameset0
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	hl, (iy + 4)
-	ld	a, (iy + 3)
-	ld	e, (iy + 7)
-	call	__fmul
-	ld	iy, (ix + 6)
-	ld	(iy), 1
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	hl, 0
-	ld	(iy + 5), hl
-	lea	hl, iy
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_f_from_i_t
-_solve_f_from_i_t:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, -7770017
-	ld	e, -80
-	ld	bc, (iy + 4)
-	ld	d, (iy + 7)
-	push	hl
-	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB12_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
-	lea	bc, iy
-	call	__fcmp
-	jp	m, BB12_3
-BB12_2:
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	a, (iy + 3)
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB12_4
-BB12_3:
-	ld	de, _.str.94
-	ld	l, 0
-	ld	a, l
-	ld	bc, 0
-BB12_4:
-	ld	iy, (ix + 6)
-	ld	(iy), l
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_t_from_i_f
-_solve_t_from_i_f:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, -7770017
-	ld	e, -80
-	ld	bc, (iy + 4)
-	ld	d, (iy + 7)
-	push	hl
-	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB13_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
-	lea	bc, iy
-	call	__fcmp
-	jp	m, BB13_3
-BB13_2:
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	a, (iy + 3)
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB13_4
-BB13_3:
-	ld	de, _.str.155
-	ld	l, 0
-	ld	a, l
-	ld	bc, 0
-BB13_4:
-	ld	iy, (ix + 6)
-	ld	(iy), l
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
+	ld	hl, _FORMULA_CALC_DOMEGA
+	ld	(_CATEGORIES+227), hl
 	ret
 	section	.text,"ax",@progbits
 
@@ -2175,14 +1941,14 @@ _solve_alpha_from_omega_omega0_t:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB16_2
+	jp	p, BB10_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB16_3
-BB16_2:
+	jp	m, BB10_3
+BB10_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	hl, (iy + 4)
@@ -2194,13 +1960,13 @@ BB16_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB16_4
-BB16_3:
+	jr	BB10_4
+BB10_3:
 	ld	de, _.str.94
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB16_4:
+BB10_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -2227,14 +1993,14 @@ _solve_t_from_omega_omega0_alpha:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB17_2
+	jp	p, BB11_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB17_3
-BB17_2:
+	jp	m, BB11_3
+BB11_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	hl, (iy + 4)
@@ -2246,13 +2012,13 @@ BB17_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB17_4
-BB17_3:
-	ld	de, _.str.124
+	jr	BB11_4
+BB11_3:
+	ld	de, _.str.121
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB17_4:
+BB11_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -2300,14 +2066,14 @@ _solve_omega_from_phi_t:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB19_2
+	jp	p, BB13_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB19_3
-BB19_2:
+	jp	m, BB13_3
+BB13_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -2316,13 +2082,13 @@ BB19_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB19_4
-BB19_3:
+	jr	BB13_4
+BB13_3:
 	ld	de, _.str.94
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB19_4:
+BB13_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -2349,14 +2115,14 @@ _solve_t_from_phi_omega:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB20_2
+	jp	p, BB14_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB20_3
-BB20_2:
+	jp	m, BB14_3
+BB14_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -2365,13 +2131,13 @@ BB20_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB20_4
-BB20_3:
-	ld	de, _.str.117
+	jr	BB14_4
+BB14_3:
+	ld	de, _.str.114
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB20_4:
+BB14_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -2398,14 +2164,14 @@ _solve_a_from_v_v0_dt:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB21_2
+	jp	p, BB15_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB21_3
-BB21_2:
+	jp	m, BB15_3
+BB15_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	hl, (iy + 4)
@@ -2417,13 +2183,13 @@ BB21_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB21_4
-BB21_3:
+	jr	BB15_4
+BB15_3:
 	ld	de, _.str.94
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB21_4:
+BB15_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -2509,14 +2275,14 @@ _solve_t_from_v_v0_a:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB24_2
+	jp	p, BB18_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB24_3
-BB24_2:
+	jp	m, BB18_3
+BB18_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	hl, (iy + 4)
@@ -2528,9 +2294,247 @@ BB24_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
+	jr	BB18_4
+BB18_3:
+	ld	de, _.str.95
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB18_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_w_from_f_d
+_solve_w_from_f_d:
+	call	__frameset0
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	hl, (iy + 4)
+	ld	a, (iy + 3)
+	ld	e, (iy + 7)
+	call	__fmul
+	ld	iy, (ix + 6)
+	ld	(iy), 1
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	hl, 0
+	ld	(iy + 5), hl
+	lea	hl, iy
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_f_from_w_d
+_solve_f_from_w_d:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 4)
+	ld	d, (iy + 7)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB20_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB20_3
+BB20_2:
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB20_4
+BB20_3:
+	ld	de, _.str.156
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB20_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_d_from_w_f
+_solve_d_from_w_f:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 4)
+	ld	d, (iy + 7)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB21_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB21_3
+BB21_2:
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB21_4
+BB21_3:
+	ld	de, _.str.150
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB21_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_i_from_f_t
+_solve_i_from_f_t:
+	call	__frameset0
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	hl, (iy + 4)
+	ld	a, (iy + 3)
+	ld	e, (iy + 7)
+	call	__fmul
+	ld	iy, (ix + 6)
+	ld	(iy), 1
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	hl, 0
+	ld	(iy + 5), hl
+	lea	hl, iy
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_f_from_i_t
+_solve_f_from_i_t:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 4)
+	ld	d, (iy + 7)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB23_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB23_3
+BB23_2:
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB23_4
+BB23_3:
+	ld	de, _.str.94
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB23_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_t_from_i_f
+_solve_t_from_i_f:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 4)
+	ld	d, (iy + 7)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB24_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB24_3
+BB24_2:
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
 	jr	BB24_4
 BB24_3:
-	ld	de, _.str.99
+	ld	de, _.str.150
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
@@ -2547,8 +2551,8 @@ BB24_4:
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
-	private	_solve_v_from_s_t
-_solve_v_from_s_t:
+	private	_solve_power_from_work_t
+_solve_power_from_work_t:
 	ld	hl, -3
 	call	__frameset
 	ld	iy, (ix + 9)
@@ -2579,130 +2583,11 @@ BB25_2:
 	ld	l, 1
 	jr	BB25_4
 BB25_3:
-	ld	de, _.str.94
+	ld	de, _.str.199
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
 BB25_4:
-	ld	iy, (ix + 6)
-	ld	(iy), l
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_s_from_v_t
-_solve_s_from_v_t:
-	call	__frameset0
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	hl, (iy + 4)
-	ld	a, (iy + 3)
-	ld	e, (iy + 7)
-	call	__fmul
-	ld	iy, (ix + 6)
-	ld	(iy), 1
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	hl, 0
-	ld	(iy + 5), hl
-	lea	hl, iy
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_t_from_s_v
-_solve_t_from_s_v:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, -7770017
-	ld	e, -80
-	ld	bc, (iy + 4)
-	ld	d, (iy + 7)
-	push	hl
-	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB27_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
-	lea	bc, iy
-	call	__fcmp
-	jp	m, BB27_3
-BB27_2:
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	a, (iy + 3)
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB27_4
-BB27_3:
-	ld	de, _.str.95
-	ld	l, 0
-	ld	a, l
-	ld	bc, 0
-BB27_4:
-	ld	iy, (ix + 6)
-	ld	(iy), l
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_power_from_work_t
-_solve_power_from_work_t:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, -7770017
-	ld	e, -80
-	ld	bc, (iy + 4)
-	ld	d, (iy + 7)
-	push	hl
-	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB28_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
-	lea	bc, iy
-	call	__fcmp
-	jp	m, BB28_3
-BB28_2:
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	a, (iy + 3)
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB28_4
-BB28_3:
-	ld	de, _.str.195
-	ld	l, 0
-	ld	a, l
-	ld	bc, 0
-BB28_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -2750,14 +2635,14 @@ _solve_t_from_power_work:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB30_2
+	jp	p, BB27_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB30_3
-BB30_2:
+	jp	m, BB27_3
+BB27_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy + 4)
 	ld	a, (iy + 7)
@@ -2766,13 +2651,13 @@ BB30_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB30_4
-BB30_3:
-	ld	de, _.str.205
+	jr	BB27_4
+BB27_3:
+	ld	de, _.str.202
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB30_4:
+BB27_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -2799,14 +2684,14 @@ _solve_force_from_dp_t:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB31_2
+	jp	p, BB28_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB31_3
-BB31_2:
+	jp	m, BB28_3
+BB28_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -2815,13 +2700,13 @@ BB31_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB31_4
-BB31_3:
-	ld	de, _.str.195
+	jr	BB28_4
+BB28_3:
+	ld	de, _.str.199
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB31_4:
+BB28_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -2869,6 +2754,125 @@ _solve_t_from_force_dp:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
+	jp	p, BB30_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB30_3
+BB30_2:
+	ld	iy, (ix + 9)
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB30_4
+BB30_3:
+	ld	de, _.str.150
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB30_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_v_from_s_t
+_solve_v_from_s_t:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 4)
+	ld	d, (iy + 7)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB31_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB31_3
+BB31_2:
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB31_4
+BB31_3:
+	ld	de, _.str.94
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB31_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_s_from_v_t
+_solve_s_from_v_t:
+	call	__frameset0
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	hl, (iy + 4)
+	ld	a, (iy + 3)
+	ld	e, (iy + 7)
+	call	__fmul
+	ld	iy, (ix + 6)
+	ld	(iy), 1
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	hl, 0
+	ld	(iy + 5), hl
+	lea	hl, iy
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_t_from_s_v
+_solve_t_from_s_v:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 4)
+	ld	d, (iy + 7)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
 	jp	p, BB33_2
 	ld	a, 48
 	ld	hl, (ix - 3)
@@ -2878,8 +2882,8 @@ _solve_t_from_force_dp:
 	jp	m, BB33_3
 BB33_2:
 	ld	iy, (ix + 9)
-	ld	bc, (iy + 4)
-	ld	a, (iy + 7)
+	ld	bc, (iy)
+	ld	a, (iy + 3)
 	ld	hl, (ix - 3)
 	ld	e, d
 	call	__fdiv
@@ -2887,7 +2891,7 @@ BB33_2:
 	ld	l, 1
 	jr	BB33_4
 BB33_3:
-	ld	de, _.str.155
+	ld	de, _.str.104
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
@@ -2901,6 +2905,364 @@ BB33_4:
 	ld	sp, ix
 	pop	ix
 	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_run_force_linear_motion_solver
+_run_force_linear_motion_solver:
+	ld	hl, -95
+	call	__frameset
+	ld	iy, (ix + 6)
+	ld	de, 0
+	ld	hl, _.str.177
+	ld	(ix - 4), de
+	ld	(ix - 1), d
+	ld	(ix - 8), de
+	ld	(ix - 5), d
+	ld	(ix - 12), de
+	ld	(ix - 9), d
+	ld	(ix - 16), de
+	ld	(ix - 13), d
+	ld	(ix - 20), de
+	ld	(ix - 17), d
+	ld	(ix - 24), de
+	ld	(ix - 21), d
+	ld	de, (iy + 3)
+	pea	ix - 4
+	push	hl
+	push	de
+	call	_io_prompt_double
+	pop	hl
+	pop	hl
+	pop	hl
+	bit	0, a
+	jp	z, BB34_12
+	ld	hl, -7770017
+	ld	e, -80
+	ld	iy, (ix - 4)
+	ld	d, (ix - 1)
+	lea	bc, iy
+	ld	a, d
+	call	__fcmp
+	jp	p, BB34_3
+	ld	a, 48
+	lea	hl, iy
+	ld	e, d
+	ld	bc, -7770017
+	call	__fcmp
+	jp	m, BB34_10
+BB34_3:
+	ld	(ix - 62), d
+	ld	(ix - 59), iy
+	ld	hl, _.str.180
+	ld	de, (ix + 6)
+	push	de
+	pop	iy
+	ld	de, (iy + 3)
+	pea	ix - 8
+	push	hl
+	push	de
+	call	_io_prompt_double
+	pop	hl
+	pop	hl
+	pop	hl
+	bit	0, a
+	jp	z, BB34_12
+	ld	hl, _.str.181
+	ld	iy, (ix + 6)
+	ld	de, (iy + 3)
+	pea	ix - 12
+	push	hl
+	push	de
+	call	_io_prompt_double
+	pop	hl
+	pop	hl
+	pop	hl
+	bit	0, a
+	jp	z, BB34_12
+	ld	hl, _.str.182
+	ld	iy, (ix + 6)
+	ld	de, (iy + 3)
+	pea	ix - 16
+	push	hl
+	push	de
+	call	_io_prompt_double
+	pop	hl
+	pop	hl
+	pop	hl
+	bit	0, a
+	jr	z, BB34_12
+	ld	hl, _.str.183
+	ld	iy, (ix + 6)
+	ld	de, (iy + 3)
+	pea	ix - 20
+	push	hl
+	push	de
+	call	_io_prompt_double
+	pop	hl
+	pop	hl
+	pop	hl
+	bit	0, a
+	jr	z, BB34_12
+	ld	hl, _.str.184
+	ld	iy, (ix + 6)
+	ld	de, (iy + 3)
+	pea	ix - 24
+	push	hl
+	push	de
+	call	_io_prompt_double
+	pop	hl
+	pop	hl
+	pop	hl
+	bit	0, a
+	jr	z, BB34_12
+	ld	iy, (ix - 24)
+	ld	d, (ix - 21)
+	lea	hl, iy
+	ld	e, d
+	ld	bc, -7770017
+	ld	a, -80
+	call	__fcmp
+	jp	p, BB34_13
+	ld	hl, _.str.185
+	ld	de, _.str.186
+	jr	BB34_11
+BB34_10:
+	ld	hl, _.str.178
+	ld	de, _.str.179
+BB34_11:
+	push	de
+	push	hl
+	ld	hl, _.str.88
+	push	hl
+	call	_io_show_message
+	pop	hl
+	pop	hl
+	pop	hl
+BB34_12:
+	or	a, a
+	sbc	hl, hl
+	ld	sp, ix
+	pop	ix
+	ret
+BB34_13:
+	lea	hl, ix - 56
+	ld	(ix - 65), hl
+	ld	hl, (ix - 16)
+	ld	(ix - 68), hl
+	ld	a, (ix - 13)
+	ld	(ix - 69), a
+	ld	bc, (ix - 8)
+	ld	(ix - 83), bc
+	ld	a, (ix - 5)
+	ld	(ix - 80), a
+	ld	hl, (ix - 59)
+	ld	e, (ix - 62)
+	call	__fdiv
+	lea	hl, iy
+	ld	e, d
+	call	__fmul
+	ld	hl, (ix - 68)
+	ld	e, (ix - 69)
+	call	__fadd
+	ld	(ix - 72), bc
+	ld	(ix - 75), a
+	ld	(ix - 90), iy
+	ld	iy, (ix - 12)
+	ld	(ix - 78), iy
+	ld	(ix - 91), d
+	ld	d, (ix - 9)
+	ld	(ix - 79), d
+	ld	bc, (ix - 59)
+	ld	a, (ix - 62)
+	or	a, a
+	sbc	hl, hl
+	ld	e, 64
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	(ix - 86), hl
+	ld	e, a
+	ld	(ix - 87), e
+	lea	bc, iy
+	ld	a, d
+	call	__fdiv
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	iy, (ix - 90)
+	lea	bc, iy
+	ld	d, (ix - 91)
+	ld	a, d
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fmul
+	ld	hl, (ix - 72)
+	ld	e, (ix - 75)
+	call	__fadd
+	ld	(ix - 72), bc
+	ld	l, a
+	ld	(ix - 75), hl
+	ld	hl, (ix - 20)
+	ld	(ix - 94), hl
+	ld	a, (ix - 17)
+	ld	(ix - 95), a
+	ld	bc, (ix - 68)
+	ld	a, (ix - 69)
+	lea	hl, iy
+	ld	e, d
+	call	__fmul
+	ld	hl, (ix - 94)
+	ld	e, (ix - 95)
+	call	__fadd
+	ld	(ix - 68), bc
+	ld	(ix - 69), a
+	ld	bc, (ix - 83)
+	ld	a, (ix - 80)
+	ld	hl, (ix - 86)
+	ld	e, (ix - 87)
+	call	__fdiv
+	push	bc
+	pop	hl
+	ld	e, a
+	lea	bc, iy
+	ld	a, d
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fmul
+	ld	hl, (ix - 68)
+	ld	e, (ix - 69)
+	call	__fadd
+	ld	(ix - 68), bc
+	ld	(ix - 69), a
+	ld	bc, (ix - 59)
+	ld	a, (ix - 62)
+	ld	hl, -4194304
+	ld	e, 64
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	bc, (ix - 78)
+	ld	a, (ix - 79)
+	call	__fdiv
+	push	bc
+	pop	hl
+	ld	e, a
+	lea	bc, iy
+	ld	a, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	e, a
+	lea	bc, iy
+	ld	a, d
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fmul
+	ld	hl, (ix - 68)
+	ld	e, (ix - 69)
+	call	__fadd
+	ld	(ix - 59), bc
+	ld	l, a
+	ld	(ix - 62), hl
+	call	_io_clear_screen
+	ld	hl, _.str.12.237
+	push	hl
+	call	_io_draw_title
+	pop	hl
+	ld	hl, (ix + 6)
+	push	hl
+	pop	iy
+	ld	hl, (iy + 3)
+	ld	de, 26
+	push	de
+	push	hl
+	ld	hl, 1
+	push	hl
+	call	_io_draw_wrapped_text
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix - 75)
+	push	hl
+	ld	hl, (ix - 72)
+	push	hl
+	ld	hl, _.str.188
+	push	hl
+	ld	hl, 32
+	push	hl
+	ld	hl, (ix - 65)
+	push	hl
+	call	_snprintf
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, 26
+	push	hl
+	ld	hl, (ix - 65)
+	push	hl
+	ld	hl, 3
+	push	hl
+	call	_io_draw_wrapped_text
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (ix - 62)
+	push	hl
+	ld	hl, (ix - 59)
+	push	hl
+	ld	hl, _.str.189
+	push	hl
+	ld	hl, 32
+	push	hl
+	ld	hl, (ix - 65)
+	push	hl
+	call	_snprintf
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, 26
+	push	hl
+	ld	hl, (ix - 65)
+	push	hl
+	ld	hl, 5
+	push	hl
+	call	_io_draw_wrapped_text
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	iy, (ix + 6)
+	ld	hl, (iy + 6)
+	ld	de, 26
+	push	de
+	push	hl
+	ld	hl, 7
+	push	hl
+	call	_io_draw_wrapped_text
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, _.str.219
+	push	hl
+	call	_io_draw_footer
+	pop	hl
+BB34_14:
+	call	_os_GetCSC
+	cp	a, 9
+	jr	z, BB34_16
+	cp	a, 15
+	jr	nz, BB34_14
+BB34_16:
+	call	_io_wait_for_key_release
+	jp	BB34_12
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
@@ -2939,14 +3301,14 @@ _solve_k_from_f_x:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB35_2
+	jp	p, BB36_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB35_3
-BB35_2:
+	jp	m, BB36_3
+BB36_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -2955,13 +3317,13 @@ BB35_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB35_4
-BB35_3:
-	ld	de, _.str.181
+	jr	BB36_4
+BB36_3:
+	ld	de, _.str.170
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB35_4:
+BB36_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -2988,14 +3350,14 @@ _solve_x_from_f_k:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB36_2
+	jp	p, BB37_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB36_3
-BB36_2:
+	jp	m, BB37_3
+BB37_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -3004,13 +3366,13 @@ BB36_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB36_4
-BB36_3:
-	ld	de, _.str.182
+	jr	BB37_4
+BB37_3:
+	ld	de, _.str.171
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB36_4:
+BB37_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -3023,17 +3385,67 @@ BB36_4:
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
-	private	_solve_w_from_delta_ek
-_solve_w_from_delta_ek:
-	call	__frameset0
-	ld	bc, (ix + 6)
+	private	_solve_pavg_from_w_t
+_solve_pavg_from_w_t:
+	ld	hl, -3
+	call	__frameset
 	ld	iy, (ix + 9)
-	ld	de, (iy)
-	ld	a, (iy + 3)
-	push	bc
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 4)
+	ld	d, (iy + 7)
+	push	hl
 	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB38_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB38_3
+BB38_2:
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB38_4
+BB38_3:
+	ld	de, _.str.94
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB38_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_w_from_pavg_t
+_solve_w_from_pavg_t:
+	call	__frameset0
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	hl, (iy + 4)
+	ld	a, (iy + 3)
+	ld	e, (iy + 7)
+	call	__fmul
+	ld	iy, (ix + 6)
 	ld	(iy), 1
-	ld	(iy + 1), de
+	ld	(iy + 1), bc
 	ld	(iy + 4), a
 	ld	hl, 0
 	ld	(iy + 5), hl
@@ -3043,21 +3455,50 @@ _solve_w_from_delta_ek:
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
-	private	_solve_delta_ek_from_w
-_solve_delta_ek_from_w:
-	call	__frameset0
-	ld	bc, (ix + 6)
+	private	_solve_t_from_pavg_w
+_solve_t_from_pavg_w:
+	ld	hl, -3
+	call	__frameset
 	ld	iy, (ix + 9)
-	ld	de, (iy)
-	ld	a, (iy + 3)
-	push	bc
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy)
+	ld	d, (iy + 3)
+	push	hl
 	pop	iy
-	ld	(iy), 1
-	ld	(iy + 1), de
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB40_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB40_3
+BB40_2:
+	ld	iy, (ix + 9)
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB40_4
+BB40_3:
+	ld	de, _.str.167
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB40_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
 	ld	(iy + 4), a
-	ld	hl, 0
-	ld	(iy + 5), hl
+	ld	(iy + 5), de
 	lea	hl, iy
+	ld	sp, ix
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
@@ -3165,14 +3606,14 @@ _solve_m_from_delta_ep_g_h:
 	ld	hl, -7770017
 	ld	e, -80
 	call	__fcmp
-	jp	p, BB43_2
+	jp	p, BB45_2
 	ld	a, 48
 	lea	hl, iy
 	ld	e, d
 	ld	bc, -7770017
 	call	__fcmp
-	jp	m, BB43_3
-BB43_2:
+	jp	m, BB45_3
+BB45_2:
 	ld	hl, (ix + 9)
 	ld	bc, (hl)
 	lea	hl, iy
@@ -3182,13 +3623,13 @@ BB43_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB43_4
-BB43_3:
-	ld	de, _.str.171
+	jr	BB45_4
+BB45_3:
+	ld	de, _.str.162
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB43_4:
+BB45_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -3215,14 +3656,14 @@ _solve_g_from_delta_ep_m_h:
 	ld	hl, -7770017
 	ld	e, -80
 	call	__fcmp
-	jp	p, BB44_2
+	jp	p, BB46_2
 	ld	a, 48
 	lea	hl, iy
 	ld	e, d
 	ld	bc, -7770017
 	call	__fcmp
-	jp	m, BB44_3
-BB44_2:
+	jp	m, BB46_3
+BB46_2:
 	ld	hl, (ix + 9)
 	ld	bc, (hl)
 	lea	hl, iy
@@ -3232,13 +3673,13 @@ BB44_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB44_4
-BB44_3:
-	ld	de, _.str.172
+	jr	BB46_4
+BB46_3:
+	ld	de, _.str.163
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB44_4:
+BB46_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -3265,14 +3706,14 @@ _solve_h_from_delta_ep_m_g:
 	ld	hl, -7770017
 	ld	e, -80
 	call	__fcmp
-	jp	p, BB45_2
+	jp	p, BB47_2
 	ld	a, 48
 	lea	hl, iy
 	ld	e, d
 	ld	bc, -7770017
 	call	__fcmp
-	jp	m, BB45_3
-BB45_2:
+	jp	m, BB47_3
+BB47_2:
 	ld	hl, (ix + 9)
 	ld	bc, (hl)
 	lea	hl, iy
@@ -3282,13 +3723,13 @@ BB45_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB45_4
-BB45_3:
-	ld	de, _.str.173
+	jr	BB47_4
+BB47_3:
+	ld	de, _.str.164
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB45_4:
+BB47_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -3335,14 +3776,14 @@ _solve_f_from_power_v:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB47_2
+	jp	p, BB49_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB47_3
-BB47_2:
+	jp	m, BB49_3
+BB49_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -3351,13 +3792,13 @@ BB47_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB47_4
-BB47_3:
-	ld	de, _.str.95
+	jr	BB49_4
+BB49_3:
+	ld	de, _.str.104
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB47_4:
+BB49_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -3384,14 +3825,14 @@ _solve_v_from_power_f:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB48_2
+	jp	p, BB50_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB48_3
-BB48_2:
+	jp	m, BB50_3
+BB50_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -3400,132 +3841,13 @@ BB48_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB48_4
-BB48_3:
-	ld	de, _.str.155
+	jr	BB50_4
+BB50_3:
+	ld	de, _.str.150
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB48_4:
-	ld	iy, (ix + 6)
-	ld	(iy), l
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_pavg_from_w_t
-_solve_pavg_from_w_t:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, -7770017
-	ld	e, -80
-	ld	bc, (iy + 4)
-	ld	d, (iy + 7)
-	push	hl
-	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB49_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
-	lea	bc, iy
-	call	__fcmp
-	jp	m, BB49_3
-BB49_2:
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	a, (iy + 3)
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB49_4
-BB49_3:
-	ld	de, _.str.94
-	ld	l, 0
-	ld	a, l
-	ld	bc, 0
-BB49_4:
-	ld	iy, (ix + 6)
-	ld	(iy), l
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_w_from_pavg_t
-_solve_w_from_pavg_t:
-	call	__frameset0
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	hl, (iy + 4)
-	ld	a, (iy + 3)
-	ld	e, (iy + 7)
-	call	__fmul
-	ld	iy, (ix + 6)
-	ld	(iy), 1
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	hl, 0
-	ld	(iy + 5), hl
-	lea	hl, iy
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_t_from_pavg_w
-_solve_t_from_pavg_w:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, -7770017
-	ld	e, -80
-	ld	bc, (iy)
-	ld	d, (iy + 3)
-	push	hl
-	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB51_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
-	lea	bc, iy
-	call	__fcmp
-	jp	m, BB51_3
-BB51_2:
-	ld	iy, (ix + 9)
-	ld	bc, (iy + 4)
-	ld	a, (iy + 7)
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB51_4
-BB51_3:
-	ld	de, _.str.164
-	ld	l, 0
-	ld	a, l
-	ld	bc, 0
-BB51_4:
+BB50_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -3589,14 +3911,14 @@ _solve_m_from_ek_v:
 	ld	hl, -7770017
 	ld	e, -80
 	call	__fcmp
-	jp	p, BB53_2
+	jp	p, BB52_2
 	ld	a, 48
 	lea	hl, iy
 	ld	e, d
 	ld	bc, -7770017
 	call	__fcmp
-	jp	m, BB53_3
-BB53_2:
+	jp	m, BB52_3
+BB52_2:
 	ld	e, 64
 	ld	hl, (ix + 9)
 	ld	bc, (hl)
@@ -3612,13 +3934,13 @@ BB53_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB53_4
-BB53_3:
-	ld	de, _.str.95
+	jr	BB52_4
+BB52_3:
+	ld	de, _.str.104
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB53_4:
+BB52_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -3643,14 +3965,14 @@ _solve_v_from_ek_m:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB54_2
+	jp	p, BB53_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	ld	bc, -7770017
 	call	__fcmp
-	jp	m, BB54_5
-BB54_2:
+	jp	m, BB53_5
+BB53_2:
 	ld	e, 64
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
@@ -3667,7 +3989,7 @@ BB54_2:
 	ld	bc, -7770017
 	ld	a, -80
 	call	__fcmp
-	jp	m, BB54_4
+	jp	m, BB53_4
 	push	de
 	push	hl
 	call	_sqrt
@@ -3675,22 +3997,181 @@ BB54_2:
 	pop	bc
 	pop	bc
 	ld	bc, 0
-	jr	BB54_7
-BB54_4:
-	ld	bc, _.str.109
-	jr	BB54_6
-BB54_5:
-	ld	bc, _.str.147
-BB54_6:
+	jr	BB53_7
+BB53_4:
+	ld	bc, _.str.98
+	jr	BB53_6
+BB53_5:
+	ld	bc, _.str.145
+BB53_6:
 	xor	a, a
 	ld	e, a
 	sbc	hl, hl
-BB54_7:
+BB53_7:
 	ld	iy, (ix + 6)
 	ld	(iy), a
 	ld	(iy + 1), hl
 	ld	(iy + 4), e
 	ld	(iy + 5), bc
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_w_from_delta_ek
+_solve_w_from_delta_ek:
+	call	__frameset0
+	ld	bc, (ix + 6)
+	ld	iy, (ix + 9)
+	ld	de, (iy)
+	ld	a, (iy + 3)
+	push	bc
+	pop	iy
+	ld	(iy), 1
+	ld	(iy + 1), de
+	ld	(iy + 4), a
+	ld	hl, 0
+	ld	(iy + 5), hl
+	lea	hl, iy
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_delta_ek_from_w
+_solve_delta_ek_from_w:
+	call	__frameset0
+	ld	bc, (ix + 6)
+	ld	iy, (ix + 9)
+	ld	de, (iy)
+	ld	a, (iy + 3)
+	push	bc
+	pop	iy
+	ld	(iy), 1
+	ld	(iy + 1), de
+	ld	(iy + 4), a
+	ld	hl, 0
+	ld	(iy + 5), hl
+	lea	hl, iy
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_p_from_m_v
+_solve_p_from_m_v:
+	call	__frameset0
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	hl, (iy + 4)
+	ld	a, (iy + 3)
+	ld	e, (iy + 7)
+	call	__fmul
+	ld	iy, (ix + 6)
+	ld	(iy), 1
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	hl, 0
+	ld	(iy + 5), hl
+	lea	hl, iy
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_m_from_p_v
+_solve_m_from_p_v:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 4)
+	ld	d, (iy + 7)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB57_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB57_3
+BB57_2:
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB57_4
+BB57_3:
+	ld	de, _.str.104
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB57_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_v_from_p_m
+_solve_v_from_p_m:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 4)
+	ld	d, (iy + 7)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB58_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB58_3
+BB58_2:
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB58_4
+BB58_3:
+	ld	de, _.str.145
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB58_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
 	lea	hl, iy
 	ld	sp, ix
 	pop	ix
@@ -3733,14 +4214,14 @@ _solve_m_from_f_a:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB56_2
+	jp	p, BB60_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB56_3
-BB56_2:
+	jp	m, BB60_3
+BB60_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -3749,13 +4230,13 @@ BB56_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB56_4
-BB56_3:
-	ld	de, _.str.99
+	jr	BB60_4
+BB60_3:
+	ld	de, _.str.95
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB56_4:
+BB60_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -3782,14 +4263,14 @@ _solve_a_from_f_m:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB57_2
+	jp	p, BB61_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB57_3
-BB57_2:
+	jp	m, BB61_3
+BB61_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -3798,13 +4279,13 @@ BB57_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB57_4
-BB57_3:
-	ld	de, _.str.147
+	jr	BB61_4
+BB61_3:
+	ld	de, _.str.145
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB57_4:
+BB61_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -3817,68 +4298,74 @@ BB57_4:
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
-	private	_solve_p_from_m_v
-_solve_p_from_m_v:
-	call	__frameset0
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	hl, (iy + 4)
-	ld	a, (iy + 3)
-	ld	e, (iy + 7)
-	call	__fmul
-	ld	iy, (ix + 6)
-	ld	(iy), 1
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	hl, 0
-	ld	(iy + 5), hl
-	lea	hl, iy
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_m_from_p_v
-_solve_m_from_p_v:
-	ld	hl, -3
+	private	_solve_freq_from_period
+_solve_freq_from_period:
+	ld	hl, -2
 	call	__frameset
 	ld	iy, (ix + 9)
-	ld	hl, -7770017
+	ld	bc, -7770017
 	ld	e, -80
-	ld	bc, (iy + 4)
-	ld	d, (iy + 7)
+	ld	hl, (iy)
+	ld	a, (iy + 3)
 	push	hl
 	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB59_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
+	push	bc
+	pop	hl
 	lea	bc, iy
+	ld	(ix - 1), a
 	call	__fcmp
-	jp	m, BB59_3
-BB59_2:
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	a, (iy + 3)
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB59_4
-BB59_3:
-	ld	de, _.str.95
-	ld	l, 0
+	ld	d, 1
+	ld	a, 0
+	ld	l, d
+	jp	p, BB62_2
+	ld	l, a
+BB62_2:
+	ld	(ix - 2), l
+	lea	hl, iy
+	ld	e, (ix - 1)
+	ld	bc, -7770017
+	ld	a, 48
+	call	__fcmp
+	jp	p, BB62_4
+	ld	d, 0
+BB62_4:
+	ld	a, (ix - 2)
+	rrc	a
+	sbc	a, a
+	ld	l, a
+	rrc	d
+	sbc	a, a
+	ld	e, a
 	ld	a, l
+	or	a, e
+	ld	d, a
+	ld	bc, -8388608
+	ld	a, 63
+	lea	hl, iy
+	ld	e, (ix - 1)
+	call	__fdiv
+	ld	l, a
+	ld	a, d
+	and	a, 1
+	bit	0, d
+	jr	nz, BB62_6
 	ld	bc, 0
-BB59_4:
+BB62_6:
+	bit	0, d
+	jr	nz, BB62_8
+	ld	l, 0
+BB62_8:
 	ld	iy, (ix + 6)
-	ld	(iy), l
+	bit	0, d
+	jr	nz, BB62_10
+	ld	de, _.str.127
+	jr	BB62_11
+BB62_10:
+	ld	de, 0
+BB62_11:
+	ld	(iy), a
 	ld	(iy + 1), bc
-	ld	(iy + 4), a
+	ld	(iy + 4), l
 	ld	(iy + 5), de
 	lea	hl, iy
 	ld	sp, ix
@@ -3887,47 +4374,74 @@ BB59_4:
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
-	private	_solve_v_from_p_m
-_solve_v_from_p_m:
-	ld	hl, -3
+	private	_solve_period_from_freq
+_solve_period_from_freq:
+	ld	hl, -2
 	call	__frameset
 	ld	iy, (ix + 9)
-	ld	hl, -7770017
+	ld	bc, -7770017
 	ld	e, -80
-	ld	bc, (iy + 4)
-	ld	d, (iy + 7)
+	ld	hl, (iy)
+	ld	a, (iy + 3)
 	push	hl
 	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB60_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
+	push	bc
+	pop	hl
 	lea	bc, iy
+	ld	(ix - 1), a
 	call	__fcmp
-	jp	m, BB60_3
-BB60_2:
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	a, (iy + 3)
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB60_4
-BB60_3:
-	ld	de, _.str.147
-	ld	l, 0
+	ld	d, 1
+	ld	a, 0
+	ld	l, d
+	jp	p, BB63_2
+	ld	l, a
+BB63_2:
+	ld	(ix - 2), l
+	lea	hl, iy
+	ld	e, (ix - 1)
+	ld	bc, -7770017
+	ld	a, 48
+	call	__fcmp
+	jp	p, BB63_4
+	ld	d, 0
+BB63_4:
+	ld	a, (ix - 2)
+	rrc	a
+	sbc	a, a
+	ld	l, a
+	rrc	d
+	sbc	a, a
+	ld	e, a
 	ld	a, l
+	or	a, e
+	ld	d, a
+	ld	bc, -8388608
+	ld	a, 63
+	lea	hl, iy
+	ld	e, (ix - 1)
+	call	__fdiv
+	ld	l, a
+	ld	a, d
+	and	a, 1
+	bit	0, d
+	jr	nz, BB63_6
 	ld	bc, 0
-BB60_4:
+BB63_6:
+	bit	0, d
+	jr	nz, BB63_8
+	ld	l, 0
+BB63_8:
 	ld	iy, (ix + 6)
-	ld	(iy), l
+	bit	0, d
+	jr	nz, BB63_10
+	ld	de, _.str.142
+	jr	BB63_11
+BB63_10:
+	ld	de, 0
+BB63_11:
+	ld	(iy), a
 	ld	(iy + 1), bc
-	ld	(iy + 4), a
+	ld	(iy + 4), l
 	ld	(iy + 5), de
 	lea	hl, iy
 	ld	sp, ix
@@ -3975,6 +4489,464 @@ _solve_n_from_phi:
 	lea	hl, iy
 	pop	ix
 	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_n_from_omega0_alpha_t
+_solve_n_from_omega0_alpha_t:
+	ld	hl, -11
+	call	__frameset
+	ld	iy, (ix + 9)
+	or	a, a
+	sbc	hl, hl
+	ld	e, 63
+	ld	bc, (iy)
+	ld	(ix - 3), bc
+	ld	a, (iy + 3)
+	ld	(ix - 4), a
+	ld	bc, (iy + 8)
+	ld	(ix - 11), bc
+	ld	d, (iy + 11)
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	iy, (ix - 11)
+	lea	bc, iy
+	ld	a, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	e, a
+	lea	bc, iy
+	ld	a, d
+	call	__fmul
+	ld	(ix - 7), bc
+	ld	(ix - 8), a
+	ld	bc, (ix - 3)
+	ld	a, (ix - 4)
+	lea	hl, iy
+	ld	e, d
+	call	__fmul
+	ld	hl, (ix - 7)
+	ld	e, (ix - 8)
+	call	__fadd
+	ld	hl, -3600421
+	ld	e, 64
+	call	__fdiv
+	ld	iy, (ix + 6)
+	ld	(iy), 1
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	hl, 0
+	ld	(iy + 5), hl
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_omega0_from_n_alpha_t
+_solve_omega0_from_n_alpha_t:
+	ld	hl, -11
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 8)
+	ld	d, (iy + 11)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB67_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB67_3
+BB67_2:
+	ld	e, -65
+	ld	iy, (ix + 9)
+	ld	hl, (iy)
+	ld	(ix - 6), hl
+	ld	a, (iy + 3)
+	ld	(ix - 7), a
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	or	a, a
+	sbc	hl, hl
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	iy, (ix - 3)
+	lea	bc, iy
+	ld	a, d
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	e, a
+	lea	bc, iy
+	ld	a, d
+	call	__fmul
+	ld	(ix - 10), bc
+	ld	(ix - 11), a
+	ld	bc, (ix - 6)
+	ld	a, (ix - 7)
+	ld	hl, -3600421
+	ld	e, 64
+	call	__fmul
+	ld	hl, (ix - 10)
+	ld	e, (ix - 11)
+	call	__fadd
+	lea	hl, iy
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB67_4
+BB67_3:
+	ld	de, _.str.94
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB67_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_alpha_from_n_omega0_t
+_solve_alpha_from_n_omega0_t:
+	ld	hl, -11
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	bc, (iy + 8)
+	ld	d, (iy + 11)
+	push	hl
+	pop	iy
+	ld	a, d
+	ld	(ix - 7), bc
+	push	bc
+	pop	hl
+	ld	e, d
+	call	__fmul
+	lea	hl, iy
+	ld	e, -80
+	ld	(ix - 3), bc
+	ld	(ix - 4), a
+	call	__fcmp
+	jp	p, BB68_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, (ix - 4)
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB68_3
+BB68_2:
+	ld	iy, (ix + 9)
+	ld	hl, (iy)
+	ld	(ix - 10), hl
+	ld	a, (iy + 3)
+	ld	(ix - 11), a
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	call	__fneg
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	bc, (ix - 7)
+	ld	a, d
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	bc, (ix - 10)
+	ld	a, (ix - 11)
+	ld	hl, -3600421
+	ld	e, 64
+	call	__fmul
+	lea	hl, iy
+	ld	e, d
+	call	__fadd
+	or	a, a
+	sbc	hl, hl
+	ld	e, 64
+	call	__fmul
+	ld	hl, (ix - 3)
+	ld	e, (ix - 4)
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB68_4
+BB68_3:
+	ld	de, _.str.94
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB68_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_t_from_n_omega0_alpha
+_solve_t_from_n_omega0_alpha:
+	ld	hl, -12
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -3600421
+	ld	e, 64
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	call	__fmul
+	ld	(ix - 12), bc
+	ld	(ix - 9), a
+	ld	hl, (iy + 4)
+	ld	a, (iy + 7)
+	ld	(ix - 8), hl
+	ld	(ix - 5), a
+	ld	hl, (iy + 8)
+	ld	a, (iy + 11)
+	ld	(ix - 4), hl
+	ld	(ix - 1), a
+	pea	ix - 12
+	ld	hl, (ix + 6)
+	push	hl
+	call	_solve_t_from_phi_omega0_alpha
+	pop	hl
+	pop	hl
+	ld	hl, (ix + 6)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_t_from_phi_omega0_alpha
+_solve_t_from_phi_omega0_alpha:
+	ld	hl, -18
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	e, 64
+	ld	bc, (iy + 8)
+	ld	(ix - 8), bc
+	ld	a, (iy + 11)
+	lea	hl, iy
+	ld	(ix - 1), a
+	ld	iy, (iy + 4)
+	ld	(ix - 5), iy
+	push	hl
+	pop	iy
+	ld	d, (iy + 7)
+	ld	(ix - 2), d
+	ld	hl, (iy)
+	ld	(ix - 11), hl
+	ld	d, (iy + 3)
+	ld	(ix - 12), d
+	or	a, a
+	sbc	hl, hl
+	call	__fmul
+	ld	hl, (ix - 11)
+	ld	e, (ix - 12)
+	call	__fmul
+	push	bc
+	pop	iy
+	ld	(ix - 15), a
+	ld	bc, (ix - 5)
+	ld	a, (ix - 2)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	lea	hl, iy
+	ld	e, (ix - 15)
+	ld	d, -80
+	call	__fadd
+	ld	(ix - 15), bc
+	ld	l, a
+	ld	(ix - 18), hl
+	ld	hl, -7770017
+	ld	e, d
+	ld	bc, (ix - 8)
+	push	bc
+	pop	iy
+	ld	a, (ix - 1)
+	ld	d, a
+	call	__fcmp
+	jp	p, BB70_5
+	ld	a, 48
+	lea	hl, iy
+	ld	e, d
+	ld	bc, -7770017
+	call	__fcmp
+	jp	p, BB70_5
+	ld	hl, -7770017
+	ld	e, -80
+	ld	iy, (ix - 5)
+	lea	bc, iy
+	ld	d, (ix - 2)
+	ld	a, d
+	call	__fcmp
+	push	hl
+	pop	bc
+	jp	p, BB70_4
+	lea	hl, iy
+	ld	e, d
+	ld	a, 48
+	call	__fcmp
+	jp	m, BB70_26
+BB70_4:
+	ld	e, d
+	ld	d, 1
+	ld	bc, (ix - 11)
+	ld	a, (ix - 12)
+	lea	hl, iy
+	call	__fdiv
+	ld	iy, (ix + 6)
+	ld	hl, 0
+	jp	BB70_25
+BB70_5:
+	ld	hl, (ix - 15)
+	ld	de, (ix - 18)
+	ld	bc, -7770017
+	ld	a, -80
+	call	__fcmp
+	jp	m, BB70_8
+	push	de
+	push	hl
+	call	_sqrt
+	push	hl
+	pop	iy
+	ld	(ix - 15), iy
+	ld	d, e
+	pop	hl
+	pop	hl
+	ld	hl, (ix - 5)
+	push	hl
+	pop	bc
+	ld	e, (ix - 2)
+	ld	a, e
+	call	__fneg
+	ld	(ix - 11), bc
+	ld	(ix - 12), a
+	lea	bc, iy
+	ld	a, d
+	call	__fsub
+	ld	iy, (ix - 8)
+	lea	hl, iy
+	ld	e, (ix - 1)
+	call	__fdiv
+	ld	(ix - 5), bc
+	ld	(ix - 2), a
+	ld	bc, (ix - 11)
+	ld	a, (ix - 12)
+	ld	hl, (ix - 15)
+	ld	e, d
+	call	__fsub
+	lea	hl, iy
+	ld	e, (ix - 1)
+	call	__fdiv
+	push	bc
+	pop	iy
+	ld	d, a
+	ld	hl, (ix - 5)
+	ld	e, (ix - 2)
+	ld	bc, -7770017
+	ld	a, -80
+	call	__fcmp
+	jp	m, BB70_10
+	ld	l, 0
+	jr	BB70_11
+BB70_8:
+	ld	hl, _.str.98
+BB70_9:
+	xor	a, a
+	ld	d, a
+	ld	iy, (ix + 6)
+	ld	bc, 0
+	jr	BB70_25
+BB70_10:
+	ld	l, 1
+BB70_11:
+	ld	e, d
+	ld	a, -80
+	bit	0, l
+	jr	nz, BB70_13
+	ld	iy, (ix - 5)
+BB70_13:
+	bit	0, l
+	jr	nz, BB70_15
+	ld	e, (ix - 2)
+BB70_15:
+	ld	(ix - 2), e
+	lea	hl, iy
+	ld	bc, -7770017
+	call	__fcmp
+	ld	d, 1
+	ld	e, 0
+	ld	l, d
+	jp	m, BB70_17
+	ld	l, e
+BB70_17:
+	ld	(ix - 1), l
+	ld	(ix - 5), iy
+	lea	hl, iy
+	ld	e, (ix - 2)
+	ld	iyh, e
+	call	__fcmp
+	jp	p, BB70_19
+	ld	d, 0
+BB70_19:
+	ld	e, (ix - 1)
+	bit	0, e
+	ld	hl, 0
+	ld	bc, 0
+	ld	a, b
+	jr	nz, BB70_21
+	ld	bc, (ix - 5)
+BB70_21:
+	bit	0, e
+	jr	nz, BB70_23
+	ld	a, iyh
+BB70_23:
+	bit	0, e
+	ld	iy, (ix + 6)
+	jr	z, BB70_25
+	ld	hl, _.str.99
+BB70_25:
+	ld	(iy), d
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), hl
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+BB70_26:
+	ld	hl, _.str.97
+	jp	BB70_9
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
@@ -4046,14 +5018,14 @@ _solve_omega0_from_phi_alpha_t:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB64_2
+	jp	p, BB72_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB64_3
-BB64_2:
+	jp	m, BB72_3
+BB72_2:
 	ld	e, -65
 	ld	iy, (ix + 9)
 	ld	hl, (iy)
@@ -4083,13 +5055,13 @@ BB64_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB64_4
-BB64_3:
+	jr	BB72_4
+BB72_3:
 	ld	de, _.str.94
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB64_4:
+BB72_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -4123,14 +5095,14 @@ _solve_alpha_from_phi_omega0_t:
 	ld	(ix - 3), bc
 	ld	(ix - 4), a
 	call	__fcmp
-	jp	p, BB65_2
+	jp	p, BB73_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, (ix - 4)
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB65_3
-BB65_2:
+	jp	m, BB73_3
+BB73_2:
 	ld	iy, (ix + 9)
 	ld	hl, (iy)
 	ld	(ix - 10), hl
@@ -4154,13 +5126,13 @@ BB65_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB65_4
-BB65_3:
+	jr	BB73_4
+BB73_3:
 	ld	de, _.str.94
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB65_4:
+BB73_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -4170,212 +5142,6 @@ BB65_4:
 	ld	sp, ix
 	pop	ix
 	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_t_from_phi_omega0_alpha
-_solve_t_from_phi_omega0_alpha:
-	ld	hl, -18
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	e, 64
-	ld	bc, (iy + 8)
-	ld	(ix - 8), bc
-	ld	a, (iy + 11)
-	lea	hl, iy
-	ld	(ix - 1), a
-	ld	iy, (iy + 4)
-	ld	(ix - 5), iy
-	push	hl
-	pop	iy
-	ld	d, (iy + 7)
-	ld	(ix - 2), d
-	ld	hl, (iy)
-	ld	(ix - 11), hl
-	ld	d, (iy + 3)
-	ld	(ix - 12), d
-	or	a, a
-	sbc	hl, hl
-	call	__fmul
-	ld	hl, (ix - 11)
-	ld	e, (ix - 12)
-	call	__fmul
-	push	bc
-	pop	iy
-	ld	(ix - 15), a
-	ld	bc, (ix - 5)
-	ld	a, (ix - 2)
-	push	bc
-	pop	hl
-	ld	e, a
-	call	__fmul
-	lea	hl, iy
-	ld	e, (ix - 15)
-	ld	d, -80
-	call	__fadd
-	ld	(ix - 15), bc
-	ld	l, a
-	ld	(ix - 18), hl
-	ld	hl, -7770017
-	ld	e, d
-	ld	bc, (ix - 8)
-	push	bc
-	pop	iy
-	ld	a, (ix - 1)
-	ld	d, a
-	call	__fcmp
-	jp	p, BB66_5
-	ld	a, 48
-	lea	hl, iy
-	ld	e, d
-	ld	bc, -7770017
-	call	__fcmp
-	jp	p, BB66_5
-	ld	hl, -7770017
-	ld	e, -80
-	ld	iy, (ix - 5)
-	lea	bc, iy
-	ld	d, (ix - 2)
-	ld	a, d
-	call	__fcmp
-	push	hl
-	pop	bc
-	jp	p, BB66_4
-	lea	hl, iy
-	ld	e, d
-	ld	a, 48
-	call	__fcmp
-	jp	m, BB66_26
-BB66_4:
-	ld	e, d
-	ld	d, 1
-	ld	bc, (ix - 11)
-	ld	a, (ix - 12)
-	lea	hl, iy
-	call	__fdiv
-	ld	iy, (ix + 6)
-	ld	hl, 0
-	jp	BB66_25
-BB66_5:
-	ld	hl, (ix - 15)
-	ld	de, (ix - 18)
-	ld	bc, -7770017
-	ld	a, -80
-	call	__fcmp
-	jp	m, BB66_8
-	push	de
-	push	hl
-	call	_sqrt
-	push	hl
-	pop	iy
-	ld	(ix - 15), iy
-	ld	d, e
-	pop	hl
-	pop	hl
-	ld	hl, (ix - 5)
-	push	hl
-	pop	bc
-	ld	e, (ix - 2)
-	ld	a, e
-	call	__fneg
-	ld	(ix - 11), bc
-	ld	(ix - 12), a
-	lea	bc, iy
-	ld	a, d
-	call	__fsub
-	ld	iy, (ix - 8)
-	lea	hl, iy
-	ld	e, (ix - 1)
-	call	__fdiv
-	ld	(ix - 5), bc
-	ld	(ix - 2), a
-	ld	bc, (ix - 11)
-	ld	a, (ix - 12)
-	ld	hl, (ix - 15)
-	ld	e, d
-	call	__fsub
-	lea	hl, iy
-	ld	e, (ix - 1)
-	call	__fdiv
-	push	bc
-	pop	iy
-	ld	d, a
-	ld	hl, (ix - 5)
-	ld	e, (ix - 2)
-	ld	bc, -7770017
-	ld	a, -80
-	call	__fcmp
-	jp	m, BB66_10
-	ld	l, 0
-	jr	BB66_11
-BB66_8:
-	ld	hl, _.str.109
-BB66_9:
-	xor	a, a
-	ld	d, a
-	ld	iy, (ix + 6)
-	ld	bc, 0
-	jr	BB66_25
-BB66_10:
-	ld	l, 1
-BB66_11:
-	ld	e, d
-	ld	a, -80
-	bit	0, l
-	jr	nz, BB66_13
-	ld	iy, (ix - 5)
-BB66_13:
-	bit	0, l
-	jr	nz, BB66_15
-	ld	e, (ix - 2)
-BB66_15:
-	ld	(ix - 2), e
-	lea	hl, iy
-	ld	bc, -7770017
-	call	__fcmp
-	ld	d, 1
-	ld	e, 0
-	ld	l, d
-	jp	m, BB66_17
-	ld	l, e
-BB66_17:
-	ld	(ix - 1), l
-	ld	(ix - 5), iy
-	lea	hl, iy
-	ld	e, (ix - 2)
-	ld	iyh, e
-	call	__fcmp
-	jp	p, BB66_19
-	ld	d, 0
-BB66_19:
-	ld	e, (ix - 1)
-	bit	0, e
-	ld	hl, 0
-	ld	bc, 0
-	ld	a, b
-	jr	nz, BB66_21
-	ld	bc, (ix - 5)
-BB66_21:
-	bit	0, e
-	jr	nz, BB66_23
-	ld	a, iyh
-BB66_23:
-	bit	0, e
-	ld	iy, (ix + 6)
-	jr	z, BB66_25
-	ld	hl, _.str.110
-BB66_25:
-	ld	(iy), d
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), hl
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-BB66_26:
-	ld	hl, _.str.108
-	jp	BB66_9
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
@@ -4398,18 +5164,18 @@ _solve_omega_from_t_period:
 	ld	d, 1
 	ld	a, 0
 	ld	l, d
-	jp	p, BB67_2
+	jp	p, BB74_2
 	ld	l, a
-BB67_2:
+BB74_2:
 	ld	(ix - 2), l
 	lea	hl, iy
 	ld	e, (ix - 1)
 	ld	bc, -7770017
 	ld	a, 48
 	call	__fcmp
-	jp	p, BB67_4
+	jp	p, BB74_4
 	ld	d, 0
-BB67_4:
+BB74_4:
 	ld	a, (ix - 2)
 	rrc	a
 	sbc	a, a
@@ -4429,21 +5195,21 @@ BB67_4:
 	ld	a, d
 	and	a, 1
 	bit	0, d
-	jr	nz, BB67_6
+	jr	nz, BB74_6
 	ld	bc, 0
-BB67_6:
+BB74_6:
 	bit	0, d
-	jr	nz, BB67_8
+	jr	nz, BB74_8
 	ld	l, 0
-BB67_8:
+BB74_8:
 	ld	iy, (ix + 6)
 	bit	0, d
-	jr	nz, BB67_10
-	ld	de, _.str.131
-	jr	BB67_11
-BB67_10:
+	jr	nz, BB74_10
+	ld	de, _.str.127
+	jr	BB74_11
+BB74_10:
 	ld	de, 0
-BB67_11:
+BB74_11:
 	ld	(iy), a
 	ld	(iy + 1), bc
 	ld	(iy + 4), l
@@ -4474,18 +5240,18 @@ _solve_period_from_omega:
 	ld	d, 1
 	ld	a, 0
 	ld	l, d
-	jp	p, BB68_2
+	jp	p, BB75_2
 	ld	l, a
-BB68_2:
+BB75_2:
 	ld	(ix - 2), l
 	lea	hl, iy
 	ld	e, (ix - 1)
 	ld	bc, -7770017
 	ld	a, 48
 	call	__fcmp
-	jp	p, BB68_4
+	jp	p, BB75_4
 	ld	d, 0
-BB68_4:
+BB75_4:
 	ld	a, (ix - 2)
 	rrc	a
 	sbc	a, a
@@ -4505,21 +5271,21 @@ BB68_4:
 	ld	a, d
 	and	a, 1
 	bit	0, d
-	jr	nz, BB68_6
+	jr	nz, BB75_6
 	ld	bc, 0
-BB68_6:
+BB75_6:
 	bit	0, d
-	jr	nz, BB68_8
+	jr	nz, BB75_8
 	ld	l, 0
-BB68_8:
+BB75_8:
 	ld	iy, (ix + 6)
 	bit	0, d
-	jr	nz, BB68_10
-	ld	de, _.str.117
-	jr	BB68_11
-BB68_10:
+	jr	nz, BB75_10
+	ld	de, _.str.114
+	jr	BB75_11
+BB75_10:
 	ld	de, 0
-BB68_11:
+BB75_11:
 	ld	(iy), a
 	ld	(iy + 1), bc
 	ld	(iy + 4), l
@@ -4573,309 +5339,6 @@ _solve_f_from_omega:
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
-	private	_solve_freq_from_period
-_solve_freq_from_period:
-	ld	hl, -2
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	bc, -7770017
-	ld	e, -80
-	ld	hl, (iy)
-	ld	a, (iy + 3)
-	push	hl
-	pop	iy
-	push	bc
-	pop	hl
-	lea	bc, iy
-	ld	(ix - 1), a
-	call	__fcmp
-	ld	d, 1
-	ld	a, 0
-	ld	l, d
-	jp	p, BB71_2
-	ld	l, a
-BB71_2:
-	ld	(ix - 2), l
-	lea	hl, iy
-	ld	e, (ix - 1)
-	ld	bc, -7770017
-	ld	a, 48
-	call	__fcmp
-	jp	p, BB71_4
-	ld	d, 0
-BB71_4:
-	ld	a, (ix - 2)
-	rrc	a
-	sbc	a, a
-	ld	l, a
-	rrc	d
-	sbc	a, a
-	ld	e, a
-	ld	a, l
-	or	a, e
-	ld	d, a
-	ld	bc, -8388608
-	ld	a, 63
-	lea	hl, iy
-	ld	e, (ix - 1)
-	call	__fdiv
-	ld	l, a
-	ld	a, d
-	and	a, 1
-	bit	0, d
-	jr	nz, BB71_6
-	ld	bc, 0
-BB71_6:
-	bit	0, d
-	jr	nz, BB71_8
-	ld	l, 0
-BB71_8:
-	ld	iy, (ix + 6)
-	bit	0, d
-	jr	nz, BB71_10
-	ld	de, _.str.131
-	jr	BB71_11
-BB71_10:
-	ld	de, 0
-BB71_11:
-	ld	(iy), a
-	ld	(iy + 1), bc
-	ld	(iy + 4), l
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_period_from_freq
-_solve_period_from_freq:
-	ld	hl, -2
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	bc, -7770017
-	ld	e, -80
-	ld	hl, (iy)
-	ld	a, (iy + 3)
-	push	hl
-	pop	iy
-	push	bc
-	pop	hl
-	lea	bc, iy
-	ld	(ix - 1), a
-	call	__fcmp
-	ld	d, 1
-	ld	a, 0
-	ld	l, d
-	jp	p, BB72_2
-	ld	l, a
-BB72_2:
-	ld	(ix - 2), l
-	lea	hl, iy
-	ld	e, (ix - 1)
-	ld	bc, -7770017
-	ld	a, 48
-	call	__fcmp
-	jp	p, BB72_4
-	ld	d, 0
-BB72_4:
-	ld	a, (ix - 2)
-	rrc	a
-	sbc	a, a
-	ld	l, a
-	rrc	d
-	sbc	a, a
-	ld	e, a
-	ld	a, l
-	or	a, e
-	ld	d, a
-	ld	bc, -8388608
-	ld	a, 63
-	lea	hl, iy
-	ld	e, (ix - 1)
-	call	__fdiv
-	ld	l, a
-	ld	a, d
-	and	a, 1
-	bit	0, d
-	jr	nz, BB72_6
-	ld	bc, 0
-BB72_6:
-	bit	0, d
-	jr	nz, BB72_8
-	ld	l, 0
-BB72_8:
-	ld	iy, (ix + 6)
-	bit	0, d
-	jr	nz, BB72_10
-	ld	de, _.str.132
-	jr	BB72_11
-BB72_10:
-	ld	de, 0
-BB72_11:
-	ld	(iy), a
-	ld	(iy + 1), bc
-	ld	(iy + 4), l
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_ac_from_v_r
-_solve_ac_from_v_r:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, -7770017
-	ld	e, -80
-	ld	bc, (iy + 4)
-	ld	d, (iy + 7)
-	push	hl
-	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB73_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
-	lea	bc, iy
-	call	__fcmp
-	jp	m, BB73_3
-BB73_2:
-	ld	hl, (ix + 9)
-	push	hl
-	pop	iy
-	ld	bc, (iy)
-	ld	a, (iy + 3)
-	push	bc
-	pop	hl
-	ld	e, a
-	call	__fmul
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB73_4
-BB73_3:
-	ld	de, _.str.121
-	ld	l, 0
-	ld	a, l
-	ld	bc, 0
-BB73_4:
-	ld	iy, (ix + 6)
-	ld	(iy), l
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_v_from_ac_r
-_solve_v_from_ac_r:
-	call	__frameset0
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	hl, (iy + 4)
-	ld	a, (iy + 3)
-	ld	e, (iy + 7)
-	call	__fmul
-	push	bc
-	pop	hl
-	ld	e, a
-	ld	bc, -7770017
-	ld	a, -80
-	call	__fcmp
-	jp	m, BB74_2
-	push	de
-	push	hl
-	call	_sqrt
-	ld	a, 1
-	pop	bc
-	pop	bc
-	ld	bc, 0
-	jr	BB74_3
-BB74_2:
-	ld	bc, _.str.109
-	xor	a, a
-	ld	e, a
-	sbc	hl, hl
-BB74_3:
-	ld	iy, (ix + 6)
-	ld	(iy), a
-	ld	(iy + 1), hl
-	ld	(iy + 4), e
-	ld	(iy + 5), bc
-	lea	hl, iy
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_r_from_ac_v
-_solve_r_from_ac_v:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, -7770017
-	ld	e, -80
-	ld	bc, (iy)
-	ld	d, (iy + 3)
-	push	hl
-	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB75_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
-	lea	bc, iy
-	call	__fcmp
-	jp	m, BB75_3
-BB75_2:
-	ld	hl, (ix + 9)
-	push	hl
-	pop	iy
-	ld	bc, (iy + 4)
-	ld	a, (iy + 7)
-	push	bc
-	pop	hl
-	ld	e, a
-	call	__fmul
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB75_4
-BB75_3:
-	ld	de, _.str.127
-	ld	l, 0
-	ld	a, l
-	ld	bc, 0
-BB75_4:
-	ld	iy, (ix + 6)
-	ld	(iy), l
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
 	private	_solve_at_from_r_alpha
 _solve_at_from_r_alpha:
 	call	__frameset0
@@ -4911,14 +5374,14 @@ _solve_r_from_at_alpha:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB77_2
+	jp	p, BB79_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB77_3
-BB77_2:
+	jp	m, BB79_3
+BB79_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -4927,13 +5390,13 @@ BB77_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB77_4
-BB77_3:
-	ld	de, _.str.124
+	jr	BB79_4
+BB79_3:
+	ld	de, _.str.121
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB77_4:
+BB79_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -4960,14 +5423,14 @@ _solve_alpha_from_at_r:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB78_2
+	jp	p, BB80_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB78_3
-BB78_2:
+	jp	m, BB80_3
+BB80_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -4976,13 +5439,164 @@ BB78_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB78_4
-BB78_3:
-	ld	de, _.str.121
+	jr	BB80_4
+BB80_3:
+	ld	de, _.str.115
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB78_4:
+BB80_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_ac_from_v_r
+_solve_ac_from_v_r:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 4)
+	ld	d, (iy + 7)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB81_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB81_3
+BB81_2:
+	ld	hl, (ix + 9)
+	push	hl
+	pop	iy
+	ld	bc, (iy)
+	ld	a, (iy + 3)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB81_4
+BB81_3:
+	ld	de, _.str.115
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB81_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_v_from_ac_r
+_solve_v_from_ac_r:
+	call	__frameset0
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	hl, (iy + 4)
+	ld	a, (iy + 3)
+	ld	e, (iy + 7)
+	call	__fmul
+	push	bc
+	pop	hl
+	ld	e, a
+	ld	bc, -7770017
+	ld	a, -80
+	call	__fcmp
+	jp	m, BB82_2
+	push	de
+	push	hl
+	call	_sqrt
+	ld	a, 1
+	pop	bc
+	pop	bc
+	ld	bc, 0
+	jr	BB82_3
+BB82_2:
+	ld	bc, _.str.98
+	xor	a, a
+	ld	e, a
+	sbc	hl, hl
+BB82_3:
+	ld	iy, (ix + 6)
+	ld	(iy), a
+	ld	(iy + 1), hl
+	ld	(iy + 4), e
+	ld	(iy + 5), bc
+	lea	hl, iy
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_r_from_ac_v
+_solve_r_from_ac_v:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy)
+	ld	d, (iy + 3)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB83_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB83_3
+BB83_2:
+	ld	hl, (ix + 9)
+	push	hl
+	pop	iy
+	ld	bc, (iy + 4)
+	ld	a, (iy + 7)
+	push	bc
+	pop	hl
+	ld	e, a
+	call	__fmul
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB83_4
+BB83_3:
+	ld	de, _.str.118
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB83_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -5030,14 +5644,14 @@ _solve_r_from_v_omega:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB80_2
+	jp	p, BB85_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB80_3
-BB80_2:
+	jp	m, BB85_3
+BB85_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -5046,13 +5660,13 @@ BB80_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB80_4
-BB80_3:
-	ld	de, _.str.117
+	jr	BB85_4
+BB85_3:
+	ld	de, _.str.114
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB80_4:
+BB85_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -5079,14 +5693,14 @@ _solve_omega_from_v_r:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB81_2
+	jp	p, BB86_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB81_3
-BB81_2:
+	jp	m, BB86_3
+BB86_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	a, (iy + 3)
@@ -5095,13 +5709,176 @@ BB81_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB81_4
-BB81_3:
-	ld	de, _.str.121
+	jr	BB86_4
+BB86_3:
+	ld	de, _.str.115
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB81_4:
+BB86_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_s_from_s0_v_t
+_solve_s_from_s0_v_t:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, (iy)
+	ld	(ix - 3), hl
+	ld	d, (iy + 3)
+	ld	bc, (iy + 4)
+	ld	hl, (iy + 8)
+	ld	a, (iy + 7)
+	ld	e, (iy + 11)
+	call	__fmul
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fadd
+	ld	iy, (ix + 6)
+	ld	(iy), 1
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	hl, 0
+	ld	(iy + 5), hl
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_s0_from_s_v_t
+_solve_s0_from_s_v_t:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, (iy)
+	ld	(ix - 3), hl
+	ld	d, (iy + 3)
+	ld	bc, (iy + 4)
+	ld	hl, (iy + 8)
+	ld	e, (iy + 11)
+	ld	a, (iy + 7)
+	call	__fneg
+	call	__fmul
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fadd
+	ld	iy, (ix + 6)
+	ld	(iy), 1
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	hl, 0
+	ld	(iy + 5), hl
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_v_from_s_s0_t
+_solve_v_from_s_s0_t:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 8)
+	ld	d, (iy + 11)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB89_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB89_3
+BB89_2:
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	hl, (iy + 4)
+	ld	a, (iy + 3)
+	ld	e, (iy + 7)
+	call	__fsub
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB89_4
+BB89_3:
+	ld	de, _.str.94
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB89_4:
+	ld	iy, (ix + 6)
+	ld	(iy), l
+	ld	(iy + 1), bc
+	ld	(iy + 4), a
+	ld	(iy + 5), de
+	lea	hl, iy
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	private	_solve_t_from_s_s0_v
+_solve_t_from_s_s0_v:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, (ix + 9)
+	ld	hl, -7770017
+	ld	e, -80
+	ld	bc, (iy + 8)
+	ld	d, (iy + 11)
+	push	hl
+	pop	iy
+	ld	(ix - 3), bc
+	ld	a, d
+	call	__fcmp
+	jp	p, BB90_2
+	ld	a, 48
+	ld	hl, (ix - 3)
+	ld	e, d
+	lea	bc, iy
+	call	__fcmp
+	jp	m, BB90_3
+BB90_2:
+	ld	iy, (ix + 9)
+	ld	bc, (iy)
+	ld	hl, (iy + 4)
+	ld	a, (iy + 3)
+	ld	e, (iy + 7)
+	call	__fsub
+	ld	hl, (ix - 3)
+	ld	e, d
+	call	__fdiv
+	ld	de, 0
+	ld	l, 1
+	jr	BB90_4
+BB90_3:
+	ld	de, _.str.104
+	ld	l, 0
+	ld	a, l
+	ld	bc, 0
+BB90_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -5149,7 +5926,7 @@ _solve_v_from_v0_a_s:
 	ld	bc, -7770017
 	ld	a, -80
 	call	__fcmp
-	jp	m, BB82_2
+	jp	m, BB91_2
 	push	de
 	push	hl
 	call	_sqrt
@@ -5157,13 +5934,13 @@ _solve_v_from_v0_a_s:
 	pop	bc
 	pop	bc
 	ld	bc, 0
-	jr	BB82_3
-BB82_2:
-	ld	bc, _.str.109
+	jr	BB91_3
+BB91_2:
+	ld	bc, _.str.98
 	xor	a, a
 	ld	e, a
 	sbc	hl, hl
-BB82_3:
+BB91_3:
 	ld	iy, (ix + 6)
 	ld	(iy), a
 	ld	(iy + 1), hl
@@ -5217,7 +5994,7 @@ _solve_v0_from_v_a_s:
 	ld	bc, -7770017
 	ld	a, -80
 	call	__fcmp
-	jp	m, BB83_2
+	jp	m, BB92_2
 	push	de
 	push	hl
 	call	_sqrt
@@ -5225,13 +6002,13 @@ _solve_v0_from_v_a_s:
 	pop	bc
 	pop	bc
 	ld	bc, 0
-	jr	BB83_3
-BB83_2:
-	ld	bc, _.str.109
+	jr	BB92_3
+BB92_2:
+	ld	bc, _.str.98
 	xor	a, a
 	ld	e, a
 	sbc	hl, hl
-BB83_3:
+BB92_3:
 	ld	iy, (ix + 6)
 	ld	(iy), a
 	ld	(iy + 1), hl
@@ -5260,14 +6037,14 @@ _solve_a_from_v_v0_s:
 	ld	e, -80
 	ld	(ix - 3), bc
 	call	__fcmp
-	jp	p, BB84_2
+	jp	p, BB93_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	ld	bc, -7770017
 	call	__fcmp
-	jp	m, BB84_3
-BB84_2:
+	jp	m, BB93_3
+BB93_2:
 	ld	iy, (ix + 9)
 	ld	hl, (iy)
 	ld	(ix - 7), hl
@@ -5306,13 +6083,13 @@ BB84_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB84_4
-BB84_3:
-	ld	de, _.str.113
+	jr	BB93_4
+BB93_3:
+	ld	de, _.str.101
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB84_4:
+BB93_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -5341,14 +6118,14 @@ _solve_s_from_v_v0_a:
 	ld	e, -80
 	ld	(ix - 3), bc
 	call	__fcmp
-	jp	p, BB85_2
+	jp	p, BB94_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	ld	bc, -7770017
 	call	__fcmp
-	jp	m, BB85_3
-BB85_2:
+	jp	m, BB94_3
+BB94_2:
 	ld	iy, (ix + 9)
 	ld	hl, (iy)
 	ld	(ix - 7), hl
@@ -5387,13 +6164,13 @@ BB85_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB85_4
-BB85_3:
-	ld	de, _.str.99
+	jr	BB94_4
+BB94_3:
+	ld	de, _.str.95
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB85_4:
+BB94_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -5474,14 +6251,14 @@ _solve_v0_from_s_t_a:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB87_2
+	jp	p, BB96_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB87_3
-BB87_2:
+	jp	m, BB96_3
+BB96_2:
 	ld	e, -65
 	ld	iy, (ix + 9)
 	ld	hl, (iy)
@@ -5511,13 +6288,13 @@ BB87_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB87_4
-BB87_3:
+	jr	BB96_4
+BB96_3:
 	ld	de, _.str.94
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB87_4:
+BB96_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -5551,14 +6328,14 @@ _solve_a_from_s_v0_t:
 	ld	(ix - 3), bc
 	ld	(ix - 4), a
 	call	__fcmp
-	jp	p, BB88_2
+	jp	p, BB97_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, (ix - 4)
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB88_3
-BB88_2:
+	jp	m, BB97_3
+BB97_2:
 	ld	iy, (ix + 9)
 	ld	hl, (iy)
 	ld	(ix - 10), hl
@@ -5582,13 +6359,13 @@ BB88_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB88_4
-BB88_3:
+	jr	BB97_4
+BB97_3:
 	ld	de, _.str.94
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB88_4:
+BB97_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -5652,13 +6429,13 @@ _solve_t_from_s_v0_a:
 	ld	a, (ix - 1)
 	ld	d, a
 	call	__fcmp
-	jp	p, BB89_5
+	jp	p, BB98_5
 	ld	a, 48
 	lea	hl, iy
 	ld	e, d
 	ld	bc, -7770017
 	call	__fcmp
-	jp	p, BB89_5
+	jp	p, BB98_5
 	ld	hl, -7770017
 	ld	e, -80
 	ld	iy, (ix - 5)
@@ -5668,13 +6445,13 @@ _solve_t_from_s_v0_a:
 	call	__fcmp
 	push	hl
 	pop	bc
-	jp	p, BB89_4
+	jp	p, BB98_4
 	lea	hl, iy
 	ld	e, d
 	ld	a, 48
 	call	__fcmp
-	jp	m, BB89_26
-BB89_4:
+	jp	m, BB98_26
+BB98_4:
 	ld	e, d
 	ld	d, 1
 	ld	bc, (ix - 11)
@@ -5683,14 +6460,14 @@ BB89_4:
 	call	__fdiv
 	ld	iy, (ix + 6)
 	ld	hl, 0
-	jp	BB89_25
-BB89_5:
+	jp	BB98_25
+BB98_5:
 	ld	hl, (ix - 15)
 	ld	de, (ix - 18)
 	ld	bc, -7770017
 	ld	a, -80
 	call	__fcmp
-	jp	m, BB89_8
+	jp	m, BB98_8
 	push	de
 	push	hl
 	call	_sqrt
@@ -5733,30 +6510,30 @@ BB89_5:
 	ld	bc, -7770017
 	ld	a, -80
 	call	__fcmp
-	jp	m, BB89_10
+	jp	m, BB98_10
 	ld	l, 0
-	jr	BB89_11
-BB89_8:
-	ld	hl, _.str.109
-BB89_9:
+	jr	BB98_11
+BB98_8:
+	ld	hl, _.str.98
+BB98_9:
 	xor	a, a
 	ld	d, a
 	ld	iy, (ix + 6)
 	ld	bc, 0
-	jr	BB89_25
-BB89_10:
+	jr	BB98_25
+BB98_10:
 	ld	l, 1
-BB89_11:
+BB98_11:
 	ld	e, d
 	ld	a, -80
 	bit	0, l
-	jr	nz, BB89_13
+	jr	nz, BB98_13
 	ld	iy, (ix - 5)
-BB89_13:
+BB98_13:
 	bit	0, l
-	jr	nz, BB89_15
+	jr	nz, BB98_15
 	ld	e, (ix - 2)
-BB89_15:
+BB98_15:
 	ld	(ix - 2), e
 	lea	hl, iy
 	ld	bc, -7770017
@@ -5764,35 +6541,35 @@ BB89_15:
 	ld	d, 1
 	ld	e, 0
 	ld	l, d
-	jp	m, BB89_17
+	jp	m, BB98_17
 	ld	l, e
-BB89_17:
+BB98_17:
 	ld	(ix - 1), l
 	ld	(ix - 5), iy
 	lea	hl, iy
 	ld	e, (ix - 2)
 	ld	iyh, e
 	call	__fcmp
-	jp	p, BB89_19
+	jp	p, BB98_19
 	ld	d, 0
-BB89_19:
+BB98_19:
 	ld	e, (ix - 1)
 	bit	0, e
 	ld	hl, 0
 	ld	bc, 0
 	ld	a, b
-	jr	nz, BB89_21
+	jr	nz, BB98_21
 	ld	bc, (ix - 5)
-BB89_21:
+BB98_21:
 	bit	0, e
-	jr	nz, BB89_23
+	jr	nz, BB98_23
 	ld	a, iyh
-BB89_23:
+BB98_23:
 	bit	0, e
 	ld	iy, (ix + 6)
-	jr	z, BB89_25
-	ld	hl, _.str.110
-BB89_25:
+	jr	z, BB98_25
+	ld	hl, _.str.99
+BB98_25:
 	ld	(iy), d
 	ld	(iy + 1), bc
 	ld	(iy + 4), a
@@ -5801,172 +6578,9 @@ BB89_25:
 	ld	sp, ix
 	pop	ix
 	ret
-BB89_26:
-	ld	hl, _.str.108
-	jp	BB89_9
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_s_from_s0_v_t
-_solve_s_from_s0_v_t:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, (iy)
-	ld	(ix - 3), hl
-	ld	d, (iy + 3)
-	ld	bc, (iy + 4)
-	ld	hl, (iy + 8)
-	ld	a, (iy + 7)
-	ld	e, (iy + 11)
-	call	__fmul
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fadd
-	ld	iy, (ix + 6)
-	ld	(iy), 1
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	hl, 0
-	ld	(iy + 5), hl
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_s0_from_s_v_t
-_solve_s0_from_s_v_t:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, (iy)
-	ld	(ix - 3), hl
-	ld	d, (iy + 3)
-	ld	bc, (iy + 4)
-	ld	hl, (iy + 8)
-	ld	e, (iy + 11)
-	ld	a, (iy + 7)
-	call	__fneg
-	call	__fmul
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fadd
-	ld	iy, (ix + 6)
-	ld	(iy), 1
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	hl, 0
-	ld	(iy + 5), hl
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_v_from_s_s0_t
-_solve_v_from_s_s0_t:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, -7770017
-	ld	e, -80
-	ld	bc, (iy + 8)
-	ld	d, (iy + 11)
-	push	hl
-	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB92_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
-	lea	bc, iy
-	call	__fcmp
-	jp	m, BB92_3
-BB92_2:
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	hl, (iy + 4)
-	ld	a, (iy + 3)
-	ld	e, (iy + 7)
-	call	__fsub
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB92_4
-BB92_3:
-	ld	de, _.str.94
-	ld	l, 0
-	ld	a, l
-	ld	bc, 0
-BB92_4:
-	ld	iy, (ix + 6)
-	ld	(iy), l
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
-	section	.text,"ax",@progbits
-
-	section	.text,"ax",@progbits
-	private	_solve_t_from_s_s0_v
-_solve_t_from_s_s0_v:
-	ld	hl, -3
-	call	__frameset
-	ld	iy, (ix + 9)
-	ld	hl, -7770017
-	ld	e, -80
-	ld	bc, (iy + 8)
-	ld	d, (iy + 11)
-	push	hl
-	pop	iy
-	ld	(ix - 3), bc
-	ld	a, d
-	call	__fcmp
-	jp	p, BB93_2
-	ld	a, 48
-	ld	hl, (ix - 3)
-	ld	e, d
-	lea	bc, iy
-	call	__fcmp
-	jp	m, BB93_3
-BB93_2:
-	ld	iy, (ix + 9)
-	ld	bc, (iy)
-	ld	hl, (iy + 4)
-	ld	a, (iy + 3)
-	ld	e, (iy + 7)
-	call	__fsub
-	ld	hl, (ix - 3)
-	ld	e, d
-	call	__fdiv
-	ld	de, 0
-	ld	l, 1
-	jr	BB93_4
-BB93_3:
-	ld	de, _.str.95
-	ld	l, 0
-	ld	a, l
-	ld	bc, 0
-BB93_4:
-	ld	iy, (ix + 6)
-	ld	(iy), l
-	ld	(iy + 1), bc
-	ld	(iy + 4), a
-	ld	(iy + 5), de
-	lea	hl, iy
-	ld	sp, ix
-	pop	ix
-	ret
+BB98_26:
+	ld	hl, _.str.97
+	jp	BB98_9
 	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
@@ -5984,14 +6598,14 @@ _solve_a_from_v_v0_t:
 	ld	(ix - 3), bc
 	ld	a, d
 	call	__fcmp
-	jp	p, BB94_2
+	jp	p, BB99_2
 	ld	a, 48
 	ld	hl, (ix - 3)
 	ld	e, d
 	lea	bc, iy
 	call	__fcmp
-	jp	m, BB94_3
-BB94_2:
+	jp	m, BB99_3
+BB99_2:
 	ld	iy, (ix + 9)
 	ld	bc, (iy)
 	ld	hl, (iy + 4)
@@ -6003,13 +6617,13 @@ BB94_2:
 	call	__fdiv
 	ld	de, 0
 	ld	l, 1
-	jr	BB94_4
-BB94_3:
+	jr	BB99_4
+BB99_3:
 	ld	de, _.str.94
 	ld	l, 0
 	ld	a, l
 	ld	bc, 0
-BB94_4:
+BB99_4:
 	ld	iy, (ix + 6)
 	ld	(iy), l
 	ld	(iy + 1), bc
@@ -6083,7 +6697,7 @@ _formula_variable_unit:
 	section	.text,"ax",@progbits
 	public	_formula_run
 _formula_run:
-	ld	hl, -137
+	ld	hl, -143
 	call	__frameset
 	ld	iy, (ix + 6)
 	xor	a, a
@@ -6093,7 +6707,7 @@ _formula_run:
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	jp	nz, BB99_37
+	jp	nz, BB104_39
 	lea	hl, ix - 30
 	ld	(ix - 119), hl
 	lea	hl, ix - 106
@@ -6107,11 +6721,11 @@ _formula_run:
 	push	de
 	pop	iy
 	push	ix
-	ld	de, -137
+	ld	de, -143
 	add	ix, de
 	ld	(ix), hl
 	pop	ix
-BB99_2:
+BB104_2:
 	ld	(ix - 42), 0
 	push	hl
 	pop	de
@@ -6125,13 +6739,13 @@ BB99_2:
 	ld	de, (ix - 119)
 	ld	(ix - 112), de
 	ld	iy, 0
-BB99_3:
+BB104_3:
 	push	hl
 	pop	de
 	lea	bc, iy
 	or	a, a
 	sbc	hl, bc
-	jr	z, BB99_5
+	jr	z, BB104_5
 	ld	(ix - 109), iy
 	ld	iy, (ix + 6)
 	ld	hl, (iy + 10)
@@ -6155,10 +6769,10 @@ BB99_3:
 	ld	(ix - 112), iy
 	ld	iy, (ix - 109)
 	ex	de, hl
-	jr	BB99_3
-BB99_5:
+	jr	BB104_3
+BB104_5:
 	ld	c, a
-BB99_6:
+BB104_6:
 	or	a, a
 	sbc	hl, hl
 	push	hl
@@ -6171,12 +6785,12 @@ BB99_6:
 	lea	iy, ix
 	add	iy, de
 	ld	(iy), a
-BB99_7:
+BB104_7:
 	ld	a, (ix - 116)
 	cp	a, c
-	jr	c, BB99_9
+	jr	c, BB104_9
 	ld	a, c
-BB99_9:
+BB104_9:
 	ld	l, a
 	ld	de, 5
 	add	hl, de
@@ -6184,12 +6798,12 @@ BB99_9:
 	ld	hl, (ix - 115)
 	or	a, a
 	sbc	hl, de
-	jr	c, BB99_11
+	jr	c, BB104_11
 	ld	bc, -134
 	lea	hl, ix
 	add	hl, bc
 	ld	a, (hl)
-BB99_11:
+BB104_11:
 	ld	(ix - 109), a
 	call	_io_clear_screen
 	ld	hl, (ix + 6)
@@ -6235,12 +6849,12 @@ BB99_11:
 	ld	a, 4
 	ld	c, a
 	ld	iy, 0
-BB99_12:
+BB104_12:
 	lea	hl, iy
 	ld	de, 15
 	or	a, a
 	sbc	hl, de
-	jp	z, BB99_17
+	jp	z, BB104_19
 	ld	(ix - 128), iy
 	ld	(ix - 125), bc
 	ld	iy, (ix + 6)
@@ -6252,39 +6866,79 @@ BB99_12:
 	pop	hl
 	or	a, a
 	sbc	hl, de
-	jr	nc, BB99_18
-	ld	de, (ix - 128)
-	ld	hl, (ix - 122)
-	add	hl, de
-	ld	de, (hl)
+	jp	nc, BB104_20
 	ld	hl, (ix - 115)
 	or	a, a
 	sbc	hl, bc
-	ld	hl, _.str.224
-	jr	z, BB99_16
-	ld	hl, _.str.225
-BB99_16:
-	push	de
+	ld	a, 62
+	jr	z, BB104_16
+	ld	a, 32
+BB104_16:
+	ld	(ix - 106), a
+	ld	(ix - 105), 32
+	ld	(ix - 104), 70
+	ld	(ix - 103), 105
+	ld	(ix - 102), 110
+	ld	(ix - 101), 100
+	ld	(ix - 100), 32
+	ld	de, (ix - 128)
+	ld	hl, (ix - 122)
+	add	hl, de
+	ld	hl, (hl)
+	ld	bc, -137
+	lea	iy, ix
+	add	iy, bc
+	ld	(iy), hl
 	push	hl
-	ld	hl, 28
+	call	_strlen
+	push	hl
+	pop	bc
+	pop	hl
+	push	bc
+	pop	hl
+	ld	de, 19
+	or	a, a
+	sbc	hl, de
+	jr	c, BB104_18
+	ld	bc, 19
+BB104_18:
+	ld	de, -140
+	lea	hl, ix
+	add	hl, de
+	ld	(hl), bc
+	push	bc
+	ld	bc, -137
+	lea	iy, ix
+	add	iy, bc
+	ld	hl, (iy)
 	push	hl
 	ld	bc, -131
 	lea	hl, ix
 	add	hl, bc
-	ld	hl, (hl)
-	push	hl
-	call	_snprintf
+	ld	iy, (hl)
+	pea	iy + 7
+	call	_memcpy
 	pop	hl
 	pop	hl
 	pop	hl
-	pop	hl
+	ld	bc, -131
+	lea	hl, ix
+	add	hl, bc
+	ld	de, (hl)
+	push	de
+	pop	iy
+	ld	(ix - 3), de
+	push	ix
+	ld	de, -140
+	add	ix, de
+	ld	bc, (ix)
+	pop	ix
+	add	iy, bc
+	ld	(iy + 7), 0
 	ld	hl, 26
 	push	hl
-	ld	bc, -131
-	lea	hl, ix
-	add	hl, bc
-	ld	hl, (hl)
-	push	hl
+	ld	de, (ix - 3)
+	push	de
 	ld	hl, (ix - 125)
 	push	hl
 	call	_io_draw_wrapped_text
@@ -6299,16 +6953,16 @@ BB99_16:
 	ld	iy, (ix - 128)
 	add	iy, de
 	inc	c
-	jp	BB99_12
-BB99_17:
+	jp	BB104_12
+BB104_19:
 	ld	iy, (ix + 6)
 	ld	a, (iy + 9)
-BB99_18:
+BB104_20:
 	cp	a, 6
-	ld	hl, _.str.7.260
-	jr	nc, BB99_20
-	ld	hl, _.str.2.276
-BB99_20:
+	ld	hl, _.str.6.251
+	jr	nc, BB104_22
+	ld	hl, _.str.2.265
+BB104_22:
 	push	hl
 	call	_io_draw_footer
 	pop	hl
@@ -6318,26 +6972,26 @@ BB99_20:
 	ld	iy, (ix + 6)
 	ld	hl, 0
 	ld	c, (ix - 109)
-	jp	nc, BB99_7
+	jp	nc, BB104_7
 	ex	de, hl
 	ld	e, a
-	ld	hl, JTI99_0
+	ld	hl, JTI104_0
 	add	hl, de
 	add	hl, de
 	add	hl, de
 	ld	hl, (hl)
 	jp	(hl)
-BB99_22:
+BB104_24:
 	ld	a, (ix - 116)
 	ld	l, a
 	dec	l
 	or	a, a
 	ld	a, 0
 	ld	(ix - 116), a
-	jp	z, BB99_6
+	jp	z, BB104_6
 	ld	(ix - 116), l
-	jp	BB99_6
-BB99_24:
+	jp	BB104_6
+BB104_26:
 	ld	hl, (ix - 115)
 	inc	hl
 	ld	de, 0
@@ -6351,8 +7005,8 @@ BB99_24:
 	ld	a, (ix - 116)
 	add	a, l
 	ld	(ix - 116), a
-	jp	BB99_6
-BB99_25:
+	jp	BB104_6
+BB104_27:
 	ld	iy, (iy + 10)
 	ld	hl, (ix - 115)
 	ld	c, 4
@@ -6375,7 +7029,7 @@ BB99_25:
 	add	iy, de
 	lea	hl, iy + 4
 	ld	(ix - 122), hl
-	ld	de, -137
+	ld	de, -143
 	lea	hl, ix
 	add	hl, de
 	ld	hl, (hl)
@@ -6384,7 +7038,7 @@ BB99_25:
 	ld	(ix - 112), a
 	sbc	hl, hl
 	ld	bc, (ix - 3)
-BB99_26:
+BB104_28:
 	ld	bc, 11
 	ld	de, 0
 	ld	iy, (ix - 109)
@@ -6393,7 +7047,7 @@ BB99_26:
 	ld	(ix - 128), hl
 	or	a, a
 	sbc	hl, de
-	jp	nc, BB99_31
+	jp	nc, BB104_33
 	ld	hl, (ix - 122)
 	ld	hl, (hl)
 	ld	bc, 3
@@ -6439,7 +7093,7 @@ BB99_26:
 	pop	hl
 	pop	hl
 	bit	0, a
-	jr	z, BB99_30
+	jr	z, BB104_32
 	ld	hl, (ix - 128)
 	inc	hl
 	ld	a, (ix - 112)
@@ -6451,15 +7105,15 @@ BB99_26:
 	ld	iy, (ix - 125)
 	lea	iy, iy + 4
 	ld	(ix - 125), iy
-	jp	BB99_26
-BB99_30:
+	jp	BB104_28
+BB104_32:
 	ld	iy, (ix - 109)
 	ld	a, (iy + 3)
 	ld	bc, 11
-BB99_31:
+BB104_33:
 	ld	l, (ix - 112)
 	cp	a, l
-	jr	nz, BB99_34
+	jr	nz, BB104_36
 	ld	hl, (ix - 115)
 	ld	c, 4
 	call	__ishl
@@ -6472,7 +7126,7 @@ BB99_31:
 	ld	iy, (iy)
 	add	iy, de
 	ld	hl, (iy + 13)
-	ld	bc, -137
+	ld	bc, -143
 	lea	iy, ix
 	add	iy, bc
 	ld	de, (iy)
@@ -6484,7 +7138,7 @@ BB99_31:
 	pop	hl
 	ld	a, (ix - 30)
 	bit	0, a
-	jr	nz, BB99_35
+	jr	nz, BB104_37
 	ld	hl, (ix - 25)
 	ld	de, _.str.89
 	push	de
@@ -6496,16 +7150,16 @@ BB99_31:
 	pop	hl
 	pop	hl
 	ld	iy, (ix + 6)
-	jr	BB99_36
-BB99_34:
+	jr	BB104_38
+BB104_36:
 	ld	iy, (ix + 6)
 	xor	a, a
-	ld	de, -137
+	ld	de, -143
 	lea	hl, ix
 	add	hl, de
 	ld	hl, (hl)
-	jp	BB99_2
-BB99_35:
+	jp	BB104_2
+BB104_37:
 	ld	hl, (ix - 109)
 	ld	hl, (hl)
 	ld	bc, 3
@@ -6559,46 +7213,46 @@ BB99_35:
 	pop	hl
 	pop	hl
 	pop	hl
-BB99_36:
+BB104_38:
 	xor	a, a
-	ld	de, -137
+	ld	de, -143
 	lea	hl, ix
 	add	hl, de
 	ld	hl, (hl)
 	ld	bc, 11
-	jp	BB99_2
-BB99_37:
+	jp	BB104_2
+BB104_39:
 	push	de
 	call	__indcall
 	pop	de
-	jr	BB99_40
-BB99_38:
+	jr	BB104_42
+BB104_40:
 	or	a, a
 	sbc	hl, hl
-	jr	BB99_40
-BB99_39:
+	jr	BB104_42
+BB104_41:
 	ld	hl, 1
-BB99_40:
+BB104_42:
 	ld	sp, ix
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
 	section	.rodata,"a",@progbits
-	private	JTI99_0
-JTI99_0:
-	dl	BB99_22
-	dl	BB99_24
-	dl	BB99_25
-	dl	BB99_38
-	dl	BB99_39
+	private	JTI104_0
+JTI104_0:
+	dl	BB104_24
+	dl	BB104_26
+	dl	BB104_27
+	dl	BB104_40
+	dl	BB104_41
 
 	section	.text,"ax",@progbits
 	public	_io_wait_for_key_release
 _io_wait_for_key_release:
-BB100_1:
+BB105_1:
 	call	_os_GetCSC
 	or	a, a
-	jr	nz, BB100_1
+	jr	nz, BB105_1
 	ld	a, 1
 	ret
 	section	.text,"ax",@progbits
@@ -6677,7 +7331,7 @@ _io_draw_wrapped_text:
 	ld	c, (ix + 12)
 	ld	(ix - 40), bc
 	ld	c, (ix + 6)
-BB105_1:
+BB110_1:
 	lea	hl, iy
 	ld	(ix - 31), de
 	add	hl, de
@@ -6685,20 +7339,20 @@ BB105_1:
 	ld	e, (hl)
 	ld	a, e
 	or	a, a
-	jr	z, BB105_9
+	jr	z, BB110_9
 	ld	a, c
 	cp	a, 9
-	jr	nc, BB105_9
+	jr	nc, BB110_9
 	ld	(ix - 46), bc
 	ld	(ix - 43), iy
 	ld	a, e
 	cp	a, 10
-	jr	z, BB105_6
+	jr	z, BB110_6
 	ld	hl, (ix - 31)
 	ld	bc, (ix - 40)
 	or	a, a
 	sbc	hl, bc
-	jr	nc, BB105_6
+	jr	nc, BB110_6
 	ld	hl, (ix - 37)
 	ld	bc, (ix - 31)
 	add	hl, bc
@@ -6708,8 +7362,8 @@ BB105_1:
 	pop	de
 	ld	iy, (ix - 43)
 	ld	bc, (ix - 46)
-	jr	BB105_1
-BB105_6:
+	jr	BB110_1
+BB110_6:
 	ld	bc, (ix - 37)
 	push	bc
 	pop	hl
@@ -6730,27 +7384,27 @@ BB105_6:
 	cp	a, 10
 	ld	de, 1
 	ld	hl, 0
-	jr	z, BB105_8
+	jr	z, BB110_8
 	ex	de, hl
-BB105_8:
+BB110_8:
 	ld	iy, (ix - 43)
 	add	iy, de
 	ld	de, (ix - 31)
 	add	iy, de
 	ld	c, (ix - 47)
 	ld	de, 0
-	jr	BB105_1
-BB105_9:
+	jr	BB110_1
+BB110_9:
 	ld	de, (ix - 31)
 	push	de
 	pop	hl
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	jr	z, BB105_12
+	jr	z, BB110_12
 	ld	a, c
 	cp	a, 9
-	jr	nc, BB105_12
+	jr	nc, BB110_12
 	push	bc
 	pop	iy
 	ld	bc, (ix - 37)
@@ -6763,7 +7417,7 @@ BB105_9:
 	call	_io_put_line
 	pop	hl
 	pop	hl
-BB105_12:
+BB110_12:
 	ld	sp, ix
 	pop	ix
 	ret
@@ -6799,7 +7453,7 @@ _io_show_message:
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	jr	z, BB106_2
+	jr	z, BB111_2
 	ld	a, (hl)
 	or	a, a
 	ld	de, 26
@@ -6811,18 +7465,18 @@ _io_show_message:
 	pop	hl
 	pop	hl
 	pop	hl
-BB106_2:
-	ld	hl, _.str.228
+BB111_2:
+	ld	hl, _.str.219
 	push	hl
 	call	_io_draw_footer
 	pop	hl
-BB106_3:
+BB111_3:
 	call	_read_key
 	cp	a, 9
-	jr	z, BB106_5
+	jr	z, BB111_5
 	cp	a, 15
-	jr	nz, BB106_3
-BB106_5:
+	jr	nz, BB111_3
+BB111_5:
 	ld	sp, ix
 	pop	ix
 	jp	_io_wait_for_key_release
@@ -6831,11 +7485,11 @@ BB106_5:
 	section	.text,"ax",@progbits
 	private	_read_key
 _read_key:
-BB107_1:
+BB112_1:
 	call	_os_GetCSC
 	ld	l, a
 	or	a, a
-	jr	z, BB107_1
+	jr	z, BB112_1
 	ld	a, l
 	ret
 	section	.text,"ax",@progbits
@@ -6857,9 +7511,9 @@ _io_prompt_double:
 	lea	de, iy
 	ld	(ix - 66), hl
 	ldir
-BB108_1:
+BB113_1:
 	ld	(ix - 67), a
-BB108_2:
+BB113_2:
 	call	_io_clear_screen
 	ld	hl, (ix + 6)
 	push	hl
@@ -6877,7 +7531,7 @@ BB108_2:
 	pop	hl
 	ld	hl, (ix - 66)
 	push	hl
-	ld	hl, _.str.5.262
+	ld	hl, _.str.1.222
 	push	hl
 	ld	hl, 32
 	push	hl
@@ -6895,14 +7549,14 @@ BB108_2:
 	call	_io_put_line
 	pop	hl
 	pop	hl
-	ld	hl, _.str.2.232
+	ld	hl, _.str.2.223
 	push	hl
 	call	_io_draw_footer
 	pop	hl
 	call	_read_key
 	ld	c, a
 	cp	a, 9
-	jr	nz, BB108_10
+	jr	nz, BB113_10
 	or	a, a
 	sbc	hl, hl
 	ld	(ix - 60), hl
@@ -6910,22 +7564,22 @@ BB108_2:
 	ld	l, (ix - 67)
 	ld	a, l
 	or	a, a
-	jr	z, BB108_6
+	jr	z, BB113_6
 	ld	a, l
 	cp	a, 1
-	jr	nz, BB108_7
+	jr	nz, BB113_7
 	ld	a, (ix - 24)
 	cp	a, 45
-	jr	nz, BB108_7
-BB108_6:
-	ld	hl, _.str.5.235
+	jr	nz, BB113_7
+BB113_6:
+	ld	hl, _.str.5.226
 	push	hl
-	ld	hl, _.str.4.234
-	jr	BB108_9
-BB108_7:
+	ld	hl, _.str.4.225
+	jr	BB113_9
+BB113_7:
 	ld	(ix - 68), c
 	pea	ix - 60
-	ld	hl, _.str.6.236
+	ld	hl, _.str.6.227
 	push	hl
 	ld	hl, (ix - 66)
 	push	hl
@@ -6936,20 +7590,20 @@ BB108_7:
 	ld	de, 1
 	or	a, a
 	sbc	hl, de
-	jp	z, BB108_49
-	ld	hl, _.str.8.238
+	jp	z, BB113_49
+	ld	hl, _.str.8.229
 	push	hl
-	ld	hl, _.str.7.237
-BB108_9:
+	ld	hl, _.str.7.228
+BB113_9:
 	push	hl
-	ld	hl, _.str.3.233
+	ld	hl, _.str.3.224
 	push	hl
 	call	_io_show_message
 	pop	hl
 	pop	hl
 	pop	hl
-	jp	BB108_2
-BB108_10:
+	jp	BB113_2
+BB113_10:
 	ld	a, c
 	rlc	a
 	sbc	hl, hl
@@ -6966,18 +7620,18 @@ BB108_10:
 	ld	bc, 20
 	or	a, a
 	sbc	hl, bc
-	jr	c, BB108_13
+	jr	c, BB113_13
 	push	de
 	pop	hl
 	ld	bc, 55
 	or	a, a
 	sbc	hl, bc
-	jr	nz, BB108_16
+	jr	nz, BB113_16
 	ld	e, (ix - 67)
 	xor	a, a
-	jp	BB108_45
-BB108_13:
-	ld	hl, JTI108_0
+	jp	BB113_45
+BB113_13:
+	ld	hl, JTI113_0
 	lea	de, iy
 	add	hl, de
 	add	hl, de
@@ -6987,109 +7641,109 @@ BB108_13:
 	ld	e, c
 	ld	a, 1
 	jp	(hl)
-BB108_14:
+BB113_14:
 	ld	a, c
 	or	a, a
 	ld	e, c
 	ld	a, 1
-	jp	nz, BB108_45
+	jp	nz, BB113_45
 	ld	(ix - 24), 45
 	ld	(ix - 23), 0
 	ld	a, 1
-	jp	BB108_48
-BB108_16:
+	jp	BB113_48
+BB113_16:
 	ex	de, hl
 	ld	de, 56
 	or	a, a
 	sbc	hl, de
 	ld	l, (ix - 67)
-	jr	nz, BB108_19
+	jr	nz, BB113_19
 	ld	a, l
 	or	a, a
 	ld	a, 0
 	ld	e, a
 	ld	a, 1
-	jp	z, BB108_45
+	jp	z, BB113_45
 	ld	de, 0
 	ld	e, l
 	ld	iy, (ix - 66)
 	add	iy, de
 	ld	(iy - 1), d
 	dec	l
-BB108_19:
+BB113_19:
 	ld	e, l
-	jp	BB108_44
-BB108_20:
+	jp	BB113_44
+BB113_20:
 	ld	a, c
 	cp	a, 23
-	jp	nc, BB108_43
+	jp	nc, BB113_43
 	ld	de, 0
 	ld	e, c
 	ld	iy, (ix - 66)
 	add	iy, de
 	ld	(iy), 51
-	jp	BB108_42
-BB108_22:
+	jp	BB113_42
+BB113_22:
 	ld	a, c
 	cp	a, 23
-	jp	nc, BB108_43
+	jp	nc, BB113_43
 	ld	de, 0
 	ld	e, c
 	ld	iy, (ix - 66)
 	add	iy, de
 	ld	(iy), 54
-	jp	BB108_42
-BB108_24:
+	jp	BB113_42
+BB113_24:
 	ld	a, c
 	cp	a, 23
-	jp	nc, BB108_43
+	jp	nc, BB113_43
 	ld	de, 0
 	ld	e, c
 	ld	iy, (ix - 66)
 	add	iy, de
 	ld	(iy), 57
-	jp	BB108_42
-BB108_26:
+	jp	BB113_42
+BB113_26:
 	ld	a, c
 	cp	a, 23
-	jp	nc, BB108_43
+	jp	nc, BB113_43
 	ld	de, 0
 	ld	e, c
 	ld	iy, (ix - 66)
 	add	iy, de
 	ld	(iy), 53
-	jp	BB108_42
-BB108_28:
+	jp	BB113_42
+BB113_28:
 	ld	a, c
 	cp	a, 23
-	jp	nc, BB108_43
+	jp	nc, BB113_43
 	ld	de, 0
 	ld	e, c
 	ld	iy, (ix - 66)
 	add	iy, de
 	ld	(iy), 48
-	jp	BB108_42
-BB108_30:
+	jp	BB113_42
+BB113_30:
 	ld	a, c
 	cp	a, 23
-	jp	nc, BB108_43
+	jp	nc, BB113_43
 	ld	de, 0
 	ld	e, c
 	ld	iy, (ix - 66)
 	add	iy, de
 	ld	(iy), 52
-	jr	BB108_42
-BB108_32:
+	jr	BB113_42
+BB113_32:
 	ld	a, c
 	cp	a, 23
-	jr	nc, BB108_43
+	jr	nc, BB113_43
 	ld	de, 0
 	ld	e, c
 	ld	iy, (ix - 66)
 	add	iy, de
 	ld	(iy), 55
-	jr	BB108_42
-BB108_34:
+	jr	BB113_42
+BB113_34:
 	ld	hl, 46
 	push	hl
 	ld	hl, (ix - 66)
@@ -7100,57 +7754,57 @@ BB108_34:
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	jr	z, BB108_46
+	jr	z, BB113_46
 	ld	e, (ix - 67)
-	jr	BB108_44
-BB108_36:
+	jr	BB113_44
+BB113_36:
 	ld	a, c
 	cp	a, 23
-	jr	nc, BB108_43
+	jr	nc, BB113_43
 	ld	de, 0
 	ld	e, c
 	ld	iy, (ix - 66)
 	add	iy, de
 	ld	(iy), 50
-	jr	BB108_42
-BB108_38:
+	jr	BB113_42
+BB113_38:
 	ld	a, c
 	cp	a, 23
-	jr	nc, BB108_43
+	jr	nc, BB113_43
 	ld	de, 0
 	ld	e, c
 	ld	iy, (ix - 66)
 	add	iy, de
 	ld	(iy), 56
-	jr	BB108_42
-BB108_40:
+	jr	BB113_42
+BB113_40:
 	ld	a, c
 	cp	a, 23
-	jr	nc, BB108_43
+	jr	nc, BB113_43
 	ld	de, 0
 	ld	e, c
 	ld	iy, (ix - 66)
 	add	iy, de
 	ld	(iy), 49
-BB108_42:
+BB113_42:
 	ld	(iy + 1), 0
 	inc	c
-BB108_43:
+BB113_43:
 	ld	e, c
-BB108_44:
+BB113_44:
 	ld	a, 1
-BB108_45:
+BB113_45:
 	ld	(ix - 69), a
 	ld	(ix - 67), e
 	call	_io_wait_for_key_release
 	ld	a, (ix - 67)
 	bit	0, (ix - 69)
-	jp	nz, BB108_1
-	jr	BB108_50
-BB108_46:
+	jp	nz, BB113_1
+	jr	BB113_50
+BB113_46:
 	ld	a, (ix - 67)
 	cp	a, 23
-	jr	nc, BB108_48
+	jr	nc, BB113_48
 	ld	de, 0
 	ld	e, a
 	ld	iy, (ix - 66)
@@ -7158,10 +7812,10 @@ BB108_46:
 	ld	(iy), 46
 	ld	(iy + 1), d
 	inc	a
-BB108_48:
+BB113_48:
 	ld	e, a
-	jr	BB108_44
-BB108_49:
+	jr	BB113_44
+BB113_49:
 	ld	hl, (ix - 60)
 	ld	a, (ix - 57)
 	ld	de, (ix + 12)
@@ -7170,42 +7824,42 @@ BB108_49:
 	ld	(iy), hl
 	ld	(iy + 3), a
 	call	_io_wait_for_key_release
-BB108_50:
+BB113_50:
 	ld	a, (ix - 68)
 	cp	a, 9
-	jr	z, BB108_52
+	jr	z, BB113_52
 	ld	a, 0
-	jr	BB108_53
-BB108_52:
+	jr	BB113_53
+BB113_52:
 	ld	a, -1
-BB108_53:
+BB113_53:
 	ld	sp, ix
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
 	section	.rodata,"a",@progbits
-	private	JTI108_0
-JTI108_0:
-	dl	BB108_14
-	dl	BB108_20
-	dl	BB108_22
-	dl	BB108_24
-	dl	BB108_45
-	dl	BB108_45
-	dl	BB108_45
-	dl	BB108_45
-	dl	BB108_34
-	dl	BB108_36
-	dl	BB108_26
-	dl	BB108_38
-	dl	BB108_45
-	dl	BB108_45
-	dl	BB108_45
-	dl	BB108_45
-	dl	BB108_28
-	dl	BB108_40
-	dl	BB108_30
-	dl	BB108_32
+	private	JTI113_0
+JTI113_0:
+	dl	BB113_14
+	dl	BB113_20
+	dl	BB113_22
+	dl	BB113_24
+	dl	BB113_45
+	dl	BB113_45
+	dl	BB113_45
+	dl	BB113_45
+	dl	BB113_34
+	dl	BB113_36
+	dl	BB113_26
+	dl	BB113_38
+	dl	BB113_45
+	dl	BB113_45
+	dl	BB113_45
+	dl	BB113_45
+	dl	BB113_28
+	dl	BB113_40
+	dl	BB113_30
+	dl	BB113_32
 
 	section	.text,"ax",@progbits
 	public	_io_prompt_text
@@ -7226,7 +7880,7 @@ _io_prompt_text:
 	pop	hl
 	pop	hl
 	pop	hl
-	ld	hl, _.str.9.241
+	ld	hl, _.str.9.232
 	push	hl
 	call	_io_draw_footer
 	pop	hl
@@ -7235,7 +7889,7 @@ _io_prompt_text:
 	ld	de, (ix + 15)
 	push	de
 	push	hl
-	ld	hl, _.str.10.242
+	ld	hl, _.str.10.233
 	push	hl
 	call	_os_GetStringInput
 	pop	hl
@@ -7244,12 +7898,12 @@ _io_prompt_text:
 	ld	hl, (ix + 12)
 	ld	a, (hl)
 	or	a, a
-	jr	nz, BB109_2
+	jr	nz, BB114_2
 	ld	a, 0
-	jr	BB109_3
-BB109_2:
+	jr	BB114_3
+BB114_2:
 	ld	a, -1
-BB109_3:
+BB114_3:
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
@@ -7260,7 +7914,7 @@ _io_show_result:
 	ld	hl, -35
 	call	__frameset
 	ld	bc, (ix + 12)
-	ld	de, _.str.11.245
+	ld	de, _.str.11.236
 	lea	hl, ix - 32
 	ld	(ix - 35), hl
 	push	af
@@ -7283,7 +7937,7 @@ _io_show_result:
 	pop	hl
 	pop	hl
 	call	_io_clear_screen
-	ld	hl, _.str.12.246
+	ld	hl, _.str.12.237
 	push	hl
 	call	_io_draw_title
 	pop	hl
@@ -7317,17 +7971,17 @@ _io_show_result:
 	pop	hl
 	pop	hl
 	pop	hl
-	ld	hl, _.str.228
+	ld	hl, _.str.219
 	push	hl
 	call	_io_draw_footer
 	pop	hl
-BB110_1:
+BB115_1:
 	call	_read_key
 	cp	a, 9
-	jr	z, BB110_3
+	jr	z, BB115_3
 	cp	a, 15
-	jr	nz, BB110_1
-BB110_3:
+	jr	nz, BB115_1
+BB115_3:
 	call	_io_wait_for_key_release
 	ld	sp, ix
 	pop	ix
@@ -7344,32 +7998,32 @@ _io_read_menu_key:
 	call	_io_wait_for_key_release
 	ld	a, (ix - 1)
 	cp	a, 1
-	jr	nz, BB111_2
+	jr	nz, BB116_2
 	ld	a, 2
-	jr	BB111_11
-BB111_2:
+	jr	BB116_11
+BB116_2:
 	cp	a, 4
-	jr	nz, BB111_4
+	jr	nz, BB116_4
 	ld	a, 1
-	jr	BB111_11
-BB111_4:
+	jr	BB116_11
+BB116_4:
 	cp	a, 9
-	jr	nz, BB111_6
+	jr	nz, BB116_6
 	ld	a, 3
-	jr	BB111_11
-BB111_6:
+	jr	BB116_11
+BB116_6:
 	cp	a, 15
-	jr	nz, BB111_8
+	jr	nz, BB116_8
 	ld	a, 5
-	jr	BB111_11
-BB111_8:
+	jr	BB116_11
+BB116_8:
 	cp	a, 55
-	jr	nz, BB111_10
+	jr	nz, BB116_10
 	ld	a, 4
-	jr	BB111_11
-BB111_10:
+	jr	BB116_11
+BB116_10:
 	xor	a, a
-BB111_11:
+BB116_11:
 	inc	sp
 	pop	ix
 	ret
@@ -7384,7 +8038,7 @@ _main:
 	ld	(ix - 2), 0
 	ld	(ix - 3), 0
 	call	_formula_registry_init
-BB112_1:
+BB117_1:
 	or	a, a
 	sbc	hl, hl
 	ld	(ix - 6), hl
@@ -7397,28 +8051,28 @@ BB112_1:
 	ld	bc, 2
 	or	a, a
 	sbc	hl, bc
-	jp	c, BB112_13
+	jp	c, BB117_13
 	ld	iy, (ix - 6)
 	lea	hl, iy
 	ld	de, 1
 	or	a, a
 	sbc	hl, de
-	jr	nz, BB112_4
+	jr	nz, BB117_4
 	call	_reference_run
-	jr	BB112_6
-BB112_4:
+	jr	BB117_6
+BB117_4:
 	lea	hl, iy
 	or	a, a
 	sbc	hl, bc
-	jr	nz, BB112_7
+	jr	nz, BB117_7
 	call	_symbols_run
-BB112_6:
+BB117_6:
 	ld	de, 2
 	or	a, a
 	sbc	hl, de
-	jr	nz, BB112_1
-	jr	BB112_13
-BB112_7:
+	jr	nz, BB117_1
+	jr	BB117_13
+BB117_7:
 	ld	hl, 0
 	ld	(ix - 9), hl
 	pea	ix - 9
@@ -7433,15 +8087,15 @@ BB112_7:
 	ld	bc, 1
 	or	a, a
 	sbc	hl, bc
-	jr	z, BB112_1
+	jr	z, BB117_1
 	ex	de, hl
 	ld	de, 2
 	or	a, a
 	sbc	hl, de
-	jr	z, BB112_13
+	jr	z, BB117_13
 	ld	bc, (ix - 9)
 	ld	(ix - 12), bc
-BB112_10:
+BB117_10:
 	pea	ix - 3
 	push	bc
 	call	_menu_select_formula
@@ -7454,12 +8108,12 @@ BB112_10:
 	ld	bc, 1
 	or	a, a
 	sbc	hl, bc
-	jr	z, BB112_7
+	jr	z, BB117_7
 	ex	de, hl
 	ld	de, 2
 	or	a, a
 	sbc	hl, de
-	jr	z, BB112_13
+	jr	z, BB117_13
 	or	a, a
 	sbc	hl, hl
 	ld	l, (ix - 3)
@@ -7477,8 +8131,8 @@ BB112_10:
 	ld	de, 1
 	or	a, a
 	sbc	hl, de
-	jr	nz, BB112_10
-BB112_13:
+	jr	nz, BB117_10
+BB117_13:
 	or	a, a
 	sbc	hl, hl
 	ld	sp, ix
@@ -7498,20 +8152,20 @@ _math_is_near_zero:
 	ld	d, 1
 	ld	l, 0
 	ld	iyl, d
-	jp	m, BB113_2
+	jp	m, BB118_2
 	ex	de, hl
 	ld	iyl, e
 	ex	de, hl
-BB113_2:
+BB118_2:
 	push	bc
 	pop	hl
 	ld	e, a
 	ld	bc, -7770017
 	ld	a, 48
 	call	__fcmp
-	jp	m, BB113_4
+	jp	m, BB118_4
 	ld	d, 0
-BB113_4:
+BB118_4:
 	ld	a, iyl
 	rrc	a
 	sbc	a, a
@@ -7534,12 +8188,12 @@ _math_is_negative:
 	ld	a, -80
 	ld	e, (ix + 9)
 	call	__fcmp
-	jp	m, BB114_2
+	jp	m, BB119_2
 	ld	a, 0
-	jr	BB114_3
-BB114_2:
+	jr	BB119_3
+BB119_2:
 	ld	a, -1
-BB114_3:
+BB119_3:
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
@@ -7556,20 +8210,20 @@ _math_can_divide:
 	ld	d, 1
 	ld	l, 0
 	ld	iyl, d
-	jp	p, BB115_2
+	jp	p, BB120_2
 	ex	de, hl
 	ld	iyl, e
 	ex	de, hl
-BB115_2:
+BB120_2:
 	push	bc
 	pop	hl
 	ld	e, a
 	ld	bc, -7770017
 	ld	a, 48
 	call	__fcmp
-	jp	p, BB115_4
+	jp	p, BB120_4
 	ld	d, 0
-BB115_4:
+BB120_4:
 	ld	a, iyl
 	rrc	a
 	sbc	a, a
@@ -7592,12 +8246,12 @@ _math_can_sqrt:
 	ld	a, -80
 	ld	e, (ix + 9)
 	call	__fcmp
-	jp	p, BB116_2
+	jp	p, BB121_2
 	ld	a, 0
-	jr	BB116_3
-BB116_2:
+	jr	BB121_3
+BB121_2:
 	ld	a, -1
-BB116_3:
+BB121_3:
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
@@ -7607,7 +8261,7 @@ BB116_3:
 _menu_select_home:
 	call	__frameset0
 	ld	bc, (ix + 6)
-	ld	hl, _.str.3.259
+	ld	hl, _.str.3.250
 	ld	de, _menu_select_home.labels
 	push	bc
 	ld	bc, 3
@@ -7622,7 +8276,7 @@ _menu_select_home:
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	jr	nz, BB117_2
+	jr	nz, BB122_2
 	ld	bc, (ix + 9)
 	ld	de, 0
 	ld	iy, (ix + 6)
@@ -7630,7 +8284,7 @@ _menu_select_home:
 	push	bc
 	pop	iy
 	ld	(iy), de
-BB117_2:
+BB122_2:
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
@@ -7638,32 +8292,30 @@ BB117_2:
 	section	.text,"ax",@progbits
 	private	_run_menu
 _run_menu:
-	ld	hl, -50
+	ld	hl, -19
 	call	__frameset
 	ld	c, 0
 	ld	iy, 0
 	ld	a, (ix + 12)
 	cp	a, 8
-	jr	nc, BB118_2
-	ld	de, _.str.2.276
-	jr	BB118_3
-BB118_2:
-	ld	de, _.str.7.260
-BB118_3:
-	ld	(ix - 47), de
-	lea	hl, ix - 28
-	ld	(ix - 38), hl
+	jr	nc, BB123_2
+	ld	de, _.str.2.265
+	jr	BB123_3
+BB123_2:
+	ld	de, _.str.6.251
+BB123_3:
+	ld	(ix - 16), de
 	lea	hl, iy
 	ld	l, (ix + 12)
-	ld	(ix - 50), hl
-BB118_4:
+	ld	(ix - 19), hl
+BB123_4:
 	ld	hl, (ix + 15)
 	ld	a, (hl)
 	cp	a, c
 	ld	b, a
-	jr	c, BB118_6
+	jr	c, BB123_6
 	ld	b, c
-BB118_6:
+BB123_6:
 	lea	hl, iy
 	ld	l, a
 	ld	iyl, b
@@ -7673,15 +8325,15 @@ BB118_6:
 	add	a, -6
 	or	a, a
 	sbc	hl, de
-	jr	c, BB118_8
+	jr	c, BB123_8
 	ld	b, a
-BB118_8:
-	ld	(ix - 35), b
+BB123_8:
+	ld	(ix - 7), b
 	call	_io_clear_screen
 	ld	hl, (ix + 6)
 	push	hl
 	call	_io_draw_title
-	ld	b, (ix - 35)
+	ld	b, (ix - 7)
 	pop	hl
 	ld	c, (ix + 12)
 	ld	a, c
@@ -7690,173 +8342,213 @@ BB118_8:
 	ld	l, 0
 	ld	a, c
 	sub	a, b
-	jr	c, BB118_10
+	jr	c, BB123_10
 	ld	l, e
-BB118_10:
-	ld	iy, 0
-	ld	iyl, b
+BB123_10:
+	ld	de, 0
+	push	de
+	pop	iy
+	ld	e, b
+	ld	(ix - 3), de
 	ld	a, l
 	cp	a, 7
-	jr	c, BB118_12
+	jr	c, BB123_12
 	ld	l, 7
-BB118_12:
-	ld	de, 0
+BB123_12:
+	lea	de, iy
 	ld	e, l
-	lea	hl, iy
+	ld	hl, (ix - 3)
 	ld	bc, 3
 	call	__imulu
 	push	hl
 	pop	bc
 	ld	hl, (ix + 9)
 	add	hl, bc
-	ld	(ix - 34), hl
-	ex	de, hl
+	ld	(ix - 6), hl
 	ld	a, 2
-	ld	e, a
-BB118_13:
-	ld	(ix - 31), de
-	ld	de, 0
+	ld	c, a
+BB123_13:
+	push	de
+	pop	hl
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	jr	z, BB118_17
-	ld	(ix - 44), hl
+	jr	z, BB123_17
+	ld	(ix - 10), de
+	ld	de, 0
 	ld	hl, (ix + 15)
 	ld	e, (hl)
-	ld	(ix - 41), iy
-	lea	hl, iy
+	ld	hl, (ix - 6)
+	ld	hl, (hl)
+	push	hl
+	ld	hl, (ix - 3)
 	or	a, a
 	sbc	hl, de
-	ld	hl, _.str.5.262
+	ld	hl, -1
+	jr	z, BB123_16
+	ld	hl, 0
+BB123_16:
 	push	hl
-	pop	bc
-	jr	z, BB118_16
-	ld	hl, _.str.6.263
-	push	hl
-	pop	bc
-BB118_16:
-	ld	hl, (ix - 34)
-	ld	de, (hl)
-	push	de
 	push	bc
-	ld	hl, 28
-	push	hl
-	ld	hl, (ix - 38)
-	push	hl
-	call	_snprintf
+	ld	(ix - 13), bc
+	call	_draw_menu_line
 	pop	hl
 	pop	hl
 	pop	hl
-	pop	hl
-	ld	hl, 26
-	push	hl
-	ld	hl, (ix - 38)
-	push	hl
-	ld	hl, (ix - 31)
-	push	hl
-	call	_io_draw_wrapped_text
-	pop	hl
-	pop	hl
-	pop	hl
-	ld	hl, (ix - 44)
-	dec	hl
-	ld	de, (ix - 41)
-	inc	de
-	ld	iy, (ix - 34)
+	ld	de, (ix - 10)
+	dec	de
+	ld	hl, (ix - 3)
+	inc	hl
+	ld	(ix - 3), hl
+	ld	iy, (ix - 6)
 	lea	iy, iy + 3
-	ld	(ix - 34), iy
-	push	de
-	pop	iy
-	ld	de, (ix - 31)
-	inc	e
-	jr	BB118_13
-BB118_17:
-	ld	hl, (ix - 47)
+	ld	(ix - 6), iy
+	ld	bc, (ix - 13)
+	inc	c
+	jr	BB123_13
+BB123_17:
+	ld	hl, (ix - 16)
 	push	hl
 	call	_io_draw_footer
 	pop	hl
 	call	_io_read_menu_key
-	ld	iy, 0
 	dec	a
 	cp	a, 5
-	ld	b, (ix - 35)
+	ld	b, (ix - 7)
 	ld	c, b
-	jp	nc, BB118_4
+	ld	iy, 0
+	jp	nc, BB123_4
 	lea	de, iy
 	ld	e, a
-	ld	hl, JTI118_0
+	ld	hl, JTI123_0
 	add	hl, de
 	add	hl, de
 	add	hl, de
 	ld	hl, (hl)
 	jp	(hl)
-BB118_19:
+BB123_19:
 	ld	hl, (ix + 15)
 	ld	e, (hl)
 	ld	a, e
 	or	a, a
 	ld	c, b
-	jp	z, BB118_4
+	jp	z, BB123_4
 	dec	e
-	jr	BB118_23
-BB118_21:
+	jr	BB123_23
+BB123_21:
 	ld	hl, (ix + 15)
 	ld	e, (hl)
 	lea	hl, iy
 	ld	l, e
 	inc	hl
-	ld	bc, (ix - 50)
+	ld	bc, (ix - 19)
 	or	a, a
 	sbc	hl, bc
-	ld	b, (ix - 35)
+	ld	b, (ix - 7)
 	ld	c, b
-	jp	nc, BB118_4
+	jp	nc, BB123_4
 	inc	e
-BB118_23:
+BB123_23:
 	ld	hl, (ix + 15)
 	ld	(hl), e
 	ld	c, b
-	jp	BB118_4
-BB118_24:
+	jp	BB123_4
+BB123_24:
 	or	a, a
 	sbc	hl, hl
-	jr	BB118_27
-BB118_25:
+	jr	BB123_27
+BB123_25:
 	ld	hl, 1
-	jr	BB118_27
-BB118_26:
+	jr	BB123_27
+BB123_26:
 	ld	hl, 2
-BB118_27:
+BB123_27:
 	ld	sp, ix
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
 	section	.rodata,"a",@progbits
-	private	JTI118_0
-JTI118_0:
-	dl	BB118_19
-	dl	BB118_21
-	dl	BB118_24
-	dl	BB118_25
-	dl	BB118_26
+	private	JTI123_0
+JTI123_0:
+	dl	BB123_19
+	dl	BB123_21
+	dl	BB123_24
+	dl	BB123_25
+	dl	BB123_26
+
+	section	.text,"ax",@progbits
+	private	_draw_menu_line
+_draw_menu_line:
+	ld	hl, -33
+	call	__frameset
+	ld	hl, (ix + 12)
+	push	hl
+	call	_strlen
+	push	hl
+	pop	bc
+	pop	hl
+	bit	0, (ix + 9)
+	jr	nz, BB124_2
+	ld	a, 32
+	jr	BB124_3
+BB124_2:
+	ld	a, 62
+BB124_3:
+	lea	iy, ix - 27
+	ld	(ix - 27), a
+	ld	(ix - 26), 32
+	ld	de, 24
+	push	bc
+	pop	hl
+	or	a, a
+	sbc	hl, de
+	jr	c, BB124_5
+	ld	bc, 24
+BB124_5:
+	ld	(ix - 30), bc
+	push	bc
+	ld	hl, (ix + 12)
+	push	hl
+	pea	iy + 2
+	ld	(ix - 33), iy
+	call	_memcpy
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	de, (ix - 33)
+	push	de
+	pop	iy
+	ld	bc, (ix - 30)
+	add	iy, bc
+	ld	(iy + 2), 0
+	ld	hl, 26
+	push	hl
+	push	de
+	ld	l, (ix + 6)
+	push	hl
+	call	_io_draw_wrapped_text
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
 
 	section	.text,"ax",@progbits
 	public	_menu_select_category
 _menu_select_category:
 	ld	hl, -24
 	call	__frameset
-	ld	de, _.str.4.269
+	ld	de, _.str.4.258
 	ld	iy, 0
 	ld	hl, _CATEGORIES
 	lea	bc, ix - 15
 	ld	(ix - 18), bc
 	ld	bc, 15
 	ld	(ix - 21), hl
-BB119_1:
+BB125_1:
 	lea	hl, iy
 	or	a, a
 	sbc	hl, bc
-	jr	z, BB119_3
+	jr	z, BB125_3
 	lea	bc, iy
 	ld	iy, (ix - 21)
 	ld	hl, (iy)
@@ -7867,7 +8559,7 @@ BB119_1:
 	add	hl, de
 	ld	de, (ix - 24)
 	ld	(hl), de
-	ld	de, _.str.4.269
+	ld	de, _.str.4.258
 	lea	iy, iy + 46
 	ld	(ix - 21), iy
 	push	bc
@@ -7875,8 +8567,8 @@ BB119_1:
 	ld	bc, 3
 	add	iy, bc
 	ld	bc, 15
-	jr	BB119_1
-BB119_3:
+	jr	BB125_1
+BB125_3:
 	ld	hl, (ix + 6)
 	push	hl
 	ld	hl, 5
@@ -7896,7 +8588,7 @@ BB119_3:
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	jr	nz, BB119_5
+	jr	nz, BB125_5
 	or	a, a
 	sbc	hl, hl
 	ld	iy, (ix + 6)
@@ -7911,7 +8603,7 @@ BB119_3:
 	add	iy, bc
 	ld	hl, (ix + 9)
 	ld	(hl), iy
-BB119_5:
+BB125_5:
 	ex	de, hl
 	ld	sp, ix
 	pop	ix
@@ -7921,66 +8613,212 @@ BB119_5:
 	section	.text,"ax",@progbits
 	public	_menu_select_formula
 _menu_select_formula:
-	ld	hl, -48
+	ld	hl, -13
 	call	__frameset
 	ld	iy, (ix + 6)
 	ld	hl, (ix + 9)
-	ld	bc, 3
-	ld	de, 0
-	ld	(ix - 45), de
-	ld	e, (iy + 3)
+	ld	e, 0
 	ld	a, (hl)
-	cp	a, e
-	ld	a, e
-	jr	c, BB120_2
+	ld	l, (iy + 3)
+	cp	a, l
+	jr	c, BB126_2
 	ld	hl, (ix + 9)
 	ld	(hl), 0
-	ld	iy, (ix + 6)
-	ld	a, (iy + 3)
-BB120_2:
-	lea	hl, ix - 42
-	ld	(ix - 48), hl
+	ld	a, e
+BB126_2:
+	cp	a, e
+	ld	c, a
+	jr	c, BB126_4
+	ld	c, e
+BB126_4:
+	ld	iy, 0
+	lea	hl, iy
+	ld	l, a
+	ld	iyl, c
+	ld	de, 5
+	add	iy, de
+	lea	de, iy
+	add	a, -4
+	or	a, a
+	sbc	hl, de
+	jr	c, BB126_6
+	ld	c, a
+BB126_6:
+	ld	(ix - 1), c
+	call	_io_clear_screen
+	ld	hl, (ix + 6)
+	ld	hl, (hl)
+	push	hl
+	call	_io_draw_title
+	pop	hl
 	or	a, a
 	sbc	hl, hl
-	ld	l, a
+	ld	iy, (ix + 9)
+	ld	l, (iy)
+	ld	bc, 3
 	call	__imulu
 	push	hl
 	pop	de
-BB120_3:
-	push	de
-	pop	hl
-	ld	bc, (ix - 45)
-	or	a, a
-	sbc	hl, bc
-	jr	z, BB120_5
-	ld	bc, (ix - 45)
 	ld	iy, (ix + 6)
-	add	iy, bc
+	add	iy, de
 	ld	iy, (iy + 4)
-	ld	iy, (iy + 3)
-	ld	hl, (ix - 48)
-	add	hl, bc
-	ld	(hl), iy
-	ld	bc, 3
-	ld	hl, (ix - 45)
-	add	hl, bc
-	ld	(ix - 45), hl
-	jr	BB120_3
-BB120_5:
-	ld	hl, (ix + 6)
-	ld	hl, (hl)
-	ld	bc, (ix + 9)
-	push	bc
-	ld	e, a
-	push	de
-	ld	de, (ix - 48)
+	ld	hl, (iy + 3)
+	ld	de, 26
 	push	de
 	push	hl
-	call	_run_menu
+	ld	hl, 1
+	push	hl
+	call	_io_draw_wrapped_text
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	iy, 0
+	push	af
+	ld	a, (ix - 1)
+	ld	iyl, a
+	pop	af
+	lea	hl, iy
+	ld	bc, 3
+	call	__imulu
+	push	hl
+	pop	de
+	ld	hl, (ix + 6)
+	add	hl, de
+	ld	(ix - 7), hl
+	ld	a, 4
+	ld	l, a
+	ld	(ix - 4), hl
+	or	a, a
+	sbc	hl, hl
+BB126_7:
+	push	hl
+	pop	bc
+	ld	de, 15
+	or	a, a
+	sbc	hl, de
+	jr	z, BB126_12
+	ld	de, 0
+	lea	hl, iy
+	ld	iy, (ix + 6)
+	ld	e, (iy + 3)
+	push	hl
+	pop	iy
+	or	a, a
+	sbc	hl, de
+	jr	nc, BB126_12
+	ld	de, 0
+	ld	hl, (ix + 9)
+	ld	e, (hl)
+	ld	(ix - 10), bc
+	lea	hl, iy
+	ld	iy, (ix - 7)
+	add	iy, bc
+	ld	iy, (iy + 4)
+	ld	bc, (iy)
+	push	bc
+	ld	(ix - 13), hl
+	or	a, a
+	sbc	hl, de
+	ld	hl, -1
+	jr	z, BB126_11
+	ld	hl, 0
+BB126_11:
+	push	hl
+	ld	hl, (ix - 4)
+	push	hl
+	call	_draw_menu_line
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	iy, (ix - 13)
+	inc	iy
+	ld	de, 3
+	ld	hl, (ix - 10)
+	add	hl, de
+	ld	de, (ix - 4)
+	inc	e
+	ld	(ix - 4), de
+	jr	BB126_7
+BB126_12:
+	ld	hl, _.str.2.265
+	push	hl
+	call	_io_draw_footer
+	pop	hl
+	call	_io_read_menu_key
+	dec	a
+	cp	a, 5
+	jr	c, BB126_14
+	ld	hl, (ix + 9)
+	ld	a, (hl)
+	ld	e, (ix - 1)
+	jp	BB126_2
+BB126_14:
+	ld	bc, 0
+	push	bc
+	pop	de
+	ld	e, a
+	ld	hl, JTI126_0
+	add	hl, de
+	add	hl, de
+	add	hl, de
+	ld	hl, (hl)
+	jp	(hl)
+BB126_15:
+	ld	hl, (ix + 9)
+	ld	c, (hl)
+	ld	a, c
+	or	a, a
+	ld	a, 0
+	ld	d, (ix - 1)
+	ld	e, d
+	jp	z, BB126_2
+	dec	c
+	ld	hl, (ix + 9)
+	ld	(hl), c
+	ld	a, c
+	ld	e, d
+	jp	BB126_2
+BB126_17:
+	ld	hl, (ix + 9)
+	ld	a, (hl)
+	push	bc
+	pop	hl
+	ld	l, a
+	inc	hl
+	ld	iy, (ix + 6)
+	ld	c, (iy + 3)
+	or	a, a
+	sbc	hl, bc
+	ld	c, (ix - 1)
+	ld	e, c
+	jp	nc, BB126_2
+	inc	a
+	ld	hl, (ix + 9)
+	ld	(hl), a
+	ld	e, c
+	jp	BB126_2
+BB126_19:
+	or	a, a
+	sbc	hl, hl
+	jr	BB126_22
+BB126_20:
+	ld	hl, 1
+	jr	BB126_22
+BB126_21:
+	ld	hl, 2
+BB126_22:
 	ld	sp, ix
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
+	section	.rodata,"a",@progbits
+	private	JTI126_0
+JTI126_0:
+	dl	BB126_15
+	dl	BB126_17
+	dl	BB126_19
+	dl	BB126_20
+	dl	BB126_21
 
 	section	.text,"ax",@progbits
 	public	_reference_run
@@ -7992,7 +8830,7 @@ _reference_run:
 	xor	a, a
 	lea	hl, ix - 28
 	ld	(ix - 34), hl
-BB121_1:
+BB127_1:
 	ld	de, 0
 	ex	de, hl
 	ld	(ix - 48), a
@@ -8006,9 +8844,9 @@ BB121_1:
 	ld	hl, (ix - 31)
 	call	__imulu
 	ld	(ix - 40), hl
-BB121_2:
+BB127_2:
 	call	_io_clear_screen
-	ld	hl, _.str.274
+	ld	hl, _.str.263
 	push	hl
 	call	_io_draw_title
 	pop	hl
@@ -8016,27 +8854,27 @@ BB121_2:
 	ld	l, a
 	ld	(ix - 31), hl
 	ld	iy, 0
-BB121_3:
+BB127_3:
 	lea	hl, iy
-	ld	de, 35
+	ld	de, 42
 	or	a, a
 	sbc	hl, de
-	jr	z, BB121_7
+	jr	z, BB127_7
 	ld	hl, (ix - 40)
 	lea	de, iy
 	or	a, a
 	sbc	hl, de
 	ld	bc, 62
 	ld	hl, _REFERENCE_CATEGORIES
-	jr	z, BB121_6
+	jr	z, BB127_6
 	ld	bc, 32
-BB121_6:
+BB127_6:
 	lea	de, iy
 	add	hl, de
 	ld	hl, (hl)
 	push	hl
 	push	bc
-	ld	hl, _.str.1.275
+	ld	hl, _.str.1.264
 	push	hl
 	ld	hl, 28
 	push	hl
@@ -8065,32 +8903,32 @@ BB121_6:
 	ld	hl, (ix - 31)
 	inc	l
 	ld	(ix - 31), hl
-	jr	BB121_3
-BB121_7:
-	ld	hl, _.str.2.276
+	jr	BB127_3
+BB127_7:
+	ld	hl, _.str.2.265
 	push	hl
 	call	_io_draw_footer
 	pop	hl
 	call	_io_read_menu_key
 	dec	a
 	cp	a, 5
-	jp	nc, BB121_2
+	jp	nc, BB127_2
 	ld	bc, 0
 	push	bc
 	pop	de
 	ld	e, a
-	ld	hl, JTI121_0
+	ld	hl, JTI127_0
 	add	hl, de
 	add	hl, de
 	add	hl, de
 	ld	hl, (hl)
 	jp	(hl)
-BB121_9:
+BB127_9:
 	ld	iy, (ix - 43)
 	ld	hl, (iy + 4)
 	ld	(ix - 37), hl
 	ld	e, 0
-BB121_10:
+BB127_10:
 	push	bc
 	pop	hl
 	ld	(ix - 44), e
@@ -8117,7 +8955,7 @@ BB121_10:
 	ld	(ix - 51), de
 	push	de
 	push	hl
-	ld	hl, _.str.148.277
+	ld	hl, _.str.186.266
 	push	hl
 	ld	hl, 28
 	push	hl
@@ -8157,23 +8995,23 @@ BB121_10:
 	sbc	hl, hl
 	ld	a, 2
 	ld	e, a
-BB121_11:
+BB127_11:
 	ld	(ix - 31), hl
 	ld	bc, 6
 	or	a, a
 	sbc	hl, bc
-	jr	nc, BB121_17
+	jr	nc, BB127_17
 	ld	a, e
 	cp	a, 9
-	jr	nc, BB121_17
+	jr	nc, BB127_17
 	ld	hl, (iy)
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	jr	z, BB121_16
+	jr	z, BB127_16
 	ld	a, (hl)
 	or	a, a
-	jr	z, BB121_16
+	jr	z, BB127_16
 	ld	bc, 26
 	push	bc
 	push	hl
@@ -8188,13 +9026,13 @@ BB121_11:
 	pop	hl
 	pop	hl
 	ld	e, (ix - 55)
-BB121_16:
+BB127_16:
 	ld	hl, (ix - 31)
 	inc	hl
 	lea	iy, iy + 3
-	jr	BB121_11
-BB121_17:
-	ld	hl, _.str.149.278
+	jr	BB127_11
+BB127_17:
+	ld	hl, _.str.187.267
 	push	hl
 	call	_io_draw_footer
 	pop	hl
@@ -8202,27 +9040,27 @@ BB121_17:
 	ld	l, a
 	cp	a, 1
 	ld	e, (ix - 44)
-	jr	nz, BB121_19
+	jr	nz, BB127_19
 	ld	a, e
 	or	a, a
-	jp	nz, BB121_22
-BB121_19:
+	jp	nz, BB127_22
+BB127_19:
 	ld	a, l
 	add	a, -2
 	cp	a, 4
-	jp	nc, BB121_23
+	jp	nc, BB127_23
 	or	a, a
 	sbc	hl, hl
 	push	hl
 	pop	bc
 	ld	c, a
-	ld	hl, JTI121_1
+	ld	hl, JTI127_1
 	add	hl, bc
 	add	hl, bc
 	add	hl, bc
 	ld	hl, (hl)
 	jp	(hl)
-BB121_21:
+BB127_21:
 	ld	hl, (ix - 51)
 	ld	bc, (ix - 54)
 	or	a, a
@@ -8234,59 +9072,59 @@ BB121_21:
 	ld	a, e
 	add	a, l
 	ld	e, a
-	jr	BB121_23
-BB121_22:
+	jr	BB127_23
+BB127_22:
 	dec	e
-BB121_23:
+BB127_23:
 	ld	bc, 0
-	jp	BB121_10
-BB121_24:
+	jp	BB127_10
+BB127_24:
 	ld	a, (ix - 48)
 	ld	l, a
 	dec	l
 	or	a, a
 	ld	a, 0
-	jp	z, BB121_27
+	jp	z, BB127_27
 	ld	a, l
-	jp	BB121_27
-BB121_26:
+	jp	BB127_27
+BB127_26:
 	ld	e, (ix - 48)
 	ld	a, e
-	cp	a, 4
+	cp	a, 5
 	ccf
 	sbc	a, a
 	ld	l, a
 	inc	l
 	ld	a, e
 	add	a, l
-BB121_27:
+BB127_27:
 	ld	iy, _REFERENCE_CATEGORIES
 	ld	bc, 7
-	jp	BB121_1
-BB121_28:
+	jp	BB127_1
+BB127_28:
 	ld	hl, 2
-	jr	BB121_30
-BB121_29:
+	jr	BB127_30
+BB127_29:
 	ld	hl, 1
-BB121_30:
+BB127_30:
 	ld	sp, ix
 	pop	ix
 	ret
 	section	.text,"ax",@progbits
 	section	.rodata,"a",@progbits
-	private	JTI121_0
-JTI121_0:
-	dl	BB121_24
-	dl	BB121_26
-	dl	BB121_9
-	dl	BB121_29
-	dl	BB121_28
-	private	JTI121_1
-JTI121_1:
-	dl	BB121_21
-	dl	BB121_21
-	dl	BB121_2
-	dl	BB121_28
+	private	JTI127_0
+JTI127_0:
+	dl	BB127_24
+	dl	BB127_26
+	dl	BB127_9
+	dl	BB127_29
+	dl	BB127_28
+	private	JTI127_1
+JTI127_1:
+	dl	BB127_21
+	dl	BB127_21
+	dl	BB127_2
+	dl	BB127_28
 
 	section	.text,"ax",@progbits
 	public	_symbols_run
@@ -8298,7 +9136,7 @@ _symbols_run:
 	ld	c, d
 	lea	hl, ix - 28
 	ld	(ix - 34), hl
-BB122_1:
+BB128_1:
 	or	a, a
 	sbc	hl, hl
 	ld	(ix - 35), c
@@ -8317,7 +9155,7 @@ BB122_1:
 	ld	de, 6
 	push	de
 	push	hl
-	ld	hl, _.str.426
+	ld	hl, _.str.453
 	push	hl
 	ld	hl, 28
 	push	hl
@@ -8356,13 +9194,13 @@ BB122_1:
 	ld	l, a
 	ld	(ix - 31), hl
 	ld	bc, 3
-BB122_2:
+BB128_2:
 	push	bc
 	pop	hl
 	ld	de, 21
 	or	a, a
 	sbc	hl, de
-	jr	z, BB122_6
+	jr	z, BB128_6
 	ld	(ix - 41), bc
 	ld	hl, (ix - 38)
 	add	hl, bc
@@ -8370,7 +9208,7 @@ BB122_2:
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
-	jr	z, BB122_5
+	jr	z, BB128_5
 	ld	a, (hl)
 	or	a, a
 	ld	de, 26
@@ -8382,7 +9220,7 @@ BB122_2:
 	pop	hl
 	pop	hl
 	pop	hl
-BB122_5:
+BB128_5:
 	ld	iy, (ix - 41)
 	ld	de, 3
 	add	iy, de
@@ -8390,9 +9228,9 @@ BB122_5:
 	inc	l
 	ld	(ix - 31), hl
 	lea	bc, iy
-	jr	BB122_2
-BB122_6:
-	ld	hl, _.str.1.427
+	jr	BB128_2
+BB128_6:
+	ld	hl, _.str.1.454
 	push	hl
 	call	_io_draw_footer
 	pop	hl
@@ -8400,40 +9238,40 @@ BB122_6:
 	ld	l, a
 	cp	a, 1
 	ld	c, (ix - 35)
-	jr	nz, BB122_8
+	jr	nz, BB128_8
 	ld	a, c
 	or	a, a
-	jr	nz, BB122_13
-BB122_8:
+	jr	nz, BB128_13
+BB128_8:
 	ld	a, l
 	cp	a, 2
 	ld	iy, _SYMBOL_ENTRIES
 	ld	de, 21
-	jr	nz, BB122_11
+	jr	nz, BB128_11
 	ld	a, c
 	cp	a, 5
-	jr	nc, BB122_11
+	jr	nc, BB128_11
 	inc	c
-	jp	BB122_1
-BB122_11:
+	jp	BB128_1
+BB128_11:
 	ld	a, l
 	cp	a, 4
-	jr	z, BB122_14
+	jr	z, BB128_14
 	ld	a, l
 	cp	a, 5
-	jp	nz, BB122_1
-	jr	BB122_15
-BB122_13:
+	jp	nz, BB128_1
+	jr	BB128_15
+BB128_13:
 	dec	c
 	ld	iy, _SYMBOL_ENTRIES
 	ld	de, 21
-	jp	BB122_1
-BB122_14:
+	jp	BB128_1
+BB128_14:
 	ld	hl, 1
-	jr	BB122_16
-BB122_15:
+	jr	BB128_16
+BB128_15:
 	ld	hl, 2
-BB122_16:
+BB128_16:
 	ld	sp, ix
 	pop	ix
 	ret
@@ -8623,51 +9461,21 @@ _CATEGORIES:
 	rb	230
 
 	section	.rodata,"a",@progbits
-	private	_FORMULA_KIN_VAVG
-_FORMULA_KIN_VAVG:
-	dl	_.str.91
-	dl	_.str.92
-	dl	_.str.93
-	db	3
-	dl	_OPT_V_S_T
-	dl	0
-
-	section	.rodata,"a",@progbits
-	private	_FORMULA_KIN_A
-_FORMULA_KIN_A:
-	dl	_.str.96
-	dl	_.str.97
-	dl	_.str.98
-	db	4
-	dl	_OPT_A_V_V0_T
-	dl	0
-
-	section	.rodata,"a",@progbits
 	private	_FORMULA_KIN_V
 _FORMULA_KIN_V:
-	dl	_.str.100
-	dl	_.str.31.409
-	dl	_.str.102
+	dl	_.str.91
+	dl	_.str.12.393
+	dl	_.str.93
 	db	4
 	dl	_OPT_V_V0_A_T
 	dl	0
 
 	section	.rodata,"a",@progbits
-	private	_FORMULA_KIN_S
-_FORMULA_KIN_S:
-	dl	_.str.103
-	dl	_.str.25.403
-	dl	_.str.105
-	db	4
-	dl	_OPT_S_S0_V_T
-	dl	0
-
-	section	.rodata,"a",@progbits
 	private	_FORMULA_KIN_S2
 _FORMULA_KIN_S2:
-	dl	_.str.106
-	dl	_.str.107
-	dl	_.str.102
+	dl	_.str.96
+	dl	_.str.96
+	dl	_.str.93
 	db	4
 	dl	_OPT_S_V0_A_T2
 	dl	0
@@ -8675,11 +9483,41 @@ _FORMULA_KIN_S2:
 	section	.rodata,"a",@progbits
 	private	_FORMULA_KIN_V2
 _FORMULA_KIN_V2:
-	dl	_.str.111
-	dl	_.str.112
-	dl	_.str.102
+	dl	_.str.100
+	dl	_.str.100
+	dl	_.str.93
 	db	4
 	dl	_OPT_V2_V0_A_S
+	dl	0
+
+	section	.rodata,"a",@progbits
+	private	_FORMULA_KIN_S
+_FORMULA_KIN_S:
+	dl	_.str.67.415
+	dl	_.str.67.415
+	dl	_.str.103
+	db	4
+	dl	_OPT_S_S0_V_T
+	dl	0
+
+	section	.rodata,"a",@progbits
+	private	_FORMULA_KIN_VAVG
+_FORMULA_KIN_VAVG:
+	dl	_.str.105
+	dl	_.str.106
+	dl	_.str.107
+	db	3
+	dl	_OPT_V_S_T
+	dl	0
+
+	section	.rodata,"a",@progbits
+	private	_FORMULA_KIN_A
+_FORMULA_KIN_A:
+	dl	_.str.108
+	dl	_.str.109
+	dl	_.str.110
+	db	4
+	dl	_OPT_A_V_V0_T
 	dl	0
 
 	section	.rodata,"a",@progbits
@@ -8688,61 +9526,41 @@ _.str.1.38:
 	db	"2. Circular Motion", 0
 
 	section	.rodata,"a",@progbits
-	private	_FORMULA_CIRC_PHI
-_FORMULA_CIRC_PHI:
-	dl	_.str.114
-	dl	_.str.63.371
-	dl	_.str.116
-	db	3
-	dl	_OPT_PHI_OMEGA_T
-	dl	0
-
-	section	.rodata,"a",@progbits
 	private	_FORMULA_CIRC_V
 _FORMULA_CIRC_V:
-	dl	_.str.118
-	dl	_.str.56.364
-	dl	_.str.120
+	dl	_.str.111
+	dl	_.str.26.360
+	dl	_.str.113
 	db	3
 	dl	_OPT_V_R_OMEGA
 	dl	0
 
 	section	.rodata,"a",@progbits
-	private	_FORMULA_CIRC_AT
-_FORMULA_CIRC_AT:
-	dl	_.str.122
-	dl	_.str.123
-	dl	_.str.120
-	db	3
-	dl	_OPT_AT_R_ALPHA
-	dl	0
-
-	section	.rodata,"a",@progbits
 	private	_FORMULA_CIRC_AC
 _FORMULA_CIRC_AC:
-	dl	_.str.125
-	dl	_.str.126
-	dl	_.str.120
+	dl	_.str.116
+	dl	_.str.117
+	dl	_.str.113
 	db	3
 	dl	_OPT_AC_V_R
 	dl	0
 
 	section	.rodata,"a",@progbits
-	private	_FORMULA_CIRC_FREQ
-_FORMULA_CIRC_FREQ:
-	dl	_.str.128
-	dl	_.str.76.384
-	dl	_.str.130
-	db	2
-	dl	_OPT_FREQ_PERIOD
+	private	_FORMULA_CIRC_AT
+_FORMULA_CIRC_AT:
+	dl	_.str.119
+	dl	_.str.27.443
+	dl	_.str.113
+	db	3
+	dl	_OPT_AT_R_ALPHA
 	dl	0
 
 	section	.rodata,"a",@progbits
 	private	_FORMULA_CIRC_OMEGA_F
 _FORMULA_CIRC_OMEGA_F:
-	dl	_.str.133
-	dl	_.str.52.360
-	dl	_.str.130
+	dl	_.str.122
+	dl	_.str.93.370
+	dl	_.str.124
 	db	2
 	dl	_OPT_OMEGA_F
 	dl	0
@@ -8750,9 +9568,9 @@ _FORMULA_CIRC_OMEGA_F:
 	section	.rodata,"a",@progbits
 	private	_FORMULA_CIRC_OMEGA_T
 _FORMULA_CIRC_OMEGA_T:
-	dl	_.str.135
-	dl	_.str.136
-	dl	_.str.130
+	dl	_.str.125
+	dl	_.str.126
+	dl	_.str.124
 	db	2
 	dl	_OPT_OMEGA_T
 	dl	0
@@ -8760,9 +9578,9 @@ _FORMULA_CIRC_OMEGA_T:
 	section	.rodata,"a",@progbits
 	private	_FORMULA_CIRC_OMEGA_ALPHA
 _FORMULA_CIRC_OMEGA_ALPHA:
-	dl	_.str.137
-	dl	_.str.69.377
-	dl	_.str.139
+	dl	_.str.128
+	dl	_.str.108.385
+	dl	_.str.130
 	db	4
 	dl	_OPT_OMEGA_OMEGA0_ALPHA_T
 	dl	0
@@ -8770,21 +9588,51 @@ _FORMULA_CIRC_OMEGA_ALPHA:
 	section	.rodata,"a",@progbits
 	private	_FORMULA_CIRC_PHI_ALPHA
 _FORMULA_CIRC_PHI_ALPHA:
-	dl	_.str.140
-	dl	_.str.141
-	dl	_.str.139
+	dl	_.str.131
+	dl	_.str.132
+	dl	_.str.130
 	db	4
 	dl	_OPT_PHI_OMEGA0_ALPHA_T
 	dl	0
 
 	section	.rodata,"a",@progbits
+	private	_FORMULA_CIRC_N_ALPHA
+_FORMULA_CIRC_N_ALPHA:
+	dl	_.str.133
+	dl	_.str.134
+	dl	_.str.130
+	db	4
+	dl	_OPT_N_OMEGA0_ALPHA_T
+	dl	0
+
+	section	.rodata,"a",@progbits
 	private	_FORMULA_CIRC_N
 _FORMULA_CIRC_N:
-	dl	_.str.73.381
-	dl	_.str.50.358
-	dl	_.str.130
+	dl	_.str.135
+	dl	_.str.91.368
+	dl	_.str.124
 	db	2
 	dl	_OPT_PHI_N
+	dl	0
+
+	section	.rodata,"a",@progbits
+	private	_FORMULA_CIRC_PHI
+_FORMULA_CIRC_PHI:
+	dl	_.str.137
+	dl	_.str.102.379
+	dl	_.str.139
+	db	3
+	dl	_OPT_PHI_OMEGA_T
+	dl	0
+
+	section	.rodata,"a",@progbits
+	private	_FORMULA_CIRC_FREQ
+_FORMULA_CIRC_FREQ:
+	dl	_.str.140
+	dl	_.str.114.391
+	dl	_.str.124
+	db	2
+	dl	_OPT_FREQ_PERIOD
 	dl	0
 
 	section	.rodata,"a",@progbits
@@ -8793,21 +9641,11 @@ _.str.2.39:
 	db	"3. Dynamics", 0
 
 	section	.rodata,"a",@progbits
-	private	_FORMULA_DYN_P
-_FORMULA_DYN_P:
-	dl	_.str.144
-	dl	_.str.85.344
-	dl	_.str.146
-	db	3
-	dl	_OPT_P_M_V
-	dl	0
-
-	section	.rodata,"a",@progbits
 	private	_FORMULA_DYN_F
 _FORMULA_DYN_F:
-	dl	_.str.148
-	dl	_.str.149
-	dl	_.str.146
+	dl	_.str.143
+	dl	_.str.143
+	dl	_.str.144
 	db	3
 	dl	_OPT_F_M_A
 	dl	0
@@ -8815,19 +9653,29 @@ _FORMULA_DYN_F:
 	section	.rodata,"a",@progbits
 	private	_FORMULA_DYN_A
 _FORMULA_DYN_A:
-	dl	_.str.150
-	dl	_.str.151
 	dl	_.str.146
+	dl	_.str.146
+	dl	_.str.144
 	db	3
 	dl	_OPT_F_M_A
 	dl	0
 
 	section	.rodata,"a",@progbits
+	private	_FORMULA_DYN_P
+_FORMULA_DYN_P:
+	dl	_.str.31.339
+	dl	_.str.31.339
+	dl	_.str.144
+	db	3
+	dl	_OPT_P_M_V
+	dl	0
+
+	section	.rodata,"a",@progbits
 	private	_FORMULA_DYN_I
 _FORMULA_DYN_I:
-	dl	_.str.152
-	dl	_.str.153
-	dl	_.str.154
+	dl	_.str.148
+	dl	_.str.148
+	dl	_.str.149
 	db	3
 	dl	_OPT_I_F_T
 	dl	0
@@ -8838,11 +9686,21 @@ _.str.3.40:
 	db	"4. Work / Energy / Power", 0
 
 	section	.rodata,"a",@progbits
+	private	_FORMULA_EN_W_DEK
+_FORMULA_EN_W_DEK:
+	dl	_.str.40.304
+	dl	_.str.152
+	dl	_.str.124
+	db	2
+	dl	_OPT_W_DELTA_EK
+	dl	0
+
+	section	.rodata,"a",@progbits
 	private	_FORMULA_EN_EK
 _FORMULA_EN_EK:
-	dl	_.str.156
-	dl	_.str.103.313
-	dl	_.str.146
+	dl	_.str.134.306
+	dl	_.str.134.306
+	dl	_.str.144
 	db	3
 	dl	_OPT_EK_M_V
 	dl	0
@@ -8850,29 +9708,19 @@ _FORMULA_EN_EK:
 	section	.rodata,"a",@progbits
 	private	_FORMULA_EN_W
 _FORMULA_EN_W:
-	dl	_.str.96.305
-	dl	_.str.159
-	dl	_.str.160
+	dl	_.str.154
+	dl	_.str.154
+	dl	_.str.155
 	db	3
 	dl	_OPT_W_F_D
 	dl	0
 
 	section	.rodata,"a",@progbits
-	private	_FORMULA_EN_PAVG
-_FORMULA_EN_PAVG:
-	dl	_.str.162
-	dl	_.str.163
-	dl	_.str.130
-	db	3
-	dl	_OPT_PAVG_W_T
-	dl	0
-
-	section	.rodata,"a",@progbits
 	private	_FORMULA_EN_P
 _FORMULA_EN_P:
-	dl	_.str.165
-	dl	_.str.166
-	dl	_.str.167
+	dl	_.str.157
+	dl	_.str.157
+	dl	_.str.158
 	db	3
 	dl	_OPT_POWER_F_V
 	dl	0
@@ -8880,9 +9728,9 @@ _FORMULA_EN_P:
 	section	.rodata,"a",@progbits
 	private	_FORMULA_EN_EP
 _FORMULA_EN_EP:
-	dl	_.str.168
-	dl	_.str.169
-	dl	_.str.170
+	dl	_.str.42.307
+	dl	_.str.160
+	dl	_.str.161
 	db	4
 	dl	_OPT_DELTA_EP_M_G_H
 	dl	0
@@ -8890,29 +9738,29 @@ _FORMULA_EN_EP:
 	section	.rodata,"a",@progbits
 	private	_FORMULA_EN_E
 _FORMULA_EN_E:
-	dl	_.str.174
-	dl	_.str.105.315
-	dl	_.str.130
+	dl	_.str.141.317
+	dl	_.str.141.317
+	dl	_.str.124
 	db	3
 	dl	_OPT_E_TOTAL_EP_EK
 	dl	0
 
 	section	.rodata,"a",@progbits
-	private	_FORMULA_EN_W_DEK
-_FORMULA_EN_W_DEK:
-	dl	_.str.176
-	dl	_.str.177
-	dl	_.str.130
-	db	2
-	dl	_OPT_W_DELTA_EK
+	private	_FORMULA_EN_PAVG
+_FORMULA_EN_PAVG:
+	dl	_.str.166
+	dl	_.str.166
+	dl	_.str.124
+	db	3
+	dl	_OPT_PAVG_W_T
 	dl	0
 
 	section	.rodata,"a",@progbits
 	private	_FORMULA_EN_SPRING
 _FORMULA_EN_SPRING:
-	dl	_.str.178
-	dl	_.str.179
-	dl	_.str.180
+	dl	_.str.168
+	dl	_.str.168
+	dl	_.str.169
 	db	3
 	dl	_OPT_F_K_X
 	dl	0
@@ -8925,19 +9773,29 @@ _.str.4.41:
 	section	.rodata,"a",@progbits
 	private	_FORMULA_CALC_EXPR
 _FORMULA_CALC_EXPR:
-	dl	_.str.183
-	dl	_.str.184
-	dl	_.str.185
+	dl	_.str.172
+	dl	_.str.173
+	dl	_.str.174
 	db	0
 	dl	0
 	dl	_expr_calc_run
 
 	section	.rodata,"a",@progbits
+	private	_FORMULA_CALC_FORCE_LINEAR
+_FORMULA_CALC_FORCE_LINEAR:
+	dl	_.str.179.296
+	dl	_.str.179.296
+	dl	_.str.176
+	db	0
+	dl	0
+	dl	_run_force_linear_motion_solver
+
+	section	.rodata,"a",@progbits
 	private	_FORMULA_CALC_V
 _FORMULA_CALC_V:
-	dl	_.str.186
-	dl	_.str.187
-	dl	_.str.188
+	dl	_.str.191
+	dl	_.str.191
+	dl	_.str.192
 	db	3
 	dl	_OPT_V_S_T
 	dl	0
@@ -8945,29 +9803,69 @@ _FORMULA_CALC_V:
 	section	.rodata,"a",@progbits
 	private	_FORMULA_CALC_A
 _FORMULA_CALC_A:
-	dl	_.str.189
-	dl	_.str.11.389
-	dl	_.str.191
+	dl	_.str.11.398
+	dl	_.str.11.398
+	dl	_.str.194
 	db	4
 	dl	_OPT_A_V_V0_T
 	dl	0
 
 	section	.rodata,"a",@progbits
+	private	_FORMULA_CALC_DISP
+_FORMULA_CALC_DISP:
+	dl	_.str.195
+	dl	_.str.195
+	dl	_.str.196
+	db	3
+	dl	_OPT_V_S_T
+	dl	0
+
+	section	.rodata,"a",@progbits
 	private	_FORMULA_CALC_FORCE
 _FORMULA_CALC_FORCE:
-	dl	_.str.192
-	dl	_.str.86.345
-	dl	_.str.194
+	dl	_.str.32.340
+	dl	_.str.32.340
+	dl	_.str.198
 	db	3
 	dl	_OPT_FORCE_DP_T
 	dl	0
 
 	section	.rodata,"a",@progbits
+	private	_FORMULA_CALC_POWER
+_FORMULA_CALC_POWER:
+	dl	_.str.200
+	dl	_.str.200
+	dl	_.str.201
+	db	3
+	dl	_OPT_POWER_W_T
+	dl	0
+
+	section	.rodata,"a",@progbits
+	private	_FORMULA_CALC_I
+_FORMULA_CALC_I:
+	dl	_.str.203
+	dl	_.str.203
+	dl	_.str.204
+	db	3
+	dl	_OPT_I_F_T
+	dl	0
+
+	section	.rodata,"a",@progbits
+	private	_FORMULA_CALC_W
+_FORMULA_CALC_W:
+	dl	_.str.39.449
+	dl	_.str.39.449
+	dl	_.str.206
+	db	3
+	dl	_OPT_W_F_D
+	dl	0
+
+	section	.rodata,"a",@progbits
 	private	_FORMULA_CALC_OMEGA
 _FORMULA_CALC_OMEGA:
-	dl	_.str.196
-	dl	_.str.48.356
-	dl	_.str.198
+	dl	_.str.24.279
+	dl	_.str.24.279
+	dl	_.str.208
 	db	3
 	dl	_OPT_PHI_OMEGA_T
 	dl	0
@@ -8975,39 +9873,19 @@ _FORMULA_CALC_OMEGA:
 	section	.rodata,"a",@progbits
 	private	_FORMULA_CALC_ALPHA
 _FORMULA_CALC_ALPHA:
-	dl	_.str.199
-	dl	_.str.49.357
-	dl	_.str.201
+	dl	_.str.25.367
+	dl	_.str.25.367
+	dl	_.str.210
 	db	4
 	dl	_OPT_OMEGA_OMEGA0_ALPHA_T
 	dl	0
 
 	section	.rodata,"a",@progbits
-	private	_FORMULA_CALC_POWER
-_FORMULA_CALC_POWER:
-	dl	_.str.202
-	dl	_.str.203
-	dl	_.str.204
-	db	3
-	dl	_OPT_POWER_W_T
-	dl	0
-
-	section	.rodata,"a",@progbits
-	private	_FORMULA_CALC_DISP
-_FORMULA_CALC_DISP:
-	dl	_.str.206
-	dl	_.str.207
-	dl	_.str.208
-	db	3
-	dl	_OPT_V_S_T
-	dl	0
-
-	section	.rodata,"a",@progbits
 	private	_FORMULA_CALC_DV
 _FORMULA_CALC_DV:
-	dl	_.str.209
-	dl	_.str.210
 	dl	_.str.211
+	dl	_.str.211
+	dl	_.str.212
 	db	4
 	dl	_OPT_A_V_V0_T
 	dl	0
@@ -9015,8 +9893,8 @@ _FORMULA_CALC_DV:
 	section	.rodata,"a",@progbits
 	private	_FORMULA_CALC_DPHI
 _FORMULA_CALC_DPHI:
-	dl	_.str.212
-	dl	_.str.213
+	dl	_.str.48.280
+	dl	_.str.48.280
 	dl	_.str.214
 	db	3
 	dl	_OPT_PHI_OMEGA_T
@@ -9026,30 +9904,10 @@ _FORMULA_CALC_DPHI:
 	private	_FORMULA_CALC_DOMEGA
 _FORMULA_CALC_DOMEGA:
 	dl	_.str.215
+	dl	_.str.215
 	dl	_.str.216
-	dl	_.str.217
 	db	4
 	dl	_OPT_OMEGA_OMEGA0_ALPHA_T
-	dl	0
-
-	section	.rodata,"a",@progbits
-	private	_FORMULA_CALC_I
-_FORMULA_CALC_I:
-	dl	_.str.218
-	dl	_.str.87.346
-	dl	_.str.220
-	db	3
-	dl	_OPT_I_F_T
-	dl	0
-
-	section	.rodata,"a",@progbits
-	private	_FORMULA_CALC_W
-_FORMULA_CALC_W:
-	dl	_.str.221
-	dl	_.str.222
-	dl	_.str.223
-	db	3
-	dl	_OPT_W_F_D
 	dl	0
 
 	section	.rodata,"a",@progbits
@@ -9596,106 +10454,11 @@ _.str.90:
 	section	.rodata,"a",@progbits
 	private	_.str.91
 _.str.91:
-	db	"Average speed", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.92
-_.str.92:
-	db	"v_avg = s / t", 0
+	db	"Velocity after time", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.93
 _.str.93:
-	db	"Use path or displacement", 0
-
-	section	.rodata,"a",@progbits
-	private	_OPT_V_S_T
-_OPT_V_S_T:
-	dl	0
-	db	2
-	dl	4
-	dl	3
-	dl	0
-	dl	_solve_v_from_s_t
-	dl	4
-	db	2
-	dl	0
-	dl	3
-	dl	0
-	dl	_solve_s_from_v_t
-	dl	3
-	db	2
-	dl	4
-	dl	0
-	dl	0
-	dl	_solve_t_from_s_v
-
-	section	.rodata,"a",@progbits
-	private	_.str.94
-_.str.94:
-	db	"t cannot be zero.", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.95
-_.str.95:
-	db	"v cannot be zero.", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.96
-_.str.96:
-	db	"Acceleration from velocity change", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.97
-_.str.97:
-	db	"a = (v - v0) / t", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.98
-_.str.98:
-	db	"Straight-line motion", 0
-
-	section	.rodata,"a",@progbits
-	private	_OPT_A_V_V0_T
-_OPT_A_V_V0_T:
-	dl	2
-	db	3
-	dl	0
-	dl	1
-	dl	3
-	dl	_solve_a_from_v_v0_dt
-	dl	0
-	db	3
-	dl	1
-	dl	2
-	dl	3
-	dl	_solve_v_from_v0_a_t
-	dl	1
-	db	3
-	dl	0
-	dl	2
-	dl	3
-	dl	_solve_v0_from_v_a_t
-	dl	3
-	db	3
-	dl	0
-	dl	1
-	dl	2
-	dl	_solve_t_from_v_v0_a
-
-	section	.rodata,"a",@progbits
-	private	_.str.99
-_.str.99:
-	db	"a cannot be zero.", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.100
-_.str.100:
-	db	"Velocity after time", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.102
-_.str.102:
 	db	"Condition: constant a", 0
 
 	section	.rodata,"a",@progbits
@@ -9727,51 +10490,18 @@ _OPT_V_V0_A_T:
 	dl	_solve_t_from_v_v0_a
 
 	section	.rodata,"a",@progbits
-	private	_.str.103
-_.str.103:
-	db	"Position at constant velocity", 0
+	private	_.str.94
+_.str.94:
+	db	"t cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.105
-_.str.105:
-	db	"Condition: constant v", 0
+	private	_.str.95
+_.str.95:
+	db	"a cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_OPT_S_S0_V_T
-_OPT_S_S0_V_T:
-	dl	4
-	db	3
-	dl	5
-	dl	0
-	dl	3
-	dl	_solve_s_from_s0_v_t
-	dl	5
-	db	3
-	dl	4
-	dl	0
-	dl	3
-	dl	_solve_s0_from_s_v_t
-	dl	0
-	db	3
-	dl	4
-	dl	5
-	dl	3
-	dl	_solve_v_from_s_s0_t
-	dl	3
-	db	3
-	dl	4
-	dl	5
-	dl	0
-	dl	_solve_t_from_s_s0_v
-
-	section	.rodata,"a",@progbits
-	private	_.str.106
-_.str.106:
-	db	"Position with acceleration", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.107
-_.str.107:
+	private	_.str.96
+_.str.96:
 	db	"s = v0*t + 0.5*a*t^2", 0
 
 	section	.rodata,"a",@progbits
@@ -9803,28 +10533,23 @@ _OPT_S_V0_A_T2:
 	dl	_solve_t_from_s_v0_a
 
 	section	.rodata,"a",@progbits
-	private	_.str.108
-_.str.108:
+	private	_.str.97
+_.str.97:
 	db	"No unique t value.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.109
-_.str.109:
+	private	_.str.98
+_.str.98:
 	db	"Invalid square root.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.110
-_.str.110:
+	private	_.str.99
+_.str.99:
 	db	"No non-negative time result.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.111
-_.str.111:
-	db	"Velocity-displacement relation", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.112
-_.str.112:
+	private	_.str.100
+_.str.100:
 	db	"v^2 = v0^2 + 2*a*s", 0
 
 	section	.rodata,"a",@progbits
@@ -9856,55 +10581,136 @@ _OPT_V2_V0_A_S:
 	dl	_solve_s_from_v_v0_a
 
 	section	.rodata,"a",@progbits
-	private	_.str.113
-_.str.113:
+	private	_.str.101
+_.str.101:
 	db	"s cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.114
-_.str.114:
-	db	"Angular displacement", 0
+	private	_.str.103
+_.str.103:
+	db	"Condition: constant v", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.116
-_.str.116:
-	db	"Condition: constant omega", 0
+	private	_OPT_S_S0_V_T
+_OPT_S_S0_V_T:
+	dl	4
+	db	3
+	dl	5
+	dl	0
+	dl	3
+	dl	_solve_s_from_s0_v_t
+	dl	5
+	db	3
+	dl	4
+	dl	0
+	dl	3
+	dl	_solve_s0_from_s_v_t
+	dl	0
+	db	3
+	dl	4
+	dl	5
+	dl	3
+	dl	_solve_v_from_s_s0_t
+	dl	3
+	db	3
+	dl	4
+	dl	5
+	dl	0
+	dl	_solve_t_from_s_s0_v
 
 	section	.rodata,"a",@progbits
-	private	_OPT_PHI_OMEGA_T
-_OPT_PHI_OMEGA_T:
-	dl	14
+	private	_.str.104
+_.str.104:
+	db	"v cannot be zero.", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.105
+_.str.105:
+	db	"v = s / t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.106
+_.str.106:
+	db	"v_avg = s / t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.107
+_.str.107:
+	db	"Use path or displacement", 0
+
+	section	.rodata,"a",@progbits
+	private	_OPT_V_S_T
+_OPT_V_S_T:
+	dl	0
 	db	2
-	dl	7
+	dl	4
 	dl	3
 	dl	0
-	dl	_solve_phi_from_omega_t
-	dl	7
+	dl	_solve_v_from_s_t
+	dl	4
 	db	2
-	dl	14
+	dl	0
 	dl	3
 	dl	0
-	dl	_solve_omega_from_phi_t
+	dl	_solve_s_from_v_t
 	dl	3
 	db	2
-	dl	14
-	dl	7
+	dl	4
 	dl	0
-	dl	_solve_t_from_phi_omega
+	dl	0
+	dl	_solve_t_from_s_v
 
 	section	.rodata,"a",@progbits
-	private	_.str.117
-_.str.117:
-	db	"omega cannot be zero.", 0
+	private	_.str.108
+_.str.108:
+	db	"a = (v-v0) / t", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.118
-_.str.118:
-	db	"Tangential speed", 0
+	private	_.str.109
+_.str.109:
+	db	"a = (v - v0) / t", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.120
-_.str.120:
+	private	_.str.110
+_.str.110:
+	db	"Straight-line motion", 0
+
+	section	.rodata,"a",@progbits
+	private	_OPT_A_V_V0_T
+_OPT_A_V_V0_T:
+	dl	2
+	db	3
+	dl	0
+	dl	1
+	dl	3
+	dl	_solve_a_from_v_v0_dt
+	dl	0
+	db	3
+	dl	1
+	dl	2
+	dl	3
+	dl	_solve_v_from_v0_a_t
+	dl	1
+	db	3
+	dl	0
+	dl	2
+	dl	3
+	dl	_solve_v0_from_v_a_t
+	dl	3
+	db	3
+	dl	0
+	dl	1
+	dl	2
+	dl	_solve_t_from_v_v0_a
+
+	section	.rodata,"a",@progbits
+	private	_.str.111
+_.str.111:
+	db	"v=r*omega", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.113
+_.str.113:
 	db	"Condition: constant r", 0
 
 	section	.rodata,"a",@progbits
@@ -9930,55 +10736,23 @@ _OPT_V_R_OMEGA:
 	dl	_solve_omega_from_v_r
 
 	section	.rodata,"a",@progbits
-	private	_.str.121
-_.str.121:
+	private	_.str.114
+_.str.114:
+	db	"omega cannot be zero.", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.115
+_.str.115:
 	db	"r cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.122
-_.str.122:
-	db	"Tangential acceleration", 0
+	private	_.str.116
+_.str.116:
+	db	"a_c=v^2/r", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.123
-_.str.123:
-	db	"a_t = r*alpha", 0
-
-	section	.rodata,"a",@progbits
-	private	_OPT_AT_R_ALPHA
-_OPT_AT_R_ALPHA:
-	dl	9
-	db	2
-	dl	6
-	dl	8
-	dl	0
-	dl	_solve_at_from_r_alpha
-	dl	6
-	db	2
-	dl	9
-	dl	8
-	dl	0
-	dl	_solve_r_from_at_alpha
-	dl	8
-	db	2
-	dl	9
-	dl	6
-	dl	0
-	dl	_solve_alpha_from_at_r
-
-	section	.rodata,"a",@progbits
-	private	_.str.124
-_.str.124:
-	db	"alpha cannot be zero.", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.125
-_.str.125:
-	db	"Centripetal acceleration", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.126
-_.str.126:
+	private	_.str.117
+_.str.117:
 	db	"a_c = v^2 / r", 0
 
 	section	.rodata,"a",@progbits
@@ -10004,50 +10778,51 @@ _OPT_AC_V_R:
 	dl	_solve_r_from_ac_v
 
 	section	.rodata,"a",@progbits
-	private	_.str.127
-_.str.127:
+	private	_.str.118
+_.str.118:
 	db	"ac cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.128
-_.str.128:
-	db	"Frequency and period", 0
+	private	_.str.119
+_.str.119:
+	db	"a_t=r*alpha", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.130
-_.str.130:
+	private	_OPT_AT_R_ALPHA
+_OPT_AT_R_ALPHA:
+	dl	9
+	db	2
+	dl	6
+	dl	8
+	dl	0
+	dl	_solve_at_from_r_alpha
+	dl	6
+	db	2
+	dl	9
+	dl	8
+	dl	0
+	dl	_solve_r_from_at_alpha
+	dl	8
+	db	2
+	dl	9
+	dl	6
+	dl	0
+	dl	_solve_alpha_from_at_r
+
+	section	.rodata,"a",@progbits
+	private	_.str.121
+_.str.121:
+	db	"alpha cannot be zero.", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.122
+_.str.122:
+	db	"omega=2*pi*f", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.124
+_.str.124:
 	db	"No extra condition", 0
-
-	section	.rodata,"a",@progbits
-	private	_OPT_FREQ_PERIOD
-_OPT_FREQ_PERIOD:
-	dl	13
-	db	1
-	dl	12
-	dl	0
-	dl	0
-	dl	_solve_freq_from_period
-	dl	12
-	db	1
-	dl	13
-	dl	0
-	dl	0
-	dl	_solve_period_from_freq
-
-	section	.rodata,"a",@progbits
-	private	_.str.131
-_.str.131:
-	db	"T cannot be zero.", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.132
-_.str.132:
-	db	"f cannot be zero.", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.133
-_.str.133:
-	db	"Angular speed from frequency", 0
 
 	section	.rodata,"a",@progbits
 	private	_OPT_OMEGA_F
@@ -10066,13 +10841,13 @@ _OPT_OMEGA_F:
 	dl	_solve_f_from_omega
 
 	section	.rodata,"a",@progbits
-	private	_.str.135
-_.str.135:
-	db	"Angular speed from period", 0
+	private	_.str.125
+_.str.125:
+	db	"omega=2*pi/T", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.136
-_.str.136:
+	private	_.str.126
+_.str.126:
 	db	"omega = 2*pi / T", 0
 
 	section	.rodata,"a",@progbits
@@ -10092,13 +10867,18 @@ _OPT_OMEGA_T:
 	dl	_solve_period_from_omega
 
 	section	.rodata,"a",@progbits
-	private	_.str.137
-_.str.137:
-	db	"Angular velocity change", 0
+	private	_.str.127
+_.str.127:
+	db	"T cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.139
-_.str.139:
+	private	_.str.128
+_.str.128:
+	db	"omega=omega0+alpha*t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.130
+_.str.130:
 	db	"Condition: constant alpha", 0
 
 	section	.rodata,"a",@progbits
@@ -10130,13 +10910,13 @@ _OPT_OMEGA_OMEGA0_ALPHA_T:
 	dl	_solve_t_from_omega_omega0_alpha
 
 	section	.rodata,"a",@progbits
-	private	_.str.140
-_.str.140:
-	db	"Angular displacement with alpha", 0
+	private	_.str.131
+_.str.131:
+	db	"phi=omega0*t+0.5*alpha*t^2", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.141
-_.str.141:
+	private	_.str.132
+_.str.132:
 	db	"phi = omega0*t + 0.5*alpha*t^2", 0
 
 	section	.rodata,"a",@progbits
@@ -10168,6 +10948,49 @@ _OPT_PHI_OMEGA0_ALPHA_T:
 	dl	_solve_t_from_phi_omega0_alpha
 
 	section	.rodata,"a",@progbits
+	private	_.str.133
+_.str.133:
+	db	"N from omega0,alpha,t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.134
+_.str.134:
+	db	"N = (omega0*t + 0.5*alpha*t^2)/(2*pi)", 0
+
+	section	.rodata,"a",@progbits
+	private	_OPT_N_OMEGA0_ALPHA_T
+_OPT_N_OMEGA0_ALPHA_T:
+	dl	16
+	db	3
+	dl	15
+	dl	8
+	dl	3
+	dl	_solve_n_from_omega0_alpha_t
+	dl	15
+	db	3
+	dl	16
+	dl	8
+	dl	3
+	dl	_solve_omega0_from_n_alpha_t
+	dl	8
+	db	3
+	dl	16
+	dl	15
+	dl	3
+	dl	_solve_alpha_from_n_omega0_t
+	dl	3
+	db	3
+	dl	16
+	dl	15
+	dl	8
+	dl	_solve_t_from_n_omega0_alpha
+
+	section	.rodata,"a",@progbits
+	private	_.str.135
+_.str.135:
+	db	"N=phi/(2*pi)", 0
+
+	section	.rodata,"a",@progbits
 	private	_OPT_PHI_N
 _OPT_PHI_N:
 	dl	14
@@ -10184,51 +11007,72 @@ _OPT_PHI_N:
 	dl	_solve_n_from_phi
 
 	section	.rodata,"a",@progbits
+	private	_.str.137
+_.str.137:
+	db	"phi=omega*t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.139
+_.str.139:
+	db	"Condition: constant omega", 0
+
+	section	.rodata,"a",@progbits
+	private	_OPT_PHI_OMEGA_T
+_OPT_PHI_OMEGA_T:
+	dl	14
+	db	2
+	dl	7
+	dl	3
+	dl	0
+	dl	_solve_phi_from_omega_t
+	dl	7
+	db	2
+	dl	14
+	dl	3
+	dl	0
+	dl	_solve_omega_from_phi_t
+	dl	3
+	db	2
+	dl	14
+	dl	7
+	dl	0
+	dl	_solve_t_from_phi_omega
+
+	section	.rodata,"a",@progbits
+	private	_.str.140
+_.str.140:
+	db	"f=1/T", 0
+
+	section	.rodata,"a",@progbits
+	private	_OPT_FREQ_PERIOD
+_OPT_FREQ_PERIOD:
+	dl	13
+	db	1
+	dl	12
+	dl	0
+	dl	0
+	dl	_solve_freq_from_period
+	dl	12
+	db	1
+	dl	13
+	dl	0
+	dl	0
+	dl	_solve_period_from_freq
+
+	section	.rodata,"a",@progbits
+	private	_.str.142
+_.str.142:
+	db	"f cannot be zero.", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.143
+_.str.143:
+	db	"F = m*a", 0
+
+	section	.rodata,"a",@progbits
 	private	_.str.144
 _.str.144:
-	db	"Momentum", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.146
-_.str.146:
 	db	"Condition: constant m", 0
-
-	section	.rodata,"a",@progbits
-	private	_OPT_P_M_V
-_OPT_P_M_V:
-	dl	18
-	db	2
-	dl	19
-	dl	0
-	dl	0
-	dl	_solve_p_from_m_v
-	dl	19
-	db	2
-	dl	18
-	dl	0
-	dl	0
-	dl	_solve_m_from_p_v
-	dl	0
-	db	2
-	dl	18
-	dl	19
-	dl	0
-	dl	_solve_v_from_p_m
-
-	section	.rodata,"a",@progbits
-	private	_.str.147
-_.str.147:
-	db	"m cannot be zero.", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.148
-_.str.148:
-	db	"Newton's second law", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.149
-_.str.149:
-	db	"F = m*a", 0
 
 	section	.rodata,"a",@progbits
 	private	_OPT_F_M_A
@@ -10253,28 +11097,45 @@ _OPT_F_M_A:
 	dl	_solve_a_from_f_m
 
 	section	.rodata,"a",@progbits
-	private	_.str.150
-_.str.150:
-	db	"Acceleration from force", 0
+	private	_.str.145
+_.str.145:
+	db	"m cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.151
-_.str.151:
+	private	_.str.146
+_.str.146:
 	db	"a = F / m", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.152
-_.str.152:
-	db	"Impulse", 0
+	private	_OPT_P_M_V
+_OPT_P_M_V:
+	dl	18
+	db	2
+	dl	19
+	dl	0
+	dl	0
+	dl	_solve_p_from_m_v
+	dl	19
+	db	2
+	dl	18
+	dl	0
+	dl	0
+	dl	_solve_m_from_p_v
+	dl	0
+	db	2
+	dl	18
+	dl	19
+	dl	0
+	dl	_solve_v_from_p_m
 
 	section	.rodata,"a",@progbits
-	private	_.str.153
-_.str.153:
+	private	_.str.148
+_.str.148:
 	db	"I = F*t", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.154
-_.str.154:
+	private	_.str.149
+_.str.149:
 	db	"Condition: constant F", 0
 
 	section	.rodata,"a",@progbits
@@ -10300,14 +11161,30 @@ _OPT_I_F_T:
 	dl	_solve_t_from_i_f
 
 	section	.rodata,"a",@progbits
-	private	_.str.155
-_.str.155:
+	private	_.str.150
+_.str.150:
 	db	"F cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.156
-_.str.156:
-	db	"Kinetic energy", 0
+	private	_.str.152
+_.str.152:
+	db	"W = delta Ek", 0
+
+	section	.rodata,"a",@progbits
+	private	_OPT_W_DELTA_EK
+_OPT_W_DELTA_EK:
+	dl	22
+	db	1
+	dl	31
+	dl	0
+	dl	0
+	dl	_solve_w_from_delta_ek
+	dl	31
+	db	1
+	dl	22
+	dl	0
+	dl	0
+	dl	_solve_delta_ek_from_w
 
 	section	.rodata,"a",@progbits
 	private	_OPT_EK_M_V
@@ -10332,13 +11209,13 @@ _OPT_EK_M_V:
 	dl	_solve_v_from_ek_m
 
 	section	.rodata,"a",@progbits
-	private	_.str.159
-_.str.159:
+	private	_.str.154
+_.str.154:
 	db	"W = F*d", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.160
-_.str.160:
+	private	_.str.155
+_.str.155:
 	db	"Constant F, F parallel d", 0
 
 	section	.rodata,"a",@progbits
@@ -10364,60 +11241,18 @@ _OPT_W_F_D:
 	dl	_solve_d_from_w_f
 
 	section	.rodata,"a",@progbits
-	private	_.str.161
-_.str.161:
+	private	_.str.156
+_.str.156:
 	db	"d cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.162
-_.str.162:
-	db	"Average power", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.163
-_.str.163:
-	db	"P_avg = W / t", 0
-
-	section	.rodata,"a",@progbits
-	private	_OPT_PAVG_W_T
-_OPT_PAVG_W_T:
-	dl	24
-	db	2
-	dl	22
-	dl	3
-	dl	0
-	dl	_solve_pavg_from_w_t
-	dl	22
-	db	2
-	dl	24
-	dl	3
-	dl	0
-	dl	_solve_w_from_pavg_t
-	dl	3
-	db	2
-	dl	24
-	dl	22
-	dl	0
-	dl	_solve_t_from_pavg_w
-
-	section	.rodata,"a",@progbits
-	private	_.str.164
-_.str.164:
-	db	"Pavg cannot be zero.", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.165
-_.str.165:
-	db	"Instantaneous power", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.166
-_.str.166:
+	private	_.str.157
+_.str.157:
 	db	"P = F*v", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.167
-_.str.167:
+	private	_.str.158
+_.str.158:
 	db	"F parallel v", 0
 
 	section	.rodata,"a",@progbits
@@ -10443,18 +11278,13 @@ _OPT_POWER_F_V:
 	dl	_solve_v_from_power_f
 
 	section	.rodata,"a",@progbits
-	private	_.str.168
-_.str.168:
-	db	"Potential energy change", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.169
-_.str.169:
+	private	_.str.160
+_.str.160:
 	db	"delta Ep = m*g*h", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.170
-_.str.170:
+	private	_.str.161
+_.str.161:
 	db	"Condition: constant m and g", 0
 
 	section	.rodata,"a",@progbits
@@ -10486,24 +11316,19 @@ _OPT_DELTA_EP_M_G_H:
 	dl	_solve_h_from_delta_ep_m_g
 
 	section	.rodata,"a",@progbits
-	private	_.str.171
-_.str.171:
+	private	_.str.162
+_.str.162:
 	db	"g*h cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.172
-_.str.172:
+	private	_.str.163
+_.str.163:
 	db	"m*h cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.173
-_.str.173:
+	private	_.str.164
+_.str.164:
 	db	"m*g cannot be zero.", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.174
-_.str.174:
-	db	"Mechanical energy", 0
 
 	section	.rodata,"a",@progbits
 	private	_OPT_E_TOTAL_EP_EK
@@ -10528,44 +11353,45 @@ _OPT_E_TOTAL_EP_EK:
 	dl	_solve_ek_from_e_total_ep
 
 	section	.rodata,"a",@progbits
-	private	_.str.176
-_.str.176:
-	db	"Work-energy theorem", 0
+	private	_.str.166
+_.str.166:
+	db	"P_avg = W / t", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.177
-_.str.177:
-	db	"W = delta Ek", 0
-
-	section	.rodata,"a",@progbits
-	private	_OPT_W_DELTA_EK
-_OPT_W_DELTA_EK:
+	private	_OPT_PAVG_W_T
+_OPT_PAVG_W_T:
+	dl	24
+	db	2
 	dl	22
-	db	1
-	dl	31
+	dl	3
 	dl	0
+	dl	_solve_pavg_from_w_t
+	dl	22
+	db	2
+	dl	24
+	dl	3
 	dl	0
-	dl	_solve_w_from_delta_ek
-	dl	31
-	db	1
+	dl	_solve_w_from_pavg_t
+	dl	3
+	db	2
+	dl	24
 	dl	22
 	dl	0
-	dl	0
-	dl	_solve_delta_ek_from_w
+	dl	_solve_t_from_pavg_w
 
 	section	.rodata,"a",@progbits
-	private	_.str.178
-_.str.178:
-	db	"Hooke's law", 0
+	private	_.str.167
+_.str.167:
+	db	"Pavg cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.179
-_.str.179:
+	private	_.str.168
+_.str.168:
 	db	"F = k*d", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.180
-_.str.180:
+	private	_.str.169
+_.str.169:
 	db	"Condition: constant k", 0
 
 	section	.rodata,"a",@progbits
@@ -10591,63 +11417,123 @@ _OPT_F_K_X:
 	dl	_solve_x_from_f_k
 
 	section	.rodata,"a",@progbits
+	private	_.str.170
+_.str.170:
+	db	"x cannot be zero.", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.171
+_.str.171:
+	db	"k cannot be zero.", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.172
+_.str.172:
+	db	"f(x), f(t), d/dx, S", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.173
+_.str.173:
+	db	"Enter polynomial in x or t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.174
+_.str.174:
+	db	"Examples: 10t, 3t^2+2, x^3-x", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.176
+_.str.176:
+	db	"Find v(t) and s(t) for linear force", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.177
+_.str.177:
+	db	"Enter mass m [kg]:", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.178
+_.str.178:
+	db	"Mass m cannot", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.179
+_.str.179:
+	db	"be zero.", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.180
+_.str.180:
+	db	"Enter force offset F0 [N]:", 0
+
+	section	.rodata,"a",@progbits
 	private	_.str.181
 _.str.181:
-	db	"x cannot be zero.", 0
+	db	"Enter force slope k [N/s]:", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.182
 _.str.182:
-	db	"k cannot be zero.", 0
+	db	"Enter initial velocity v0 [m/s]:", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.183
 _.str.183:
-	db	"Derivative / integral of expression", 0
+	db	"Enter initial position s0 [m]:", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.184
 _.str.184:
-	db	"Enter polynomial in x or t", 0
+	db	"Enter time t [s]:", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.185
 _.str.185:
-	db	"Examples: 10t, 3t^2+2, x^3-x", 0
+	db	"Time t must be", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.186
 _.str.186:
-	db	"Find velocity from dx and dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.187
-_.str.187:
-	db	"v = dx / dt", 0
+	db	"non-negative.", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.188
 _.str.188:
-	db	"Use change in position over time", 0
+	db	"v(t) = %.8g m/s", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.189
 _.str.189:
-	db	"Find acceleration from dv and dt", 0
+	db	"s(t) = %.8g m", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.191
 _.str.191:
-	db	"Use change in velocity over time", 0
+	db	"v = dx / dt", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.192
 _.str.192:
-	db	"Find force from dp and dt", 0
+	db	"Use change in position over time", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.194
 _.str.194:
+	db	"Use change in velocity over time", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.195
+_.str.195:
+	db	"x = S v dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.196
+_.str.196:
+	db	"Constant v over the interval", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.198
+_.str.198:
 	db	"Use momentum change over time", 0
 
 	section	.rodata,"a",@progbits
@@ -10673,43 +11559,18 @@ _OPT_FORCE_DP_T:
 	dl	_solve_t_from_force_dp
 
 	section	.rodata,"a",@progbits
-	private	_.str.195
-_.str.195:
+	private	_.str.199
+_.str.199:
 	db	"dt cannot be zero.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.196
-_.str.196:
-	db	"Find angular speed from dphi and dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.198
-_.str.198:
-	db	"Use change in angle over time", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.199
-_.str.199:
-	db	"Find angular accel from domega,dt", 0
+	private	_.str.200
+_.str.200:
+	db	"P = dW / dt", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.201
 _.str.201:
-	db	"Use change in omega over time", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.202
-_.str.202:
-	db	"Find power from dW and dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.203
-_.str.203:
-	db	"P = dW / dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.204
-_.str.204:
 	db	"Use work change over time", 0
 
 	section	.rodata,"a",@progbits
@@ -10735,1399 +11596,1630 @@ _OPT_POWER_W_T:
 	dl	_solve_t_from_power_work
 
 	section	.rodata,"a",@progbits
-	private	_.str.205
-_.str.205:
+	private	_.str.202
+_.str.202:
 	db	"P cannot be zero.", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.203
+_.str.203:
+	db	"I = S F dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.204
+_.str.204:
+	db	"F constant over dt", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.206
 _.str.206:
-	db	"Find dx from velocity and dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.207
-_.str.207:
-	db	"dx = v * dt", 0
+	db	"F constant and parallel", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.208
 _.str.208:
-	db	"Constant v over time interval", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.209
-_.str.209:
-	db	"Find dv from acceleration, dt", 0
+	db	"Use change in angle over time", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.210
 _.str.210:
-	db	"dv = a * dt", 0
+	db	"Use change in omega over time", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.211
 _.str.211:
-	db	"Constant a over time interval", 0
+	db	"v = S a dt", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.212
 _.str.212:
-	db	"Find dphi from omega, dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.213
-_.str.213:
-	db	"dphi = omega * dt", 0
+	db	"Constant a over the interval", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.214
 _.str.214:
-	db	"Constant omega over time", 0
+	db	"Constant omega over the interval", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.215
 _.str.215:
-	db	"Find domega from alpha, dt", 0
+	db	"omega = S alpha dt", 0
 
 	section	.rodata,"a",@progbits
 	private	_.str.216
 _.str.216:
-	db	"domega = alpha * dt", 0
+	db	"Constant alpha over the interval", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.217
-_.str.217:
-	db	"Constant alpha over time", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.218
-_.str.218:
-	db	"Find impulse from force, dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.220
-_.str.220:
-	db	"F constant over dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.221
-_.str.221:
-	db	"Find work from force and dr", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.222
-_.str.222:
-	db	"W = integral(F dr)", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.223
-_.str.223:
-	db	"F constant and parallel", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.224
-_.str.224:
-	db	"> Find %s", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.225
-_.str.225:
-	db	"  Find %s", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.228
-_.str.228:
+	private	_.str.219
+_.str.219:
 	db	"ENTER/CLEAR continue", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.2.232
-_.str.2.232:
+	private	_.str.1.222
+_.str.1.222:
+	db	"> %s", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.2.223
+_.str.2.223:
 	db	"ENTER ok MODE back", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.3.233
-_.str.3.233:
+	private	_.str.3.224
+_.str.3.224:
 	db	"Input Error", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.4.234
-_.str.4.234:
+	private	_.str.4.225
+_.str.4.225:
 	db	"Please enter a", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.5.235
-_.str.5.235:
+	private	_.str.5.226
+_.str.5.226:
 	db	"valid number.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.6.236
-_.str.6.236:
+	private	_.str.6.227
+_.str.6.227:
 	db	"%lf", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.7.237
-_.str.7.237:
+	private	_.str.7.228
+_.str.7.228:
 	db	"Number format", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.8.238
-_.str.8.238:
+	private	_.str.8.229
+_.str.8.229:
 	db	"not supported.", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.9.241
-_.str.9.241:
+	private	_.str.9.232
+_.str.9.232:
 	db	"Use OS input, then Enter", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.10.242
-_.str.10.242:
+	private	_.str.10.233
+_.str.10.233:
 	db	"> ", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.11.245
-_.str.11.245:
+	private	_.str.11.236
+_.str.11.236:
 	db	"%s = %.8g", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.12.246
-_.str.12.246:
+	private	_.str.12.237
+_.str.12.237:
 	db	"Result", 0
 
 	section	.data,"aw",@progbits
 	private	_menu_select_home.labels
 _menu_select_home.labels:
-	dl	_.str.264
-	dl	_.str.274
-	dl	_.str.2.266
+	dl	_.str.253
+	dl	_.str.263
+	dl	_.str.2.255
 
 	section	.rodata,"a",@progbits
-	private	_.str.264
-_.str.264:
+	private	_.str.253
+_.str.253:
 	db	"Formula Solver", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.2.266
-_.str.2.266:
+	private	_.str.2.255
+_.str.2.255:
 	db	"Symbols", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.3.259
-_.str.3.259:
+	private	_.str.3.250
+_.str.3.250:
 	db	"Physics Tools", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.4.269
-_.str.4.269:
+	private	_.str.4.258
+_.str.4.258:
 	db	"Physics Solver", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.5.262
-_.str.5.262:
-	db	"> %s", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.6.263
-_.str.6.263:
-	db	"  %s", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.7.260
-_.str.7.260:
+	private	_.str.6.251
+_.str.6.251:
 	db	"UP/DN scroll OK select", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.274
-_.str.274:
+	private	_.str.263
+_.str.263:
 	db	"All Formulas", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.1.275
-_.str.1.275:
+	private	_.str.1.264
+_.str.1.264:
 	db	"%c %s", 0
 
 	section	.rodata,"a",@progbits
 	private	_REFERENCE_CATEGORIES
 _REFERENCE_CATEGORIES:
-	dl	_.str.3.279
+	dl	_.str.3.268
 	db	6
+	dl	_QUICK_ACCESS_ENTRIES
+	dl	_.str.4.269
+	db	7
 	dl	_KINEMATICS_ENTRIES
-	dl	_.str.4.280
-	db	5
+	dl	_.str.5.270
+	db	6
 	dl	_CIRCULAR_ENTRIES
-	dl	_.str.23.449
-	db	3
+	dl	_.str.23.476
+	db	4
 	dl	_DYNAMICS_ENTRIES
-	dl	_.str.6.282
-	db	5
+	dl	_.str.7.272
+	db	6
 	dl	_ENERGY_ENTRIES
-	dl	_.str.7.283
-	db	3
+	dl	_.str.8.273
+	db	5
 	dl	_CALCULUS_ENTRIES
 
 	section	.rodata,"a",@progbits
-	private	_.str.2.276
-_.str.2.276:
+	private	_.str.2.265
+_.str.2.265:
 	db	"UP/DN OK MODE BACK", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.3.279
-_.str.3.279:
+	private	_.str.3.268
+_.str.3.268:
+	db	"Quick Access", 0
+
+	section	.rodata,"a",@progbits
+	private	_QUICK_ACCESS_ENTRIES
+_QUICK_ACCESS_ENTRIES:
+	dl	_.str.9.433
+	dl	_.str.10.401
+	dl	_.str.11.398
+	dl	_.str.12.393
+	dl	_.str.13.394
+	dl	_.str.14.395
+	dl	_.str.15.434
+	dl	_.str.16.435
+	dl	_.str.17.436
+	dl	_.str.18.437
+	dl	_.str.19.438
+	dl	_.str.20.439
+	dl	_.str.21.440
+	dl	_.str.22.441
+	dl	_.str.23.442
+	dl	_.str.24.279
+	dl	_.str.25.367
+	dl	_.str.26.360
+	dl	_.str.27.443
+	dl	_.str.28.444
+	dl	_.str.29.365
+	dl	_.str.30.445
+	dl	_.str.31.339
+	dl	_.str.32.340
+	dl	_.str.33.446
+	dl	_.str.34.447
+	dl	_.str.35.343
+	dl	_.str.22.475
+	dl	_.str.37.448
+	dl	_.str.38.313
+	dl	_.str.39.449
+	dl	_.str.40.304
+	dl	_.str.41.305
+	dl	_.str.42.307
+	dl	_.str.43.308
+	dl	_.str.44.450
+	dl	_.str.45.275
+	dl	_.str.46.276
+	dl	_.str.47.277
+	dl	_.str.24.279
+	dl	_.str.48.280
+	dl	_.str.22.475
+
+	section	.rodata,"a",@progbits
+	private	_.str.4.269
+_.str.4.269:
 	db	"Kinematics", 0
 
 	section	.rodata,"a",@progbits
 	private	_KINEMATICS_ENTRIES
 _KINEMATICS_ENTRIES:
-	dl	_.str.8.386
-	dl	_.str.9.387
-	dl	_.str.10.388
-	dl	_.str.11.389
-	dl	_.str.12.390
-	dl	_.str.13.391
-	dl	_.str.14.392
-	dl	_.str.15.393
-	dl	_.str.16.394
-	dl	_.str.17.395
-	dl	_.str.18.396
-	dl	_.str.19.397
-	dl	_.str.20.398
-	dl	_.str.21.399
-	dl	_.str.22.400
-	dl	_.str.23.401
-	dl	_.str.24.402
-	dl	_.str.25.403
-	dl	_.str.26.404
-	dl	_.str.27.405
-	dl	_.str.28.406
-	dl	_.str.29.407
-	dl	_.str.30.408
-	dl	_.str.31.409
-	dl	_.str.32.410
-	dl	_.str.33.411
-	dl	_.str.34.412
-	dl	_.str.22.448
-	dl	_.str.36.413
-	dl	_.str.37.414
-	dl	_.str.38.415
-	dl	_.str.39.416
-	dl	_.str.40.417
-	dl	_.str.22.448
-	dl	_.str.22.448
-	dl	_.str.41.418
-	dl	_.str.42.419
-	dl	_.str.43.420
-	dl	_.str.44.421
-	dl	_.str.45.422
-	dl	_.str.46.423
-	dl	_.str.22.448
+	dl	_.str.49.392
+	dl	_.str.12.393
+	dl	_.str.13.394
+	dl	_.str.14.395
+	dl	_.str.50.396
+	dl	_.str.51.397
+	dl	_.str.11.398
+	dl	_.str.52.399
+	dl	_.str.53.400
+	dl	_.str.10.401
+	dl	_.str.11.398
+	dl	_.str.54.402
+	dl	_.str.55.403
+	dl	_.str.56.404
+	dl	_.str.57.405
+	dl	_.str.58.406
+	dl	_.str.59.407
+	dl	_.str.60.408
+	dl	_.str.61.409
+	dl	_.str.62.410
+	dl	_.str.63.411
+	dl	_.str.64.412
+	dl	_.str.65.413
+	dl	_.str.66.414
+	dl	_.str.67.415
+	dl	_.str.68.416
+	dl	_.str.69.417
+	dl	_.str.51.397
+	dl	_.str.70.418
+	dl	_.str.71.419
+	dl	_.str.12.393
+	dl	_.str.13.394
+	dl	_.str.72.420
+	dl	_.str.73.421
+	dl	_.str.22.475
+	dl	_.str.74.422
+	dl	_.str.75.423
+	dl	_.str.76.424
+	dl	_.str.77.425
+	dl	_.str.78.426
+	dl	_.str.22.475
+	dl	_.str.22.475
+	dl	_.str.79.427
+	dl	_.str.80.428
+	dl	_.str.81.429
+	dl	_.str.82.430
+	dl	_.str.83.431
+	dl	_.str.84.432
+	dl	_.str.22.475
 
 	section	.rodata,"a",@progbits
-	private	_.str.4.280
-_.str.4.280:
+	private	_.str.5.270
+_.str.5.270:
 	db	"Circular Motion", 0
 
 	section	.rodata,"a",@progbits
 	private	_CIRCULAR_ENTRIES
 _CIRCULAR_ENTRIES:
-	dl	_.str.47.355
-	dl	_.str.48.356
-	dl	_.str.49.357
-	dl	_.str.50.358
-	dl	_.str.51.359
-	dl	_.str.52.360
-	dl	_.str.53.361
-	dl	_.str.54.362
-	dl	_.str.55.363
-	dl	_.str.56.364
-	dl	_.str.57.365
-	dl	_.str.58.366
-	dl	_.str.59.367
-	dl	_.str.22.448
-	dl	_.str.60.368
-	dl	_.str.61.369
-	dl	_.str.62.370
-	dl	_.str.63.371
-	dl	_.str.64.372
-	dl	_.str.65.373
-	dl	_.str.66.374
-	dl	_.str.67.375
-	dl	_.str.68.376
-	dl	_.str.69.377
-	dl	_.str.70.378
-	dl	_.str.71.379
-	dl	_.str.72.380
-	dl	_.str.22.448
-	dl	_.str.73.381
-	dl	_.str.74.382
-	dl	_.str.50.358
-	dl	_.str.75.383
-	dl	_.str.76.384
-	dl	_.str.77.385
-	dl	_.str.22.448
+	dl	_.str.85.359
+	dl	_.str.26.360
+	dl	_.str.86.361
+	dl	_.str.87.362
+	dl	_.str.88.363
+	dl	_.str.89.364
+	dl	_.str.29.365
+	dl	_.str.90.366
+	dl	_.str.24.279
+	dl	_.str.25.367
+	dl	_.str.91.368
+	dl	_.str.92.369
+	dl	_.str.93.370
+	dl	_.str.94.371
+	dl	_.str.95.372
+	dl	_.str.96.373
+	dl	_.str.26.360
+	dl	_.str.97.374
+	dl	_.str.98.375
+	dl	_.str.88.363
+	dl	_.str.22.475
+	dl	_.str.99.376
+	dl	_.str.100.377
+	dl	_.str.101.378
+	dl	_.str.102.379
+	dl	_.str.103.380
+	dl	_.str.104.381
+	dl	_.str.105.382
+	dl	_.str.106.383
+	dl	_.str.107.384
+	dl	_.str.108.385
+	dl	_.str.109.386
+	dl	_.str.110.387
+	dl	_.str.111.388
+	dl	_.str.22.475
+	dl	_.str.112.389
+	dl	_.str.29.365
+	dl	_.str.91.368
+	dl	_.str.113.390
+	dl	_.str.114.391
+	dl	_.str.89.364
+	dl	_.str.22.475
 
 	section	.rodata,"a",@progbits
 	private	_DYNAMICS_ENTRIES
 _DYNAMICS_ENTRIES:
-	dl	_.str.78.337
-	dl	_.str.79.338
-	dl	_.str.80.339
-	dl	_.str.81.340
-	dl	_.str.82.341
-	dl	_.str.83.342
-	dl	_.str.22.448
-	dl	_.str.84.343
-	dl	_.str.85.344
-	dl	_.str.86.345
-	dl	_.str.87.346
-	dl	_.str.88.347
-	dl	_.str.89.348
-	dl	_.str.22.448
-	dl	_.str.90.349
-	dl	_.str.91.350
-	dl	_.str.92.351
-	dl	_.str.93.352
-	dl	_.str.94.353
-	dl	_.str.95.354
-	dl	_.str.22.448
+	dl	_.str.115.338
+	dl	_.str.31.339
+	dl	_.str.32.340
+	dl	_.str.116.341
+	dl	_.str.117.342
+	dl	_.str.35.343
+	dl	_.str.22.475
+	dl	_.str.118.344
+	dl	_.str.119.345
+	dl	_.str.120.346
+	dl	_.str.121.347
+	dl	_.str.122.348
+	dl	_.str.123.349
+	dl	_.str.22.475
+	dl	_.str.124.350
+	dl	_.str.31.339
+	dl	_.str.32.340
+	dl	_.str.125.351
+	dl	_.str.126.352
+	dl	_.str.127.353
+	dl	_.str.22.475
+	dl	_.str.128.354
+	dl	_.str.129.355
+	dl	_.str.130.356
+	dl	_.str.131.357
+	dl	_.str.35.343
+	dl	_.str.132.358
+	dl	_.str.22.475
 
 	section	.rodata,"a",@progbits
-	private	_.str.6.282
-_.str.6.282:
+	private	_.str.7.272
+_.str.7.272:
 	db	"Work / Energy / Power", 0
 
 	section	.rodata,"a",@progbits
 	private	_ENERGY_ENTRIES
 _ENERGY_ENTRIES:
-	dl	_.str.96.305
-	dl	_.str.97.306
-	dl	_.str.98.307
-	dl	_.str.99.308
-	dl	_.str.100.309
-	dl	_.str.101.310
-	dl	_.str.22.448
-	dl	_.str.102.312
-	dl	_.str.103.313
-	dl	_.str.104.314
-	dl	_.str.105.315
-	dl	_.str.106.316
-	dl	_.str.107.317
-	dl	_.str.22.448
-	dl	_.str.108.318
-	dl	_.str.109.319
-	dl	_.str.110.320
-	dl	_.str.111.321
-	dl	_.str.112.322
-	dl	_.str.113.323
-	dl	_.str.114.324
-	dl	_.str.115.325
-	dl	_.str.116.326
-	dl	_.str.117.327
-	dl	_.str.118.328
-	dl	_.str.119.329
-	dl	_.str.120.330
-	dl	_.str.22.448
-	dl	_.str.121.331
-	dl	_.str.122.332
-	dl	_.str.123.333
-	dl	_.str.124.334
-	dl	_.str.125.335
-	dl	_.str.126.336
-	dl	_.str.22.448
+	dl	_.str.133.303
+	dl	_.str.40.304
+	dl	_.str.41.305
+	dl	_.str.134.306
+	dl	_.str.42.307
+	dl	_.str.43.308
+	dl	_.str.135.309
+	dl	_.str.136.310
+	dl	_.str.135.309
+	dl	_.str.137.311
+	dl	_.str.138.312
+	dl	_.str.38.313
+	dl	_.str.139.314
+	dl	_.str.22.475
+	dl	_.str.140.316
+	dl	_.str.134.306
+	dl	_.str.42.307
+	dl	_.str.141.317
+	dl	_.str.142.318
+	dl	_.str.143.319
+	dl	_.str.22.475
+	dl	_.str.144.320
+	dl	_.str.145.321
+	dl	_.str.146.322
+	dl	_.str.147.323
+	dl	_.str.148.324
+	dl	_.str.149.325
+	dl	_.str.150.326
+	dl	_.str.151.327
+	dl	_.str.43.308
+	dl	_.str.152.328
+	dl	_.str.153.329
+	dl	_.str.154.330
+	dl	_.str.155.331
+	dl	_.str.22.475
+	dl	_.str.156.332
+	dl	_.str.157.333
+	dl	_.str.158.334
+	dl	_.str.159.335
+	dl	_.str.160.336
+	dl	_.str.161.337
+	dl	_.str.22.475
 
 	section	.rodata,"a",@progbits
-	private	_.str.7.283
-_.str.7.283:
+	private	_.str.8.273
+_.str.8.273:
 	db	"Physics Calculus", 0
 
 	section	.rodata,"a",@progbits
 	private	_CALCULUS_ENTRIES
 _CALCULUS_ENTRIES:
-	dl	_.str.127.284
-	dl	_.str.128.285
-	dl	_.str.129.286
-	dl	_.str.130.287
-	dl	_.str.131.288
-	dl	_.str.132.289
-	dl	_.str.133.290
-	dl	_.str.134.291
-	dl	_.str.135.292
-	dl	_.str.136.293
-	dl	_.str.137.294
-	dl	_.str.138.295
-	dl	_.str.139.296
-	dl	_.str.140.297
-	dl	_.str.141.298
-	dl	_.str.142.299
-	dl	_.str.143.300
-	dl	_.str.144.301
-	dl	_.str.145.302
-	dl	_.str.146.303
-	dl	_.str.147.304
+	dl	_.str.162.274
+	dl	_.str.45.275
+	dl	_.str.46.276
+	dl	_.str.47.277
+	dl	_.str.163.278
+	dl	_.str.24.279
+	dl	_.str.48.280
+	dl	_.str.164.281
+	dl	_.str.165.282
+	dl	_.str.166.283
+	dl	_.str.167.284
+	dl	_.str.168.285
+	dl	_.str.169.286
+	dl	_.str.170.287
+	dl	_.str.171.288
+	dl	_.str.172.289
+	dl	_.str.173.290
+	dl	_.str.174.291
+	dl	_.str.175.292
+	dl	_.str.176.293
+	dl	_.str.177.294
+	dl	_.str.178.295
+	dl	_.str.179.296
+	dl	_.str.180.297
+	dl	_.str.181.298
+	dl	_.str.182.299
+	dl	_.str.183.300
+	dl	_.str.184.301
+	dl	_.str.185.302
+	dl	_.str.45.275
+	dl	_.str.46.276
+	dl	_.str.47.277
+	dl	_.str.163.278
+	dl	_.str.24.279
+	dl	_.str.48.280
 
 	section	.rodata,"a",@progbits
-	private	_.str.8.386
-_.str.8.386:
-	db	"Vector definitions", 0
+	private	_.str.9.433
+_.str.9.433:
+	db	"Core kinematics", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.9.387
-_.str.9.387:
-	db	"r = x*i + y*j + z*k", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.10.388
-_.str.10.388:
+	private	_.str.10.401
+_.str.10.401:
 	db	"v = dr / dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.11.389
-_.str.11.389:
+	private	_.str.11.398
+_.str.11.398:
 	db	"a = dv / dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.12.390
-_.str.12.390:
-	db	"dr = r2 - r1", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.13.391
-_.str.13.391:
-	db	"v_avg = dr / dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.14.392
-_.str.14.392:
-	db	"a_avg = dv / dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.15.393
-_.str.15.393:
-	db	"Scalars and magnitudes", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.16.394
-_.str.16.394:
-	db	"speed avg: v = ds / dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.17.395
-_.str.17.395:
-	db	"instant speed: v = ds / dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.18.396
-_.str.18.396:
-	db	"v = vx*i + vy*j + vz*k", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.19.397
-_.str.19.397:
-	db	"a = ax*i + ay*j + az*k", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.20.398
-_.str.20.398:
-	db	"|v| = sqrt(vx^2 + vy^2 + vz^2)", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.21.399
-_.str.21.399:
-	db	"|a| = sqrt(ax^2 + ay^2 + az^2)", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.22.400
-_.str.22.400:
-	db	"Uniform motion", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.23.401
-_.str.23.401:
-	db	"a = 0", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.24.402
-_.str.24.402:
-	db	"v = const", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.25.403
-_.str.25.403:
-	db	"s = s0 + v*t", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.26.404
-_.str.26.404:
-	db	"ds = v*dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.27.405
-_.str.27.405:
-	db	"r = r0 + v*t", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.28.406
-_.str.28.406:
-	db	"v = ds / dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.29.407
-_.str.29.407:
-	db	"UAM / UDM", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.30.408
-_.str.30.408:
-	db	"a = const", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.31.409
-_.str.31.409:
+	private	_.str.12.393
+_.str.12.393:
 	db	"v = v0 + a*t", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.32.410
-_.str.32.410:
+	private	_.str.13.394
+_.str.13.394:
 	db	"s = s0 + v0*t + 0.5*a*t^2", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.33.411
-_.str.33.411:
-	db	"UDM: v = v0 - a*t", 0
+	private	_.str.14.395
+_.str.14.395:
+	db	"v^2 = v0^2 + 2*a*(s-s0)", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.34.412
-_.str.34.412:
-	db	"UDM: s = s0 + v0*t - 0.5*a*t^2", 0
+	private	_.str.15.434
+_.str.15.434:
+	db	"cos(phi)=(v.a)/(|v||a|)", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.36.413
-_.str.36.413:
-	db	"No-time relation", 0
+	private	_.str.16.435
+_.str.16.435:
+	db	"Accel grows with t", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.37.414
-_.str.37.414:
-	db	"v^2 = v0^2 + 2*a*(s - s0)", 0
+	private	_.str.17.436
+_.str.17.436:
+	db	"a = a0 + k*t", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.38.415
-_.str.38.415:
-	db	"UDM stop: 0 = v0^2 - 2*a*ds", 0
+	private	_.str.18.437
+_.str.18.437:
+	db	"k = (a-a0)/t", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.39.416
-_.str.39.416:
-	db	"meeting: s1 + s2 = distance", 0
+	private	_.str.19.438
+_.str.19.438:
+	db	"v = int a dt = int(k*t)dt + C", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.40.417
-_.str.40.417:
-	db	"solve kinematics together", 0
+	private	_.str.20.439
+_.str.20.439:
+	db	"s = int v dt + C", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.41.418
-_.str.41.418:
-	db	"Angle between vectors", 0
+	private	_.str.21.440
+_.str.21.440:
+	db	"If a0 = 0: a = k*t", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.42.419
-_.str.42.419:
-	db	"cos(phi) = (u.v) / (|u||v|)", 0
+	private	_.str.22.441
+_.str.22.441:
+	db	"Ex: s=int(t^2+1)dt=t^3/3+t+C", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.43.420
-_.str.43.420:
-	db	"u.v = ux*vx + uy*vy + uz*vz", 0
+	private	_.str.23.442
+_.str.23.442:
+	db	"Core circular motion", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.44.421
-_.str.44.421:
-	db	"For test tasks use:", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.45.422
-_.str.45.422:
-	db	"cos(phi) = (v.a) / (|v||a|)", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.46.423
-_.str.46.423:
-	db	"phi = arccos(...)", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.47.355
-_.str.47.355:
-	db	"Angular basics", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.48.356
-_.str.48.356:
+	private	_.str.24.279
+_.str.24.279:
 	db	"omega = dphi / dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.49.357
-_.str.49.357:
+	private	_.str.25.367
+_.str.25.367:
 	db	"alpha = domega / dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.50.358
-_.str.50.358:
-	db	"phi = 2*pi*N", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.51.359
-_.str.51.359:
-	db	"f = 1/T", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.52.360
-_.str.52.360:
-	db	"omega = 2*pi*f", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.53.361
-_.str.53.361:
-	db	"omega = 2*pi/T", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.54.362
-_.str.54.362:
-	db	"Linear/angular", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.55.363
-_.str.55.363:
-	db	"ds = r*dphi", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.56.364
-_.str.56.364:
+	private	_.str.26.360
+_.str.26.360:
 	db	"v = r*omega", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.57.365
-_.str.57.365:
-	db	"at = dv/dt = r*alpha", 0
+	private	_.str.27.443
+_.str.27.443:
+	db	"a_t = r*alpha", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.58.366
-_.str.58.366:
-	db	"ac = v^2/r = r*omega^2", 0
+	private	_.str.28.444
+_.str.28.444:
+	db	"a_c = r*omega^2 = v^2/r", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.59.367
-_.str.59.367:
-	db	"a = sqrt(at^2 + ac^2)", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.60.368
-_.str.60.368:
-	db	"Uniform circular", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.61.369
-_.str.61.369:
-	db	"alpha = 0", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.62.370
-_.str.62.370:
-	db	"omega = const", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.63.371
-_.str.63.371:
-	db	"phi = omega*t", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.64.372
-_.str.64.372:
-	db	"v = const size", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.65.373
-_.str.65.373:
-	db	"ac = v^2/r", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.66.374
-_.str.66.374:
-	db	"T = 2*pi/omega", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.67.375
-_.str.67.375:
-	db	"Angular accel", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.68.376
-_.str.68.376:
-	db	"alpha = const", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.69.377
-_.str.69.377:
-	db	"omega = omega0 + alpha*t", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.70.378
-_.str.70.378:
-	db	"phi = phi0 + omega0*t", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.71.379
-_.str.71.379:
-	db	"phi = phi0 + 0.5*alpha*t^2", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.72.380
-_.str.72.380:
-	db	"UDCM: omega = omega0-alpha*t", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.73.381
-_.str.73.381:
-	db	"Revolutions", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.74.382
-_.str.74.382:
+	private	_.str.29.365
+_.str.29.365:
 	db	"N = phi / (2*pi)", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.75.383
-_.str.75.383:
-	db	"T = 1 / f", 0
+	private	_.str.30.445
+_.str.30.445:
+	db	"Core dynamics", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.76.384
-_.str.76.384:
-	db	"f = 1 / T", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.77.385
-_.str.77.385:
-	db	"omega = 2*pi*f = 2*pi/T", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.78.337
-_.str.78.337:
-	db	"Newton laws", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.79.338
-_.str.79.338:
-	db	"1) Fnet = 0 => rest/UM", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.80.339
-_.str.80.339:
-	db	"2) F = dp / dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.81.340
-_.str.81.340:
-	db	"   F = m*a for m const", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.82.341
-_.str.82.341:
-	db	"3) F21 = -F12", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.83.342
-_.str.83.342:
-	db	"inertia measure: mass m", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.84.343
-_.str.84.343:
-	db	"Momentum/impulse", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.85.344
-_.str.85.344:
+	private	_.str.31.339
+_.str.31.339:
 	db	"p = m*v", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.86.345
-_.str.86.345:
+	private	_.str.32.340
+_.str.32.340:
 	db	"F = dp / dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.87.346
-_.str.87.346:
-	db	"I = integral(F dt)", 0
+	private	_.str.33.446
+_.str.33.446:
+	db	"F = m*a if m const", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.88.347
-_.str.88.347:
-	db	"F const => I = F*t", 0
+	private	_.str.34.447
+_.str.34.447:
+	db	"I = S F dt = dp", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.89.348
-_.str.89.348:
-	db	"I = dp = p2 - p1", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.90.349
-_.str.90.349:
-	db	"Vector forms", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.91.350
-_.str.91.350:
-	db	"p = m*v (vector form)", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.92.351
-_.str.92.351:
-	db	"F = dp/dt (vector form)", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.93.352
-_.str.93.352:
-	db	"If m = const => F = m*a", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.94.353
-_.str.94.353:
+	private	_.str.35.343
+_.str.35.343:
 	db	"F21 = -F12", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.95.354
-_.str.95.354:
-	db	"action and reaction pair", 0
+	private	_.str.37.448
+_.str.37.448:
+	db	"Core work/energy", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.96.305
-_.str.96.305:
-	db	"Work", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.97.306
-_.str.97.306:
-	db	"W = F*d if F || d", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.98.307
-_.str.98.307:
-	db	"W = F*d*cos(phi)", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.99.308
-_.str.99.308:
-	db	"W = integral(F.dr)", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.100.309
-_.str.100.309:
+	private	_.str.38.313
+_.str.38.313:
 	db	"dW = F.dr", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.101.310
-_.str.101.310:
-	db	"unit: J = N*m", 0
+	private	_.str.39.449
+_.str.39.449:
+	db	"W = S F.dr", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.102.312
-_.str.102.312:
-	db	"Energy", 0
+	private	_.str.40.304
+_.str.40.304:
+	db	"W = dEk", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.103.313
-_.str.103.313:
-	db	"Ek = 0.5*m*v^2", 0
+	private	_.str.41.305
+_.str.41.305:
+	db	"P = dW/dt = F.v", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.104.314
-_.str.104.314:
+	private	_.str.42.307
+_.str.42.307:
 	db	"dEp = m*g*h", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.105.315
-_.str.105.315:
-	db	"E = Ep + Ek", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.106.316
-_.str.106.316:
-	db	"Work-energy: W = dEk", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.107.317
-_.str.107.317:
-	db	"mech E const (cons forces)", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.108.318
-_.str.108.318:
-	db	"Power/springs", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.109.319
-_.str.109.319:
-	db	"Pavg = W / t", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.110.320
-_.str.110.320:
-	db	"P = dW/dt = F*v", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.111.321
-_.str.111.321:
-	db	"Vector form: P = F . v", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.112.322
-_.str.112.322:
-	db	"Hooke: F = k*d", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.113.323
-_.str.113.323:
-	db	"spring work = 0.5*k*d^2", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.114.324
-_.str.114.324:
-	db	"k = F / d", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.115.325
-_.str.115.325:
-	db	"Energy conservation", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.116.326
-_.str.116.326:
+	private	_.str.43.308
+_.str.43.308:
 	db	"E = Ep + Ek = const", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.117.327
-_.str.117.327:
+	private	_.str.44.450
+_.str.44.450:
+	db	"Core calculus", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.45.275
+_.str.45.275:
+	db	"v = dr / dt, a = dv / dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.46.276
+_.str.46.276:
+	db	"v = S a dt, r = S v dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.47.277
+_.str.47.277:
+	db	"F = dp / dt, I = S F dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.48.280
+_.str.48.280:
+	db	"phi = S omega dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.49.392
+_.str.49.392:
+	db	"Most used kinematics", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.50.396
+_.str.50.396:
+	db	"s = s0 + v*t if v const", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.51.397
+_.str.51.397:
+	db	"v = ds / dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.52.399
+_.str.52.399:
+	db	"Vector definitions", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.53.400
+_.str.53.400:
+	db	"r = x*i + y*j + z*k", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.54.402
+_.str.54.402:
+	db	"dr = r2 - r1", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.55.403
+_.str.55.403:
+	db	"v_avg = dr / dt (vector)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.56.404
+_.str.56.404:
+	db	"a_avg = dv / dt (vector)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.57.405
+_.str.57.405:
+	db	"Scalars and magnitudes", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.58.406
+_.str.58.406:
+	db	"speed avg: v = ds / dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.59.407
+_.str.59.407:
+	db	"instant speed: v = ds / dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.60.408
+_.str.60.408:
+	db	"v = vx*i + vy*j + vz*k", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.61.409
+_.str.61.409:
+	db	"a = ax*i + ay*j + az*k", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.62.410
+_.str.62.410:
+	db	"|v| = sqrt(vx^2 + vy^2 + vz^2)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.63.411
+_.str.63.411:
+	db	"|a| = sqrt(ax^2 + ay^2 + az^2)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.64.412
+_.str.64.412:
+	db	"Uniform motion", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.65.413
+_.str.65.413:
+	db	"a = 0", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.66.414
+_.str.66.414:
+	db	"v = const", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.67.415
+_.str.67.415:
+	db	"s = s0 + v*t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.68.416
+_.str.68.416:
+	db	"ds = v*dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.69.417
+_.str.69.417:
+	db	"r = r0 + v*t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.70.418
+_.str.70.418:
+	db	"UAM / UDM", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.71.419
+_.str.71.419:
+	db	"a = const", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.72.420
+_.str.72.420:
+	db	"UDM: v = v0 - a*t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.73.421
+_.str.73.421:
+	db	"UDM: s = s0 + v0*t - 0.5*a*t^2", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.74.422
+_.str.74.422:
+	db	"No-time relation", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.75.423
+_.str.75.423:
+	db	"v^2 = v0^2 + 2*a*(s - s0)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.76.424
+_.str.76.424:
+	db	"UDM stop: 0 = v0^2 - 2*a*ds", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.77.425
+_.str.77.425:
+	db	"meeting: s1 + s2 = distance", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.78.426
+_.str.78.426:
+	db	"solve kinematics together", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.79.427
+_.str.79.427:
+	db	"Angle between vectors", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.80.428
+_.str.80.428:
+	db	"cos(phi) = (u.v) / (|u||v|)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.81.429
+_.str.81.429:
+	db	"u.v = ux*vx + uy*vy + uz*vz", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.82.430
+_.str.82.430:
+	db	"For test tasks use:", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.83.431
+_.str.83.431:
+	db	"cos(phi) = (v.a) / (|v||a|)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.84.432
+_.str.84.432:
+	db	"phi = arccos(...)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.85.359
+_.str.85.359:
+	db	"Most used circular", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.86.361
+_.str.86.361:
+	db	"at = r*alpha", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.87.362
+_.str.87.362:
+	db	"ac = r*omega^2 = v^2/r", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.88.363
+_.str.88.363:
+	db	"a = sqrt(at^2 + ac^2)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.89.364
+_.str.89.364:
+	db	"omega = 2*pi*f = 2*pi/T", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.90.366
+_.str.90.366:
+	db	"Angular basics", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.91.368
+_.str.91.368:
+	db	"phi = 2*pi*N", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.92.369
+_.str.92.369:
+	db	"f = 1/T", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.93.370
+_.str.93.370:
+	db	"omega = 2*pi*f", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.94.371
+_.str.94.371:
+	db	"omega = 2*pi/T", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.95.372
+_.str.95.372:
+	db	"Linear/angular", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.96.373
+_.str.96.373:
+	db	"ds = r*dphi", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.97.374
+_.str.97.374:
+	db	"at = dv/dt = r*alpha", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.98.375
+_.str.98.375:
+	db	"ac = v^2/r = r*omega^2", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.99.376
+_.str.99.376:
+	db	"Uniform circular", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.100.377
+_.str.100.377:
+	db	"alpha = 0", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.101.378
+_.str.101.378:
+	db	"omega = const", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.102.379
+_.str.102.379:
+	db	"phi = omega*t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.103.380
+_.str.103.380:
+	db	"v = const size", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.104.381
+_.str.104.381:
+	db	"ac = v^2/r", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.105.382
+_.str.105.382:
+	db	"T = 2*pi/omega", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.106.383
+_.str.106.383:
+	db	"Angular accel", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.107.384
+_.str.107.384:
+	db	"alpha = const", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.108.385
+_.str.108.385:
+	db	"omega = omega0 + alpha*t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.109.386
+_.str.109.386:
+	db	"phi = phi0 + omega0*t + 0.5*alpha*t^2", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.110.387
+_.str.110.387:
+	db	"If start from rest: phi = alpha*t^2/2", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.111.388
+_.str.111.388:
+	db	"Then N = phi / (2*pi)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.112.389
+_.str.112.389:
+	db	"Revolutions", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.113.390
+_.str.113.390:
+	db	"T = 1 / f", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.114.391
+_.str.114.391:
+	db	"f = 1 / T", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.115.338
+_.str.115.338:
+	db	"Most used dynamics", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.116.341
+_.str.116.341:
+	db	"If m const: F = m*a", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.117.342
+_.str.117.342:
+	db	"I = integral(F dt) = dp", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.118.344
+_.str.118.344:
+	db	"Newton laws", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.119.345
+_.str.119.345:
+	db	"1) Fnet = 0 => rest/UM", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.120.346
+_.str.120.346:
+	db	"2) F = dp / dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.121.347
+_.str.121.347:
+	db	"   F = m*a for m const", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.122.348
+_.str.122.348:
+	db	"3) F21 = -F12", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.123.349
+_.str.123.349:
+	db	"inertia measure: mass m", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.124.350
+_.str.124.350:
+	db	"Momentum/impulse", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.125.351
+_.str.125.351:
+	db	"I = integral(F dt)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.126.352
+_.str.126.352:
+	db	"F const => I = F*t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.127.353
+_.str.127.353:
+	db	"I = dp = p2 - p1", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.128.354
+_.str.128.354:
+	db	"Vector forms", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.129.355
+_.str.129.355:
+	db	"p = m*v (vector form)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.130.356
+_.str.130.356:
+	db	"F = dp/dt (vector form)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.131.357
+_.str.131.357:
+	db	"If m = const => F = m*a", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.132.358
+_.str.132.358:
+	db	"action and reaction pair", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.133.303
+_.str.133.303:
+	db	"Most used energy/power", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.134.306
+_.str.134.306:
+	db	"Ek = 0.5*m*v^2", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.135.309
+_.str.135.309:
+	db	"W = F*d if F || d", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.136.310
+_.str.136.310:
+	db	"Work", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.137.311
+_.str.137.311:
+	db	"W = F*d*cos(phi)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.138.312
+_.str.138.312:
+	db	"W = integral(F.dr)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.139.314
+_.str.139.314:
+	db	"unit: J = N*m", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.140.316
+_.str.140.316:
+	db	"Energy", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.141.317
+_.str.141.317:
+	db	"E = Ep + Ek", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.142.318
+_.str.142.318:
+	db	"Work-energy: W = dEk", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.143.319
+_.str.143.319:
+	db	"mech E const (cons forces)", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.144.320
+_.str.144.320:
+	db	"Power/springs", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.145.321
+_.str.145.321:
+	db	"Pavg = W / t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.146.322
+_.str.146.322:
+	db	"P = dW/dt = F*v", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.147.323
+_.str.147.323:
+	db	"Vector form: P = F . v", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.148.324
+_.str.148.324:
+	db	"Hooke: F = k*d", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.149.325
+_.str.149.325:
+	db	"spring work = 0.5*k*d^2", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.150.326
+_.str.150.326:
+	db	"k = F / d", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.151.327
+_.str.151.327:
+	db	"Energy conservation", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.152.328
+_.str.152.328:
 	db	"Ep1 + Ek1 = Ep2 + Ek2", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.118.328
-_.str.118.328:
+	private	_.str.153.329
+_.str.153.329:
 	db	"dEp = -dEk", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.119.329
-_.str.119.329:
+	private	_.str.154.330
+_.str.154.330:
 	db	"cons. forces preserve E", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.120.330
-_.str.120.330:
+	private	_.str.155.331
+_.str.155.331:
 	db	"non-cons: friction losses", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.121.331
-_.str.121.331:
+	private	_.str.156.332
+_.str.156.332:
 	db	"Key theorem forms", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.122.332
-_.str.122.332:
+	private	_.str.157.333
+_.str.157.333:
 	db	"I = dp = m*(v2-v1)", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.123.333
-_.str.123.333:
+	private	_.str.158.334
+_.str.158.334:
 	db	"W = dEk = 0.5*m*(v2^2-v1^2)", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.124.334
-_.str.124.334:
+	private	_.str.159.335
+_.str.159.335:
 	db	"dEp = mgh", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.125.335
-_.str.125.335:
+	private	_.str.160.336
+_.str.160.336:
 	db	"s = m*(v^2-v0^2)/(2*F)", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.126.336
-_.str.126.336:
+	private	_.str.161.337
+_.str.161.337:
 	db	"t = m*(v-v0)/F", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.127.284
-_.str.127.284:
+	private	_.str.162.274
+_.str.162.274:
+	db	"Most used calc forms", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.163.278
+_.str.163.278:
+	db	"P = dW / dt, W = S F.dr", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.164.281
+_.str.164.281:
 	db	"Physics derivatives", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.128.285
-_.str.128.285:
+	private	_.str.165.282
+_.str.165.282:
 	db	"Velocity: v = dx / dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.129.286
-_.str.129.286:
+	private	_.str.166.283
+_.str.166.283:
 	db	"Acceleration: a = dv / dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.130.287
-_.str.130.287:
-	db	"Angular speed: omega=dphi/dt", 0
+	private	_.str.167.284
+_.str.167.284:
+	db	"Angular speed: omega = dphi / dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.131.288
-_.str.131.288:
-	db	"Angular accel: alpha=domega/dt", 0
+	private	_.str.168.285
+_.str.168.285:
+	db	"Angular accel: alpha = domega / dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.132.289
-_.str.132.289:
+	private	_.str.169.286
+_.str.169.286:
 	db	"Power: P = dW / dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.133.290
-_.str.133.290:
+	private	_.str.170.287
+_.str.170.287:
 	db	"Force: F = dp / dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.134.291
-_.str.134.291:
+	private	_.str.171.288
+_.str.171.288:
 	db	"Physics integrals", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.135.292
-_.str.135.292:
-	db	"Velocity change: v = int a dt", 0
+	private	_.str.172.289
+_.str.172.289:
+	db	"Velocity: v = S a dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.136.293
-_.str.136.293:
-	db	"Position: r = int v dt", 0
+	private	_.str.173.290
+_.str.173.290:
+	db	"Position: r = S v dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.137.294
-_.str.137.294:
-	db	"Angular speed: omega=int alpha dt", 0
+	private	_.str.174.291
+_.str.174.291:
+	db	"Angular speed: omega = S alpha dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.138.295
-_.str.138.295:
-	db	"Impulse: I = int F dt", 0
+	private	_.str.175.292
+_.str.175.292:
+	db	"Impulse: I = S F dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.139.296
-_.str.139.296:
-	db	"Work: W = int F.dr", 0
+	private	_.str.176.293
+_.str.176.293:
+	db	"Work: W = S F.dr", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.140.297
-_.str.140.297:
-	db	"Angle: phi = int omega dt", 0
+	private	_.str.177.294
+_.str.177.294:
+	db	"Angle: phi = S omega dt", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.141.298
-_.str.141.298:
+	private	_.str.178.295
+_.str.178.295:
+	db	"Linear force motion", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.179.296
+_.str.179.296:
+	db	"F(t) = F0 + k*t", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.180.297
+_.str.180.297:
+	db	"a(t) = F(t)/m", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.181.298
+_.str.181.298:
+	db	"v(t) = v0 + S a(t)dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.182.299
+_.str.182.299:
+	db	"s(t) = s0 + S v(t)dt", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.183.300
+_.str.183.300:
+	db	"For 20t: use F0=0, k=20", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.184.301
+_.str.184.301:
+	db	"good for test-style tasks", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.185.302
+_.str.185.302:
 	db	"Test formulas", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.142.299
-_.str.142.299:
-	db	"v = dr/dt, a = dv/dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.143.300
-_.str.143.300:
-	db	"v = int a dt, r = int v dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.144.301
-_.str.144.301:
-	db	"F = dp/dt, I = int F dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.145.302
-_.str.145.302:
-	db	"P = dW/dt, W = int F.dr", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.146.303
-_.str.146.303:
-	db	"omega=dphi/dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.147.304
-_.str.147.304:
-	db	"phi = int omega dt", 0
-
-	section	.rodata,"a",@progbits
-	private	_.str.148.277
-_.str.148.277:
+	private	_.str.186.266
+_.str.186.266:
 	db	"%s %u/%u", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.149.278
-_.str.149.278:
+	private	_.str.187.267
+_.str.187.267:
 	db	"UP/DN PG ENTER NEXT", 0
 
 	section	.rodata,"a",@progbits
 	private	_SYMBOL_ENTRIES
 _SYMBOL_ENTRIES:
-	dl	_.str.2.428
-	dl	_.str.3.429
-	dl	_.str.4.430
-	dl	_.str.5.431
-	dl	_.str.6.432
-	dl	_.str.7.433
-	dl	_.str.8.434
-	dl	_.str.9.435
-	dl	_.str.10.436
-	dl	_.str.11.437
-	dl	_.str.12.438
-	dl	_.str.13.439
-	dl	_.str.14.440
-	dl	_.str.15.441
-	dl	_.str.16.442
-	dl	_.str.17.443
-	dl	_.str.18.444
-	dl	_.str.19.445
-	dl	_.str.20.446
-	dl	_.str.21.447
-	dl	_.str.22.448
-	dl	_.str.23.449
-	dl	_.str.24.450
-	dl	_.str.25.451
-	dl	_.str.26.452
-	dl	_.str.27.453
-	dl	_.str.28.454
-	dl	_.str.22.448
-	dl	_.str.29.455
-	dl	_.str.30.456
-	dl	_.str.31.457
-	dl	_.str.32.458
-	dl	_.str.33.459
-	dl	_.str.34.460
-	dl	_.str.35.461
-	dl	_.str.36.462
-	dl	_.str.37.463
-	dl	_.str.38.464
-	dl	_.str.39.465
-	dl	_.str.40.466
-	dl	_.str.41.467
-	dl	_.str.42.468
+	dl	_.str.2.455
+	dl	_.str.3.456
+	dl	_.str.4.457
+	dl	_.str.5.458
+	dl	_.str.6.459
+	dl	_.str.7.460
+	dl	_.str.8.461
+	dl	_.str.9.462
+	dl	_.str.10.463
+	dl	_.str.11.464
+	dl	_.str.12.465
+	dl	_.str.13.466
+	dl	_.str.14.467
+	dl	_.str.15.468
+	dl	_.str.16.469
+	dl	_.str.17.470
+	dl	_.str.18.471
+	dl	_.str.19.472
+	dl	_.str.20.473
+	dl	_.str.21.474
+	dl	_.str.22.475
+	dl	_.str.23.476
+	dl	_.str.24.477
+	dl	_.str.25.478
+	dl	_.str.26.479
+	dl	_.str.27.480
+	dl	_.str.28.481
+	dl	_.str.22.475
+	dl	_.str.29.482
+	dl	_.str.30.483
+	dl	_.str.31.484
+	dl	_.str.32.485
+	dl	_.str.33.486
+	dl	_.str.34.487
+	dl	_.str.35.488
+	dl	_.str.36.489
+	dl	_.str.37.490
+	dl	_.str.38.491
+	dl	_.str.39.492
+	dl	_.str.40.493
+	dl	_.str.41.494
+	dl	_.str.42.495
 
 	section	.rodata,"a",@progbits
-	private	_.str.426
-_.str.426:
+	private	_.str.453
+_.str.453:
 	db	"Symbols %u/%u", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.1.427
-_.str.1.427:
+	private	_.str.1.454
+_.str.1.454:
 	db	"UP/DN scroll MODE back", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.2.428
-_.str.2.428:
+	private	_.str.2.455
+_.str.2.455:
 	db	"Basic motion", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.3.429
-_.str.3.429:
+	private	_.str.3.456
+_.str.3.456:
 	db	"s = displacement [m]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.4.430
-_.str.4.430:
+	private	_.str.4.457
+_.str.4.457:
 	db	"s0 = initial position [m]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.5.431
-_.str.5.431:
+	private	_.str.5.458
+_.str.5.458:
 	db	"t = time [s]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.6.432
-_.str.6.432:
+	private	_.str.6.459
+_.str.6.459:
 	db	"v = velocity / speed [m/s]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.7.433
-_.str.7.433:
+	private	_.str.7.460
+_.str.7.460:
 	db	"v0 = initial velocity [m/s]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.8.434
-_.str.8.434:
+	private	_.str.8.461
+_.str.8.461:
 	db	"a = acceleration [m/s^2]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.9.435
-_.str.9.435:
+	private	_.str.9.462
+_.str.9.462:
 	db	"Circular motion", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.10.436
-_.str.10.436:
+	private	_.str.10.463
+_.str.10.463:
 	db	"r = radius [m]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.11.437
-_.str.11.437:
+	private	_.str.11.464
+_.str.11.464:
 	db	"phi = angle [rad]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.12.438
-_.str.12.438:
+	private	_.str.12.465
+_.str.12.465:
 	db	"omega = angular speed [rad/s]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.13.439
-_.str.13.439:
+	private	_.str.13.466
+_.str.13.466:
 	db	"omega0 = init ang speed [rad/s]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.14.440
-_.str.14.440:
+	private	_.str.14.467
+_.str.14.467:
 	db	"alpha = ang accel [rad/s^2]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.15.441
-_.str.15.441:
+	private	_.str.15.468
+_.str.15.468:
 	db	"N = revolutions [rev]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.16.442
-_.str.16.442:
+	private	_.str.16.469
+_.str.16.469:
 	db	"Circular accel", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.17.443
-_.str.17.443:
+	private	_.str.17.470
+_.str.17.470:
 	db	"a_t = tangential accel [m/s^2]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.18.444
-_.str.18.444:
+	private	_.str.18.471
+_.str.18.471:
 	db	"a_c = centripetal accel [m/s^2]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.19.445
-_.str.19.445:
+	private	_.str.19.472
+_.str.19.472:
 	db	"T = period [s]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.20.446
-_.str.20.446:
+	private	_.str.20.473
+_.str.20.473:
 	db	"f = frequency [Hz]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.21.447
-_.str.21.447:
+	private	_.str.21.474
+_.str.21.474:
 	db	"pi = 3.14159...", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.22.448
-_.str.22.448:
+	private	_.str.22.475
+_.str.22.475:
 	db	1 dup 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.23.449
-_.str.23.449:
+	private	_.str.23.476
+_.str.23.476:
 	db	"Dynamics", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.24.450
-_.str.24.450:
+	private	_.str.24.477
+_.str.24.477:
 	db	"F = force [N]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.25.451
-_.str.25.451:
+	private	_.str.25.478
+_.str.25.478:
 	db	"m = mass [kg]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.26.452
-_.str.26.452:
+	private	_.str.26.479
+_.str.26.479:
 	db	"p = momentum [kg*m/s]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.27.453
-_.str.27.453:
+	private	_.str.27.480
+_.str.27.480:
 	db	"I = impulse [N*s]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.28.454
-_.str.28.454:
+	private	_.str.28.481
+_.str.28.481:
 	db	"g = grav accel [m/s^2]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.29.455
-_.str.29.455:
+	private	_.str.29.482
+_.str.29.482:
 	db	"Energy / power", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.30.456
-_.str.30.456:
+	private	_.str.30.483
+_.str.30.483:
 	db	"W = work [J]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.31.457
-_.str.31.457:
+	private	_.str.31.484
+_.str.31.484:
 	db	"P = power [W]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.32.458
-_.str.32.458:
+	private	_.str.32.485
+_.str.32.485:
 	db	"Pavg = avg power [W]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.33.459
-_.str.33.459:
+	private	_.str.33.486
+_.str.33.486:
 	db	"Ek = kinetic energy [J]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.34.460
-_.str.34.460:
+	private	_.str.34.487
+_.str.34.487:
 	db	"Ep = potential energy [J]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.35.461
-_.str.35.461:
+	private	_.str.35.488
+_.str.35.488:
 	db	"E = mechanical energy [J]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.36.462
-_.str.36.462:
+	private	_.str.36.489
+_.str.36.489:
 	db	"More symbols", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.37.463
-_.str.37.463:
+	private	_.str.37.490
+_.str.37.490:
 	db	"dEp = change in Ep [J]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.38.464
-_.str.38.464:
+	private	_.str.38.491
+_.str.38.491:
 	db	"dEk = change in Ek [J]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.39.465
-_.str.39.465:
+	private	_.str.39.492
+_.str.39.492:
 	db	"d = distance [m]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.40.466
-_.str.40.466:
+	private	_.str.40.493
+_.str.40.493:
 	db	"k = spring const [N/m]", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.41.467
-_.str.41.467:
+	private	_.str.41.494
+_.str.41.494:
 	db	"dx/dt = derivative", 0
 
 	section	.rodata,"a",@progbits
-	private	_.str.42.468
-_.str.42.468:
+	private	_.str.42.495
+_.str.42.495:
 	db	"int = integral", 0
 
 	ident	"clang version 15.0.7 (https://github.com/CE-Programming/llvm-project 31b787336940cbc96d054033c3d843f344507042)"
@@ -12157,6 +13249,7 @@ _.str.42.468:
 	extern	__fneg
 	extern	__Unwind_SjLj_Register
 	extern	__fadd
+	extern	_memcpy
 	extern	_strchr
 	extern	_os_PutStrFull
 	extern	__indcallhl

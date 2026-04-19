@@ -14,7 +14,88 @@ typedef struct {
     const reference_entry_t *entries;
 } reference_category_t;
 
+static const reference_entry_t QUICK_ACCESS_ENTRIES[] = {
+    {
+        "Core kinematics",
+        {
+            "v = dr / dt",
+            "a = dv / dt",
+            "v = v0 + a*t",
+            "s = s0 + v0*t + 0.5*a*t^2",
+            "v^2 = v0^2 + 2*a*(s-s0)",
+            "cos(phi)=(v.a)/(|v||a|)"
+        }
+    },
+    {
+        "Accel grows with t",
+        {
+            "a = a0 + k*t",
+            "decelerates: a = a0 - k*t",
+            "k = (a-a0)/t",
+            "v = int a dt = int(k*t)dt + C",
+            "s = int v dt + C",
+            "If a0 = 0: a = +/-k*t",
+            "Ex: s=int(t^2+1)dt=t^3/3+t+C"
+        }
+    },
+    {
+        "Core circular motion",
+        {
+            "omega = dphi / dt",
+            "alpha = domega / dt",
+            "v = r*omega",
+            "a_t = r*alpha",
+            "a_c = r*omega^2 = v^2/r",
+            "N = phi / (2*pi)"
+        }
+    },
+    {
+        "Core dynamics",
+        {
+            "p = m*v",
+            "F = dp / dt",
+            "F = m*a if m const",
+            "I = S F dt = dp",
+            "F21 = -F12",
+            ""
+        }
+    },
+    {
+        "Core work/energy",
+        {
+            "dW = F.dr",
+            "W = S F.dr",
+            "W = dEk",
+            "P = dW/dt = F.v",
+            "dEp = m*g*h",
+            "E = Ep + Ek = const"
+        }
+    },
+    {
+        "Core calculus",
+        {
+            "v = dr / dt, a = dv / dt",
+            "v = S a dt, r = S v dt",
+            "F = dp / dt, I = S F dt",
+            "omega = dphi / dt",
+            "phi = S omega dt",
+            ""
+        }
+    }
+};
+
 static const reference_entry_t KINEMATICS_ENTRIES[] = {
+    {
+        "Most used kinematics",
+        {
+            "v = v0 + a*t",
+            "s = s0 + v0*t + 0.5*a*t^2",
+            "v^2 = v0^2 + 2*a*(s-s0)",
+            "s = s0 + v*t if v const",
+            "v = ds / dt",
+            "a = dv / dt"
+        }
+    },
     {
         "Vector definitions",
         {
@@ -22,8 +103,8 @@ static const reference_entry_t KINEMATICS_ENTRIES[] = {
             "v = dr / dt",
             "a = dv / dt",
             "dr = r2 - r1",
-            "v_avg = dr / dt",
-            "a_avg = dv / dt"
+            "v_avg = dr / dt (vector)",
+            "a_avg = dv / dt (vector)"
         }
     },
     {
@@ -85,6 +166,17 @@ static const reference_entry_t KINEMATICS_ENTRIES[] = {
 
 static const reference_entry_t CIRCULAR_ENTRIES[] = {
     {
+        "Most used circular",
+        {
+            "v = r*omega",
+            "at = r*alpha",
+            "ac = r*omega^2 = v^2/r",
+            "a = sqrt(at^2 + ac^2)",
+            "omega = 2*pi*f = 2*pi/T",
+            "N = phi / (2*pi)"
+        }
+    },
+    {
         "Angular basics",
         {
             "omega = dphi / dt",
@@ -122,9 +214,9 @@ static const reference_entry_t CIRCULAR_ENTRIES[] = {
         {
             "alpha = const",
             "omega = omega0 + alpha*t",
-            "phi = phi0 + omega0*t",
-            "phi = phi0 + 0.5*alpha*t^2",
-            "UDCM: omega = omega0-alpha*t",
+            "phi = phi0 + omega0*t + 0.5*alpha*t^2",
+            "If start from rest: phi = alpha*t^2/2",
+            "Then N = phi / (2*pi)",
             ""
         }
     },
@@ -142,6 +234,17 @@ static const reference_entry_t CIRCULAR_ENTRIES[] = {
 };
 
 static const reference_entry_t DYNAMICS_ENTRIES[] = {
+    {
+        "Most used dynamics",
+        {
+            "p = m*v",
+            "F = dp / dt",
+            "If m const: F = m*a",
+            "I = integral(F dt) = dp",
+            "F21 = -F12",
+            ""
+        }
+    },
     {
         "Newton laws",
         {
@@ -178,6 +281,17 @@ static const reference_entry_t DYNAMICS_ENTRIES[] = {
 };
 
 static const reference_entry_t ENERGY_ENTRIES[] = {
+    {
+        "Most used energy/power",
+        {
+            "W = dEk",
+            "P = dW/dt = F.v",
+            "Ek = 0.5*m*v^2",
+            "dEp = m*g*h",
+            "E = Ep + Ek = const",
+            "W = F*d if F || d"
+        }
+    },
     {
         "Work",
         {
@@ -237,12 +351,23 @@ static const reference_entry_t ENERGY_ENTRIES[] = {
 
 static const reference_entry_t CALCULUS_ENTRIES[] = {
     {
+        "Most used calc forms",
+        {
+            "v = dr / dt, a = dv / dt",
+            "v = S a dt, r = S v dt",
+            "F = dp / dt, I = S F dt",
+            "P = dW / dt, W = S F.dr",
+            "omega = dphi / dt",
+            "phi = S omega dt"
+        }
+    },
+    {
         "Physics derivatives",
         {
             "Velocity: v = dx / dt",
             "Acceleration: a = dv / dt",
-            "Angular speed: omega=dphi/dt",
-            "Angular accel: alpha=domega/dt",
+            "Angular speed: omega = dphi / dt",
+            "Angular accel: alpha = domega / dt",
             "Power: P = dW / dt",
             "Force: F = dp / dt"
         }
@@ -250,28 +375,40 @@ static const reference_entry_t CALCULUS_ENTRIES[] = {
     {
         "Physics integrals",
         {
-            "Velocity change: v = int a dt",
-            "Position: r = int v dt",
-            "Angular speed: omega=int alpha dt",
-            "Impulse: I = int F dt",
-            "Work: W = int F.dr",
-            "Angle: phi = int omega dt"
+            "Velocity: v = S a dt",
+            "Position: r = S v dt",
+            "Angular speed: omega = S alpha dt",
+            "Impulse: I = S F dt",
+            "Work: W = S F.dr",
+            "Angle: phi = S omega dt"
+        }
+    },
+    {
+        "Linear force motion",
+        {
+            "F(t) = F0 + k*t",
+            "a(t) = F(t)/m",
+            "v(t) = v0 + S a(t)dt",
+            "s(t) = s0 + S v(t)dt",
+            "For 20t: use F0=0, k=20",
+            "good for test-style tasks"
         }
     },
     {
         "Test formulas",
         {
-            "v = dr/dt, a = dv/dt",
-            "v = int a dt, r = int v dt",
-            "F = dp/dt, I = int F dt",
-            "P = dW/dt, W = int F.dr",
-            "omega=dphi/dt",
-            "phi = int omega dt"
+            "v = dr / dt, a = dv / dt",
+            "v = S a dt, r = S v dt",
+            "F = dp / dt, I = S F dt",
+            "P = dW / dt, W = S F.dr",
+            "omega = dphi / dt",
+            "phi = S omega dt"
         }
     }
 };
 
 static const reference_category_t REFERENCE_CATEGORIES[] = {
+    { "Quick Access", (uint8_t)(sizeof(QUICK_ACCESS_ENTRIES) / sizeof(QUICK_ACCESS_ENTRIES[0])), QUICK_ACCESS_ENTRIES },
     { "Kinematics", (uint8_t)(sizeof(KINEMATICS_ENTRIES) / sizeof(KINEMATICS_ENTRIES[0])), KINEMATICS_ENTRIES },
     { "Circular Motion", (uint8_t)(sizeof(CIRCULAR_ENTRIES) / sizeof(CIRCULAR_ENTRIES[0])), CIRCULAR_ENTRIES },
     { "Dynamics", (uint8_t)(sizeof(DYNAMICS_ENTRIES) / sizeof(DYNAMICS_ENTRIES[0])), DYNAMICS_ENTRIES },
@@ -280,6 +417,7 @@ static const reference_category_t REFERENCE_CATEGORIES[] = {
 };
 
 static menu_result_t reference_select_category(uint8_t *selected_index, const reference_category_t **category_out) {
+    const uint8_t category_count = (uint8_t)(sizeof(REFERENCE_CATEGORIES) / sizeof(REFERENCE_CATEGORIES[0]));
     uint8_t i;
     uint8_t action;
 
@@ -287,7 +425,7 @@ static menu_result_t reference_select_category(uint8_t *selected_index, const re
         io_clear_screen();
         io_draw_title("All Formulas");
 
-        for (i = 0; i < 5; ++i) {
+        for (i = 0; i < category_count; ++i) {
             char line[28];
             snprintf(line, sizeof(line), "%c %s", i == *selected_index ? '>' : ' ', REFERENCE_CATEGORIES[i].name);
             io_draw_wrapped_text((uint8_t)(2 + i), line, 26);
@@ -298,7 +436,7 @@ static menu_result_t reference_select_category(uint8_t *selected_index, const re
 
         if (action == IO_MENU_UP && *selected_index > 0) {
             --(*selected_index);
-        } else if (action == IO_MENU_DOWN && *selected_index < 4) {
+        } else if (action == IO_MENU_DOWN && *selected_index + 1 < category_count) {
             ++(*selected_index);
         } else if (action == IO_MENU_SELECT) {
             *category_out = &REFERENCE_CATEGORIES[*selected_index];
