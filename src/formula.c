@@ -515,6 +515,95 @@ static solve_result_t solve_g_from_v0_h_ek_third_ep(const double *in) {
     return ok_result((3.0 * in[0] * in[0]) / denominator);
 }
 
+static solve_result_t solve_i0_cylinder_from_m_r(const double *in) { return ok_result(0.5 * in[0] * in[1] * in[1]); }
+static solve_result_t solve_m_from_i0_cylinder_r(const double *in) {
+    double denominator = 0.5 * in[1] * in[1];
+    if (!math_can_divide(denominator)) return error_result("r cannot be zero.");
+    return ok_result(in[0] / denominator);
+}
+static solve_result_t solve_r_from_i0_cylinder_m(const double *in) {
+    double radicand;
+    if (!math_can_divide(in[1])) return error_result("m cannot be zero.");
+    radicand = (2.0 * in[0]) / in[1];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+
+static solve_result_t solve_irot_from_i0_m_axis_a(const double *in) { return ok_result(in[0] + in[1] * in[2] * in[2]); }
+static solve_result_t solve_i0_from_irot_m_axis_a(const double *in) { return ok_result(in[0] - in[1] * in[2] * in[2]); }
+static solve_result_t solve_m_from_irot_i0_axis_a(const double *in) {
+    double denominator = in[2] * in[2];
+    if (!math_can_divide(denominator)) return error_result("a cannot be zero.");
+    return ok_result((in[0] - in[1]) / denominator);
+}
+static solve_result_t solve_axis_a_from_irot_i0_m(const double *in) {
+    double radicand;
+    if (!math_can_divide(in[2])) return error_result("m cannot be zero.");
+    radicand = (in[0] - in[1]) / in[2];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+
+static solve_result_t solve_ek_rot_from_irot_omega(const double *in) { return ok_result(0.5 * in[0] * in[1] * in[1]); }
+static solve_result_t solve_irot_from_ek_rot_omega(const double *in) {
+    double denominator = 0.5 * in[1] * in[1];
+    if (!math_can_divide(denominator)) return error_result("omega cannot be zero.");
+    return ok_result(in[0] / denominator);
+}
+static solve_result_t solve_omega_from_ek_rot_irot(const double *in) {
+    double radicand;
+    if (!math_can_divide(in[1])) return error_result("I cannot be zero.");
+    radicand = (2.0 * in[0]) / in[1];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+
+static solve_result_t solve_ek_rot_cylinder_offset_from_m_r_a_omega(const double *in) {
+    double irot = 0.5 * in[0] * in[1] * in[1] + in[0] * in[2] * in[2];
+    return ok_result(0.5 * irot * in[3] * in[3]);
+}
+
+static solve_result_t solve_torque_from_irot_alpha(const double *in) { return ok_result(in[0] * in[1]); }
+static solve_result_t solve_irot_from_torque_alpha(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("alpha cannot be zero.");
+    return ok_result(in[0] / in[1]);
+}
+static solve_result_t solve_alpha_from_torque_irot(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("I cannot be zero.");
+    return ok_result(in[0] / in[1]);
+}
+
+static solve_result_t solve_w_rot_from_irot_omega_omega0(const double *in) {
+    return ok_result(0.5 * in[0] * (in[1] * in[1] - in[2] * in[2]));
+}
+static solve_result_t solve_irot_from_w_rot_omega_omega0(const double *in) {
+    double denominator = 0.5 * (in[1] * in[1] - in[2] * in[2]);
+    if (!math_can_divide(denominator)) return error_result("omega terms cancel.");
+    return ok_result(in[0] / denominator);
+}
+static solve_result_t solve_omega_from_w_rot_irot_omega0(const double *in) {
+    double radicand;
+    if (!math_can_divide(in[1])) return error_result("I cannot be zero.");
+    radicand = (2.0 * in[0]) / in[1] + in[2] * in[2];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+
+static solve_result_t solve_alpha_from_rigidbody_task(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("I cannot be zero.");
+    return ok_result(in[0] / in[1]);
+}
+static solve_result_t solve_omega_from_rigidbody_task(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("I cannot be zero.");
+    return ok_result(in[2] + (in[0] / in[1]) * in[3]);
+}
+static solve_result_t solve_w_from_rigidbody_task(const double *in) {
+    double omega;
+    if (!math_can_divide(in[1])) return error_result("I cannot be zero.");
+    omega = in[2] + (in[0] / in[1]) * in[3];
+    return ok_result(0.5 * in[1] * (omega * omega - in[2] * in[2]));
+}
+
 static solve_result_t solve_w_from_f_d(const double *in) { return ok_result(in[0] * in[1]); }
 static solve_result_t solve_f_from_w_d(const double *in) {
     if (!math_can_divide(in[1])) return error_result("d cannot be zero.");
@@ -876,6 +965,47 @@ static const solve_option_t OPT_EK_THIRD_EP[] = {
     { VAR_G, 2, { VAR_V0, VAR_H }, solve_g_from_v0_h_ek_third_ep }
 };
 
+static const solve_option_t OPT_I0_CYLINDER[] = {
+    { VAR_I0, 2, { VAR_M, VAR_R }, solve_i0_cylinder_from_m_r },
+    { VAR_M, 2, { VAR_I0, VAR_R }, solve_m_from_i0_cylinder_r },
+    { VAR_R, 2, { VAR_I0, VAR_M }, solve_r_from_i0_cylinder_m }
+};
+
+static const solve_option_t OPT_PARALLEL_AXIS[] = {
+    { VAR_IROT, 3, { VAR_I0, VAR_M, VAR_AXIS_A }, solve_irot_from_i0_m_axis_a },
+    { VAR_I0, 3, { VAR_IROT, VAR_M, VAR_AXIS_A }, solve_i0_from_irot_m_axis_a },
+    { VAR_M, 3, { VAR_IROT, VAR_I0, VAR_AXIS_A }, solve_m_from_irot_i0_axis_a },
+    { VAR_AXIS_A, 3, { VAR_IROT, VAR_I0, VAR_M }, solve_axis_a_from_irot_i0_m }
+};
+
+static const solve_option_t OPT_EK_ROT[] = {
+    { VAR_EK, 2, { VAR_IROT, VAR_OMEGA }, solve_ek_rot_from_irot_omega },
+    { VAR_IROT, 2, { VAR_EK, VAR_OMEGA }, solve_irot_from_ek_rot_omega },
+    { VAR_OMEGA, 2, { VAR_EK, VAR_IROT }, solve_omega_from_ek_rot_irot }
+};
+
+static const solve_option_t OPT_EK_ROT_CYLINDER_OFFSET[] = {
+    { VAR_EK, 4, { VAR_M, VAR_R, VAR_AXIS_A, VAR_OMEGA }, solve_ek_rot_cylinder_offset_from_m_r_a_omega }
+};
+
+static const solve_option_t OPT_TORQUE_I_ALPHA[] = {
+    { VAR_TORQUE_M, 2, { VAR_IROT, VAR_ALPHA }, solve_torque_from_irot_alpha },
+    { VAR_IROT, 2, { VAR_TORQUE_M, VAR_ALPHA }, solve_irot_from_torque_alpha },
+    { VAR_ALPHA, 2, { VAR_TORQUE_M, VAR_IROT }, solve_alpha_from_torque_irot }
+};
+
+static const solve_option_t OPT_W_ROT_DELTA_EK[] = {
+    { VAR_W, 3, { VAR_IROT, VAR_OMEGA, VAR_OMEGA0 }, solve_w_rot_from_irot_omega_omega0 },
+    { VAR_IROT, 3, { VAR_W, VAR_OMEGA, VAR_OMEGA0 }, solve_irot_from_w_rot_omega_omega0 },
+    { VAR_OMEGA, 3, { VAR_W, VAR_IROT, VAR_OMEGA0 }, solve_omega_from_w_rot_irot_omega0 }
+};
+
+static const solve_option_t OPT_RIGID_TORQUE_TASK[] = {
+    { VAR_ALPHA, 4, { VAR_TORQUE_M, VAR_IROT, VAR_OMEGA0, VAR_T }, solve_alpha_from_rigidbody_task },
+    { VAR_OMEGA, 4, { VAR_TORQUE_M, VAR_IROT, VAR_OMEGA0, VAR_T }, solve_omega_from_rigidbody_task },
+    { VAR_W, 4, { VAR_TORQUE_M, VAR_IROT, VAR_OMEGA0, VAR_T }, solve_w_from_rigidbody_task }
+};
+
 static const solve_option_t OPT_W_F_D[] = {
     { VAR_W, 2, { VAR_F, VAR_D }, solve_w_from_f_d },
     { VAR_F, 2, { VAR_W, VAR_D }, solve_f_from_w_d },
@@ -1199,6 +1329,62 @@ static const formula_def_t FORMULA_EN_EK_THIRD_EP_HEIGHT = {
     OPT_EK_THIRD_EP
 };
 
+static const formula_def_t FORMULA_ROT_I0_CYLINDER = {
+    "I0=0.5*m*r^2",
+    "I0 = 0.5*m*r^2",
+    "Use: solid cylinder axis",
+    ARRAY_LEN(OPT_I0_CYLINDER),
+    OPT_I0_CYLINDER
+};
+
+static const formula_def_t FORMULA_ROT_PARALLEL_AXIS = {
+    "I=I0+m*a^2",
+    "I = I0 + m*a^2",
+    "Use: shifted parallel axis",
+    ARRAY_LEN(OPT_PARALLEL_AXIS),
+    OPT_PARALLEL_AXIS
+};
+
+static const formula_def_t FORMULA_ROT_EK = {
+    "Ek=0.5*I*omega^2",
+    "Ek = 0.5*I*omega^2",
+    "Use: rotational kinetic energy",
+    ARRAY_LEN(OPT_EK_ROT),
+    OPT_EK_ROT
+};
+
+static const formula_def_t FORMULA_ROT_EK_CYLINDER_OFFSET = {
+    "Ek=0.5*(0.5mr^2+ma^2)*omega^2",
+    "Ek = 0.5*(0.5*m*r^2 + m*a^2)*omega^2",
+    "Use: cylinder, shifted axis",
+    ARRAY_LEN(OPT_EK_ROT_CYLINDER_OFFSET),
+    OPT_EK_ROT_CYLINDER_OFFSET
+};
+
+static const formula_def_t FORMULA_ROT_TORQUE = {
+    "M=I*alpha",
+    "M = I*alpha",
+    "Use: torque causes angular accel",
+    ARRAY_LEN(OPT_TORQUE_I_ALPHA),
+    OPT_TORQUE_I_ALPHA
+};
+
+static const formula_def_t FORMULA_ROT_WORK_DELTA_EK = {
+    "W=0.5I(omega^2-omega0^2)",
+    "W = 0.5*I*(omega^2 - omega0^2)",
+    "Use: rotational work-energy",
+    ARRAY_LEN(OPT_W_ROT_DELTA_EK),
+    OPT_W_ROT_DELTA_EK
+};
+
+static const formula_def_t FORMULA_ROT_TORQUE_TASK = {
+    "omega=omega0+alpha*t",
+    "M = I*alpha",
+    "W=0.5I(omega^2-omega0^2)",
+    ARRAY_LEN(OPT_RIGID_TORQUE_TASK),
+    OPT_RIGID_TORQUE_TASK
+};
+
 static const formula_def_t FORMULA_EN_W = {
     "W = F*d",
     "W = F*d",
@@ -1407,7 +1593,7 @@ static category_def_t CATEGORIES[CATEGORY_COUNT];
 
 void formula_registry_init(void) {
     CATEGORIES[0].name = "1. Quick Solver";
-    CATEGORIES[0].formula_count = 41;
+    CATEGORIES[0].formula_count = 49;
     CATEGORIES[0].formulas[0] = &FORMULA_CALC_EXPR;
     CATEGORIES[0].formulas[1] = &FORMULA_CALC_FORCE;
     CATEGORIES[0].formulas[2] = &FORMULA_CALC_FORCE_LINEAR;
@@ -1436,19 +1622,27 @@ void formula_registry_init(void) {
     CATEGORIES[0].formulas[25] = &FORMULA_DYN_I;
     CATEGORIES[0].formulas[26] = &FORMULA_EN_W_DEK;
     CATEGORIES[0].formulas[27] = &FORMULA_EN_EK;
-    CATEGORIES[0].formulas[28] = &FORMULA_EN_EP;
-    CATEGORIES[0].formulas[29] = &FORMULA_EN_E;
-    CATEGORIES[0].formulas[30] = &FORMULA_VERT_V2;
-    CATEGORIES[0].formulas[31] = &FORMULA_VERT_H_FROM_V;
-    CATEGORIES[0].formulas[32] = &FORMULA_VERT_HMAX;
-    CATEGORIES[0].formulas[33] = &FORMULA_VERT_HMAX_H0;
-    CATEGORIES[0].formulas[34] = &FORMULA_EN_TWO_HEIGHTS;
-    CATEGORIES[0].formulas[35] = &FORMULA_EN_EK_EQ_EP;
-    CATEGORIES[0].formulas[36] = &FORMULA_EN_EK_HALF_EP_HEIGHT;
-    CATEGORIES[0].formulas[37] = &FORMULA_EN_EK_THIRD_EP_HEIGHT;
-    CATEGORIES[0].formulas[38] = &FORMULA_EN_STOP;
-    CATEGORIES[0].formulas[39] = &FORMULA_EN_W;
-    CATEGORIES[0].formulas[40] = &FORMULA_EN_P;
+    CATEGORIES[0].formulas[28] = &FORMULA_ROT_I0_CYLINDER;
+    CATEGORIES[0].formulas[29] = &FORMULA_ROT_PARALLEL_AXIS;
+    CATEGORIES[0].formulas[30] = &FORMULA_ROT_EK;
+    CATEGORIES[0].formulas[31] = &FORMULA_ROT_EK_CYLINDER_OFFSET;
+    CATEGORIES[0].formulas[32] = &FORMULA_ROT_TORQUE;
+    CATEGORIES[0].formulas[33] = &FORMULA_CIRC_OMEGA_ALPHA;
+    CATEGORIES[0].formulas[34] = &FORMULA_ROT_WORK_DELTA_EK;
+    CATEGORIES[0].formulas[35] = &FORMULA_ROT_TORQUE_TASK;
+    CATEGORIES[0].formulas[36] = &FORMULA_EN_EP;
+    CATEGORIES[0].formulas[37] = &FORMULA_EN_E;
+    CATEGORIES[0].formulas[38] = &FORMULA_VERT_V2;
+    CATEGORIES[0].formulas[39] = &FORMULA_VERT_H_FROM_V;
+    CATEGORIES[0].formulas[40] = &FORMULA_VERT_HMAX;
+    CATEGORIES[0].formulas[41] = &FORMULA_VERT_HMAX_H0;
+    CATEGORIES[0].formulas[42] = &FORMULA_EN_TWO_HEIGHTS;
+    CATEGORIES[0].formulas[43] = &FORMULA_EN_EK_EQ_EP;
+    CATEGORIES[0].formulas[44] = &FORMULA_EN_EK_HALF_EP_HEIGHT;
+    CATEGORIES[0].formulas[45] = &FORMULA_EN_EK_THIRD_EP_HEIGHT;
+    CATEGORIES[0].formulas[46] = &FORMULA_EN_STOP;
+    CATEGORIES[0].formulas[47] = &FORMULA_EN_W;
+    CATEGORIES[0].formulas[48] = &FORMULA_EN_P;
 
     CATEGORIES[1].name = "2. Kinematics";
     CATEGORIES[1].formula_count = 9;
@@ -1488,24 +1682,31 @@ void formula_registry_init(void) {
     CATEGORIES[3].formulas[5] = &FORMULA_DYN_I;
 
     CATEGORIES[4].name = "5. Work / Energy / Power";
-    CATEGORIES[4].formula_count = 17;
+    CATEGORIES[4].formula_count = 24;
     CATEGORIES[4].formulas[0] = &FORMULA_EN_W_DEK;
     CATEGORIES[4].formulas[1] = &FORMULA_EN_EK;
-    CATEGORIES[4].formulas[2] = &FORMULA_EN_EP;
-    CATEGORIES[4].formulas[3] = &FORMULA_EN_E;
-    CATEGORIES[4].formulas[4] = &FORMULA_VERT_V2;
-    CATEGORIES[4].formulas[5] = &FORMULA_VERT_H_FROM_V;
-    CATEGORIES[4].formulas[6] = &FORMULA_VERT_HMAX;
-    CATEGORIES[4].formulas[7] = &FORMULA_VERT_HMAX_H0;
-    CATEGORIES[4].formulas[8] = &FORMULA_EN_TWO_HEIGHTS;
-    CATEGORIES[4].formulas[9] = &FORMULA_EN_EK_EQ_EP;
-    CATEGORIES[4].formulas[10] = &FORMULA_EN_EK_HALF_EP_HEIGHT;
-    CATEGORIES[4].formulas[11] = &FORMULA_EN_EK_THIRD_EP_HEIGHT;
-    CATEGORIES[4].formulas[12] = &FORMULA_EN_STOP;
-    CATEGORIES[4].formulas[13] = &FORMULA_EN_W;
-    CATEGORIES[4].formulas[14] = &FORMULA_EN_P;
-    CATEGORIES[4].formulas[15] = &FORMULA_EN_PAVG;
-    CATEGORIES[4].formulas[16] = &FORMULA_EN_SPRING;
+    CATEGORIES[4].formulas[2] = &FORMULA_ROT_I0_CYLINDER;
+    CATEGORIES[4].formulas[3] = &FORMULA_ROT_PARALLEL_AXIS;
+    CATEGORIES[4].formulas[4] = &FORMULA_ROT_EK;
+    CATEGORIES[4].formulas[5] = &FORMULA_ROT_EK_CYLINDER_OFFSET;
+    CATEGORIES[4].formulas[6] = &FORMULA_ROT_TORQUE;
+    CATEGORIES[4].formulas[7] = &FORMULA_ROT_WORK_DELTA_EK;
+    CATEGORIES[4].formulas[8] = &FORMULA_ROT_TORQUE_TASK;
+    CATEGORIES[4].formulas[9] = &FORMULA_EN_EP;
+    CATEGORIES[4].formulas[10] = &FORMULA_EN_E;
+    CATEGORIES[4].formulas[11] = &FORMULA_VERT_V2;
+    CATEGORIES[4].formulas[12] = &FORMULA_VERT_H_FROM_V;
+    CATEGORIES[4].formulas[13] = &FORMULA_VERT_HMAX;
+    CATEGORIES[4].formulas[14] = &FORMULA_VERT_HMAX_H0;
+    CATEGORIES[4].formulas[15] = &FORMULA_EN_TWO_HEIGHTS;
+    CATEGORIES[4].formulas[16] = &FORMULA_EN_EK_EQ_EP;
+    CATEGORIES[4].formulas[17] = &FORMULA_EN_EK_HALF_EP_HEIGHT;
+    CATEGORIES[4].formulas[18] = &FORMULA_EN_EK_THIRD_EP_HEIGHT;
+    CATEGORIES[4].formulas[19] = &FORMULA_EN_STOP;
+    CATEGORIES[4].formulas[20] = &FORMULA_EN_W;
+    CATEGORIES[4].formulas[21] = &FORMULA_EN_P;
+    CATEGORIES[4].formulas[22] = &FORMULA_EN_PAVG;
+    CATEGORIES[4].formulas[23] = &FORMULA_EN_SPRING;
 
     CATEGORIES[5].name = "6. Derivatives / Integrals";
     CATEGORIES[5].formula_count = 14;
@@ -1582,6 +1783,10 @@ const char *formula_variable_name(variable_id_t id) {
         case VAR_X2: return "Position x2";
         case VAR_T1: return "Time t1";
         case VAR_T2: return "Time t2";
+        case VAR_IROT: return "Moment of inertia I";
+        case VAR_I0: return "Center-axis inertia I0";
+        case VAR_AXIS_A: return "Axis offset a";
+        case VAR_TORQUE_M: return "Torque M";
         default: return "?";
     }
 }
@@ -1638,6 +1843,10 @@ const char *formula_variable_prompt(variable_id_t id) {
         case VAR_X2: return "position x2";
         case VAR_T1: return "time t1";
         case VAR_T2: return "time t2";
+        case VAR_IROT: return "moment of inertia I";
+        case VAR_I0: return "center-axis inertia I0";
+        case VAR_AXIS_A: return "axis offset a";
+        case VAR_TORQUE_M: return "torque M";
         default: return "?";
     }
 }
@@ -1694,6 +1903,10 @@ const char *formula_variable_unit(variable_id_t id) {
         case VAR_X2: return "m";
         case VAR_T1: return "s";
         case VAR_T2: return "s";
+        case VAR_IROT: return "kg*m^2";
+        case VAR_I0: return "kg*m^2";
+        case VAR_AXIS_A: return "m";
+        case VAR_TORQUE_M: return "N*m";
         default: return "";
     }
 }
