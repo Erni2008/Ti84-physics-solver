@@ -5,8 +5,8 @@
 #include <stdint.h>
 
 #define MAX_FORMULA_INPUTS 3
-#define MAX_FORMULAS_PER_CATEGORY 14
-#define CATEGORY_COUNT 5
+#define MAX_FORMULAS_PER_CATEGORY 23
+#define CATEGORY_COUNT 6
 
 typedef enum {
     VAR_V,
@@ -42,6 +42,10 @@ typedef enum {
     VAR_EP,
     VAR_DELTA_EK,
     VAR_K,
+    VAR_DOT_VA,
+    VAR_V_MAG,
+    VAR_A_MAG,
+    VAR_PHI_DEG,
     VAR_COUNT
 } variable_id_t;
 

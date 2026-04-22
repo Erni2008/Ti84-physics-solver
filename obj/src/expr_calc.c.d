@@ -6,6 +6,7 @@ obj/src/expr_calc.c.bc: src/expr_calc.c \
   /Users/erni/Desktop/CEdev/include/stdbool.h \
   /Users/erni/Desktop/CEdev/include/stdio.h \
   /Users/erni/Desktop/CEdev/include/stdarg.h \
+  /Users/erni/Desktop/CEdev/include/stdlib.h \
   /Users/erni/Desktop/CEdev/include/string.h include/expr_calc.h \
   include/formula.h /Users/erni/Desktop/CEdev/include/stdint.h \
   include/io_helpers.h /Users/erni/Desktop/CEdev/include/stddef.h \

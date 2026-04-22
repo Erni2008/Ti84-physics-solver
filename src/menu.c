@@ -67,9 +67,9 @@ static menu_result_t run_menu(const char *title, const char *const *items, uint8
 
 menu_result_t menu_select_home(uint8_t *selected_index, app_section_t *section_out) {
     static const char *labels[] = {
-        "Formula Solver",
-        "All Formulas",
-        "Symbols"
+        "Solve formulas",
+        "Browse formulas",
+        "Symbols + units"
     };
     menu_result_t result = run_menu("Physics Tools", labels, 3, selected_index);
 

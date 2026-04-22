@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <tice.h>
@@ -86,8 +87,8 @@ void io_show_message(const char *title, const char *line1, const char *line2) {
     }
 }
 
-static bool append_char(char *buffer, uint8_t *length, char c) {
-    if (*length >= INPUT_BUFFER_SIZE - 1) {
+static bool append_char_limited(char *buffer, uint8_t *length, size_t capacity, char c) {
+    if (*length >= capacity - 1) {
         return false;
     }
 
@@ -95,6 +96,10 @@ static bool append_char(char *buffer, uint8_t *length, char c) {
     buffer[*length + 1] = '\0';
     ++(*length);
     return true;
+}
+
+static bool append_char(char *buffer, uint8_t *length, char c) {
+    return append_char_limited(buffer, length, INPUT_BUFFER_SIZE, c);
 }
 
 static bool handle_input_key(char key, char *buffer, uint8_t *length, bool *is_back) {
@@ -162,13 +167,15 @@ bool io_prompt_double(const char *title, const char *prompt, double *out_value) 
         key = read_key();
         if (key == sk_Enter) {
             double parsed = 0.0;
+            char *endptr = NULL;
 
             if (length == 0 || (length == 1 && buffer[0] == '-')) {
                 io_show_message("Input Error", "Please enter a", "valid number.");
                 continue;
             }
 
-            if (sscanf(buffer, "%lf", &parsed) != 1) {
+            parsed = strtod(buffer, &endptr);
+            if (endptr == buffer || *endptr != '\0') {
                 io_show_message("Input Error", "Number format", "not supported.");
                 continue;
             }
@@ -188,17 +195,93 @@ bool io_prompt_double(const char *title, const char *prompt, double *out_value) 
 }
 
 bool io_prompt_text(const char *title, const char *prompt, char *buffer, size_t buffer_size) {
-    io_clear_screen();
-    io_draw_title(title);
-    io_draw_wrapped_text(2, prompt, 26);
-    io_draw_footer("Use OS input, then Enter");
+    uint8_t length = 0;
+    bool alpha_mode = false;
 
     buffer[0] = '\0';
-    os_GetStringInput("> ", buffer, buffer_size);
-    if (buffer[0] == '\0') {
-        return false;
+
+    while (true) {
+        char line[32];
+        char key;
+
+        io_clear_screen();
+        io_draw_title(title);
+        io_draw_wrapped_text(1, prompt, 26);
+        io_draw_wrapped_text(3, "X,T key=t  ALPHA+X,T=x", 26);
+        snprintf(line, sizeof(line), "> %s", buffer);
+        io_put_line(6, line);
+        io_draw_footer("ENTER ok DEL MODE back");
+
+        key = read_key();
+        if (key == sk_Enter) {
+            io_wait_for_key_release();
+            return length > 0;
+        }
+        if (key == sk_Mode || key == sk_Clear) {
+            io_wait_for_key_release();
+            return false;
+        }
+        if (key == sk_Alpha) {
+            alpha_mode = !alpha_mode;
+            io_wait_for_key_release();
+            continue;
+        }
+        if (key == sk_Del) {
+            if (length > 0) {
+                buffer[length - 1] = '\0';
+                --length;
+            }
+            io_wait_for_key_release();
+            continue;
+        }
+
+        if (key == sk_GraphVar) {
+            append_char_limited(buffer, &length, buffer_size, alpha_mode ? 'x' : 't');
+            alpha_mode = false;
+        } else if (key == sk_Add) {
+            append_char_limited(buffer, &length, buffer_size, '+');
+        } else if (key == sk_Sub) {
+            append_char_limited(buffer, &length, buffer_size, '-');
+        } else if (key == sk_Mul) {
+            append_char_limited(buffer, &length, buffer_size, '*');
+        } else if (key == sk_Div) {
+            append_char_limited(buffer, &length, buffer_size, '/');
+        } else if (key == sk_Power) {
+            append_char_limited(buffer, &length, buffer_size, '^');
+        } else if (key == sk_Square) {
+            if (append_char_limited(buffer, &length, buffer_size, '^')) {
+                append_char_limited(buffer, &length, buffer_size, '2');
+            }
+        } else if (key == sk_DecPnt) {
+            append_char_limited(buffer, &length, buffer_size, '.');
+        } else if (key == sk_Chs) {
+            append_char_limited(buffer, &length, buffer_size, '-');
+        } else if (key == sk_0) {
+            append_char_limited(buffer, &length, buffer_size, '0');
+        } else if (key == sk_1) {
+            append_char_limited(buffer, &length, buffer_size, '1');
+        } else if (key == sk_2) {
+            append_char_limited(buffer, &length, buffer_size, '2');
+        } else if (key == sk_3) {
+            append_char_limited(buffer, &length, buffer_size, '3');
+        } else if (key == sk_4) {
+            append_char_limited(buffer, &length, buffer_size, '4');
+        } else if (key == sk_5) {
+            append_char_limited(buffer, &length, buffer_size, '5');
+        } else if (key == sk_6) {
+            append_char_limited(buffer, &length, buffer_size, '6');
+        } else if (key == sk_7) {
+            append_char_limited(buffer, &length, buffer_size, '7');
+        } else if (key == sk_8) {
+            append_char_limited(buffer, &length, buffer_size, '8');
+        } else if (key == sk_9) {
+            append_char_limited(buffer, &length, buffer_size, '9');
+        } else {
+            alpha_mode = false;
+        }
+
+        io_wait_for_key_release();
     }
-    return true;
 }
 
 void io_show_result(const char *formula_name, const char *target_name, double result, const char *const_note) {

@@ -53,6 +53,7 @@ int main(void) {
                 return 0;
             }
 
+            formula_index = 0;
             while (true) {
                 menu_result_t formula_result = menu_select_formula(category, &formula_index);
                 if (formula_result == MENU_BACK) {

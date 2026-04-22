@@ -110,6 +110,19 @@ static solve_result_t solve_s_from_v_v0_a(const double *in) {
     return ok_result((in[0] * in[0] - in[1] * in[1]) / (2.0 * in[2]));
 }
 
+static solve_result_t solve_phi_deg_from_dot_vmag_amag(const double *in) {
+    double denominator = in[1] * in[2];
+    double c;
+    if (!math_can_divide(denominator)) return error_result("|v| or |a| is zero.");
+    c = in[0] / denominator;
+    if (c < -1.0 || c > 1.0) return error_result("cos(phi) outside [-1,1].");
+    return ok_result(acos(c) * 180.0 / PHYSICS_PI);
+}
+static solve_result_t solve_dot_from_phi_deg_vmag_amag(const double *in) {
+    double phi_rad = in[0] * PHYSICS_PI / 180.0;
+    return ok_result(in[1] * in[2] * cos(phi_rad));
+}
+
 static solve_result_t solve_v_from_r_omega(const double *in) { return ok_result(in[0] * in[1]); }
 static solve_result_t solve_r_from_v_omega(const double *in) {
     if (!math_can_divide(in[1])) return error_result("omega cannot be zero.");
@@ -142,6 +155,34 @@ static solve_result_t solve_v_from_ac_r(const double *in) {
 static solve_result_t solve_r_from_ac_v(const double *in) {
     if (!math_can_divide(in[0])) return error_result("ac cannot be zero.");
     return ok_result((in[1] * in[1]) / in[0]);
+}
+static solve_result_t solve_ac_from_r_omega(const double *in) {
+    return ok_result(in[0] * in[1] * in[1]);
+}
+static solve_result_t solve_r_from_ac_omega(const double *in) {
+    double denominator = in[1] * in[1];
+    if (!math_can_divide(denominator)) return error_result("omega cannot be zero.");
+    return ok_result(in[0] / denominator);
+}
+static solve_result_t solve_omega_from_ac_r(const double *in) {
+    double radicand;
+    if (!math_can_divide(in[1])) return error_result("r cannot be zero.");
+    radicand = in[0] / in[1];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+static solve_result_t solve_a_total_from_at_ac(const double *in) {
+    return ok_result(sqrt(in[0] * in[0] + in[1] * in[1]));
+}
+static solve_result_t solve_at_from_a_total_ac(const double *in) {
+    double radicand = in[0] * in[0] - in[1] * in[1];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+static solve_result_t solve_ac_from_a_total_at(const double *in) {
+    double radicand = in[0] * in[0] - in[1] * in[1];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
 }
 
 static solve_result_t solve_omega_from_f(const double *in) { return ok_result(2.0 * PHYSICS_PI * in[0]); }
@@ -468,6 +509,11 @@ static const solve_option_t OPT_V2_V0_A_S[] = {
     { VAR_S, 3, { VAR_V, VAR_V0, VAR_A }, solve_s_from_v_v0_a }
 };
 
+static const solve_option_t OPT_PHI_DOT_VMAG_AMAG[] = {
+    { VAR_PHI_DEG, 3, { VAR_DOT_VA, VAR_V_MAG, VAR_A_MAG }, solve_phi_deg_from_dot_vmag_amag },
+    { VAR_DOT_VA, 3, { VAR_PHI_DEG, VAR_V_MAG, VAR_A_MAG }, solve_dot_from_phi_deg_vmag_amag }
+};
+
 static const solve_option_t OPT_V_R_OMEGA[] = {
     { VAR_V, 2, { VAR_R, VAR_OMEGA }, solve_v_from_r_omega },
     { VAR_R, 2, { VAR_V, VAR_OMEGA }, solve_r_from_v_omega },
@@ -484,6 +530,18 @@ static const solve_option_t OPT_AC_V_R[] = {
     { VAR_AC, 2, { VAR_V, VAR_R }, solve_ac_from_v_r },
     { VAR_V, 2, { VAR_AC, VAR_R }, solve_v_from_ac_r },
     { VAR_R, 2, { VAR_AC, VAR_V }, solve_r_from_ac_v }
+};
+
+static const solve_option_t OPT_AC_R_OMEGA[] = {
+    { VAR_AC, 2, { VAR_R, VAR_OMEGA }, solve_ac_from_r_omega },
+    { VAR_R, 2, { VAR_AC, VAR_OMEGA }, solve_r_from_ac_omega },
+    { VAR_OMEGA, 2, { VAR_AC, VAR_R }, solve_omega_from_ac_r }
+};
+
+static const solve_option_t OPT_A_AT_AC[] = {
+    { VAR_A, 2, { VAR_AT, VAR_AC }, solve_a_total_from_at_ac },
+    { VAR_AT, 2, { VAR_A, VAR_AC }, solve_at_from_a_total_ac },
+    { VAR_AC, 2, { VAR_A, VAR_AT }, solve_ac_from_a_total_at }
 };
 
 static const solve_option_t OPT_OMEGA_F[] = {
@@ -611,8 +669,11 @@ static const solve_option_t OPT_F_K_X[] = {
     { VAR_D, 2, { VAR_F, VAR_K }, solve_x_from_f_k }
 };
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-field-initializers"
+
 static const formula_def_t FORMULA_KIN_V = {
-    "Velocity after time",
+    "v=v0+a*t",
     "v = v0 + a*t",
     "Condition: constant a",
     ARRAY_LEN(OPT_V_V0_A_T),
@@ -620,7 +681,7 @@ static const formula_def_t FORMULA_KIN_V = {
 };
 
 static const formula_def_t FORMULA_KIN_VAVG = {
-    "v = s / t",
+    "v=s/t",
     "v_avg = s / t",
     "Use path or displacement",
     ARRAY_LEN(OPT_V_S_T),
@@ -628,7 +689,7 @@ static const formula_def_t FORMULA_KIN_VAVG = {
 };
 
 static const formula_def_t FORMULA_KIN_A = {
-    "a = (v-v0) / t",
+    "a=(v-v0)/t",
     "a = (v - v0) / t",
     "Straight-line motion",
     ARRAY_LEN(OPT_A_V_V0_T),
@@ -636,7 +697,7 @@ static const formula_def_t FORMULA_KIN_A = {
 };
 
 static const formula_def_t FORMULA_KIN_S = {
-    "s = s0 + v*t",
+    "s=s0+v*t",
     "s = s0 + v*t",
     "Condition: constant v",
     ARRAY_LEN(OPT_S_S0_V_T),
@@ -644,7 +705,7 @@ static const formula_def_t FORMULA_KIN_S = {
 };
 
 static const formula_def_t FORMULA_KIN_S2 = {
-    "s = v0*t + 0.5*a*t^2",
+    "s=v0*t+0.5*a*t^2",
     "s = v0*t + 0.5*a*t^2",
     "Condition: constant a",
     ARRAY_LEN(OPT_S_V0_A_T2),
@@ -681,6 +742,22 @@ static const formula_def_t FORMULA_CIRC_AC = {
     "Condition: constant r",
     ARRAY_LEN(OPT_AC_V_R),
     OPT_AC_V_R
+};
+
+static const formula_def_t FORMULA_CIRC_AC_OMEGA = {
+    "a_c=r*omega^2",
+    "a_c = r*omega^2",
+    "Condition: constant r",
+    ARRAY_LEN(OPT_AC_R_OMEGA),
+    OPT_AC_R_OMEGA
+};
+
+static const formula_def_t FORMULA_CIRC_A_TOTAL = {
+    "a=sqrt(a_t^2+a_c^2)",
+    "a = sqrt(a_t^2 + a_c^2)",
+    "Total acceleration",
+    ARRAY_LEN(OPT_A_AT_AC),
+    OPT_A_AT_AC
 };
 
 static const formula_def_t FORMULA_CIRC_OMEGA_F = {
@@ -732,7 +809,7 @@ static const formula_def_t FORMULA_CIRC_N = {
 };
 
 static const formula_def_t FORMULA_CIRC_N_ALPHA = {
-    "N from omega0,alpha,t",
+    "N=(omega0*t+.5*alpha*t^2)/2pi",
     "N = (omega0*t + 0.5*alpha*t^2)/(2*pi)",
     "Condition: constant alpha",
     ARRAY_LEN(OPT_N_OMEGA0_ALPHA_T),
@@ -843,6 +920,14 @@ static const formula_def_t FORMULA_KIN_V2 = {
     OPT_V2_V0_A_S
 };
 
+static const formula_def_t FORMULA_KIN_ANGLE_VA = {
+    "cos(phi)=(v.a)/(|v||a|)",
+    "cos(phi) = (v.a) / (|v|*|a|)",
+    "Angle between v and a",
+    ARRAY_LEN(OPT_PHI_DOT_VMAG_AMAG),
+    OPT_PHI_DOT_VMAG_AMAG
+};
+
 static const formula_def_t FORMULA_CALC_V = {
     "v = dx / dt",
     "v = dx / dt",
@@ -892,55 +977,55 @@ static const formula_def_t FORMULA_CALC_FORCE = {
 };
 
 static const formula_def_t FORMULA_CALC_DISP = {
-    "x = S v dt",
-    "x = S v dt",
+    "x = S v*dt",
+    "x = S v*dt",
     "Constant v over the interval",
     ARRAY_LEN(OPT_V_S_T),
     OPT_V_S_T
 };
 
 static const formula_def_t FORMULA_CALC_DV = {
-    "v = S a dt",
-    "v = S a dt",
+    "v = S a*dt",
+    "v = S a*dt",
     "Constant a over the interval",
     ARRAY_LEN(OPT_A_V_V0_T),
     OPT_A_V_V0_T
 };
 
 static const formula_def_t FORMULA_CALC_DPHI = {
-    "phi = S omega dt",
-    "phi = S omega dt",
+    "phi = S omega*dt",
+    "phi = S omega*dt",
     "Constant omega over the interval",
     ARRAY_LEN(OPT_PHI_OMEGA_T),
     OPT_PHI_OMEGA_T
 };
 
 static const formula_def_t FORMULA_CALC_DOMEGA = {
-    "omega = S alpha dt",
-    "omega = S alpha dt",
+    "omega = S alpha*dt",
+    "omega = S alpha*dt",
     "Constant alpha over the interval",
     ARRAY_LEN(OPT_OMEGA_OMEGA0_ALPHA_T),
     OPT_OMEGA_OMEGA0_ALPHA_T
 };
 
 static const formula_def_t FORMULA_CALC_I = {
-    "I = S F dt",
-    "I = S F dt",
+    "I = S F*dt",
+    "I = S F*dt",
     "F constant over dt",
     ARRAY_LEN(OPT_I_F_T),
     OPT_I_F_T
 };
 
 static const formula_def_t FORMULA_CALC_W = {
-    "W = S F.dr",
-    "W = S F.dr",
+    "W = S F*dr",
+    "W = S F*dr",
     "F constant and parallel",
     ARRAY_LEN(OPT_W_F_D),
     OPT_W_F_D
 };
 
 static const formula_def_t FORMULA_CALC_EXPR = {
-    "f(x), f(t), d/dx, S",
+    "d/dx or S polynomial",
     "Enter polynomial in x or t",
     "Examples: 10t, 3t^2+2, x^3-x",
     0,
@@ -949,7 +1034,7 @@ static const formula_def_t FORMULA_CALC_EXPR = {
 };
 
 static const formula_def_t FORMULA_CALC_FORCE_LINEAR = {
-    "F(t) = F0 + k*t",
+    "F(t)->v(t),s(t)",
     "F(t) = F0 + k*t",
     "Find v(t) and s(t) for linear force",
     0,
@@ -957,66 +1042,97 @@ static const formula_def_t FORMULA_CALC_FORCE_LINEAR = {
     run_force_linear_motion_solver
 };
 
+#pragma clang diagnostic pop
+
 static category_def_t CATEGORIES[CATEGORY_COUNT];
 
 void formula_registry_init(void) {
-    CATEGORIES[0].name = "1. Kinematics";
-    CATEGORIES[0].formula_count = 6;
-    CATEGORIES[0].formulas[0] = &FORMULA_KIN_V;
-    CATEGORIES[0].formulas[1] = &FORMULA_KIN_S2;
-    CATEGORIES[0].formulas[2] = &FORMULA_KIN_V2;
-    CATEGORIES[0].formulas[3] = &FORMULA_KIN_S;
-    CATEGORIES[0].formulas[4] = &FORMULA_KIN_VAVG;
-    CATEGORIES[0].formulas[5] = &FORMULA_KIN_A;
+    CATEGORIES[0].name = "1. Quick Solver";
+    CATEGORIES[0].formula_count = 23;
+    CATEGORIES[0].formulas[0] = &FORMULA_CALC_EXPR;
+    CATEGORIES[0].formulas[1] = &FORMULA_CALC_FORCE_LINEAR;
+    CATEGORIES[0].formulas[2] = &FORMULA_CALC_V;
+    CATEGORIES[0].formulas[3] = &FORMULA_CALC_A;
+    CATEGORIES[0].formulas[4] = &FORMULA_KIN_V;
+    CATEGORIES[0].formulas[5] = &FORMULA_KIN_S2;
+    CATEGORIES[0].formulas[6] = &FORMULA_KIN_V2;
+    CATEGORIES[0].formulas[7] = &FORMULA_KIN_ANGLE_VA;
+    CATEGORIES[0].formulas[8] = &FORMULA_CIRC_N_ALPHA;
+    CATEGORIES[0].formulas[9] = &FORMULA_CIRC_OMEGA_ALPHA;
+    CATEGORIES[0].formulas[10] = &FORMULA_CIRC_PHI_ALPHA;
+    CATEGORIES[0].formulas[11] = &FORMULA_CIRC_V;
+    CATEGORIES[0].formulas[12] = &FORMULA_CIRC_AC_OMEGA;
+    CATEGORIES[0].formulas[13] = &FORMULA_CIRC_AT;
+    CATEGORIES[0].formulas[14] = &FORMULA_CIRC_A_TOTAL;
+    CATEGORIES[0].formulas[15] = &FORMULA_DYN_F;
+    CATEGORIES[0].formulas[16] = &FORMULA_DYN_P;
+    CATEGORIES[0].formulas[17] = &FORMULA_DYN_I;
+    CATEGORIES[0].formulas[18] = &FORMULA_EN_W_DEK;
+    CATEGORIES[0].formulas[19] = &FORMULA_EN_EK;
+    CATEGORIES[0].formulas[20] = &FORMULA_EN_W;
+    CATEGORIES[0].formulas[21] = &FORMULA_EN_P;
+    CATEGORIES[0].formulas[22] = &FORMULA_EN_EP;
 
-    CATEGORIES[1].name = "2. Circular Motion";
-    CATEGORIES[1].formula_count = 11;
-    CATEGORIES[1].formulas[0] = &FORMULA_CIRC_V;
-    CATEGORIES[1].formulas[1] = &FORMULA_CIRC_AC;
-    CATEGORIES[1].formulas[2] = &FORMULA_CIRC_AT;
-    CATEGORIES[1].formulas[3] = &FORMULA_CIRC_OMEGA_F;
-    CATEGORIES[1].formulas[4] = &FORMULA_CIRC_OMEGA_T;
-    CATEGORIES[1].formulas[5] = &FORMULA_CIRC_OMEGA_ALPHA;
-    CATEGORIES[1].formulas[6] = &FORMULA_CIRC_PHI_ALPHA;
-    CATEGORIES[1].formulas[7] = &FORMULA_CIRC_N_ALPHA;
-    CATEGORIES[1].formulas[8] = &FORMULA_CIRC_N;
-    CATEGORIES[1].formulas[9] = &FORMULA_CIRC_PHI;
-    CATEGORIES[1].formulas[10] = &FORMULA_CIRC_FREQ;
+    CATEGORIES[1].name = "2. Kinematics";
+    CATEGORIES[1].formula_count = 7;
+    CATEGORIES[1].formulas[0] = &FORMULA_KIN_V;
+    CATEGORIES[1].formulas[1] = &FORMULA_KIN_S2;
+    CATEGORIES[1].formulas[2] = &FORMULA_KIN_V2;
+    CATEGORIES[1].formulas[3] = &FORMULA_KIN_S;
+    CATEGORIES[1].formulas[4] = &FORMULA_KIN_VAVG;
+    CATEGORIES[1].formulas[5] = &FORMULA_KIN_A;
+    CATEGORIES[1].formulas[6] = &FORMULA_KIN_ANGLE_VA;
 
-    CATEGORIES[2].name = "3. Dynamics";
-    CATEGORIES[2].formula_count = 4;
-    CATEGORIES[2].formulas[0] = &FORMULA_DYN_F;
-    CATEGORIES[2].formulas[1] = &FORMULA_DYN_A;
-    CATEGORIES[2].formulas[2] = &FORMULA_DYN_P;
-    CATEGORIES[2].formulas[3] = &FORMULA_DYN_I;
+    CATEGORIES[2].name = "3. Circular Motion";
+    CATEGORIES[2].formula_count = 13;
+    CATEGORIES[2].formulas[0] = &FORMULA_CIRC_V;
+    CATEGORIES[2].formulas[1] = &FORMULA_CIRC_AC;
+    CATEGORIES[2].formulas[2] = &FORMULA_CIRC_AC_OMEGA;
+    CATEGORIES[2].formulas[3] = &FORMULA_CIRC_AT;
+    CATEGORIES[2].formulas[4] = &FORMULA_CIRC_A_TOTAL;
+    CATEGORIES[2].formulas[5] = &FORMULA_CIRC_OMEGA_F;
+    CATEGORIES[2].formulas[6] = &FORMULA_CIRC_OMEGA_T;
+    CATEGORIES[2].formulas[7] = &FORMULA_CIRC_OMEGA_ALPHA;
+    CATEGORIES[2].formulas[8] = &FORMULA_CIRC_PHI_ALPHA;
+    CATEGORIES[2].formulas[9] = &FORMULA_CIRC_N_ALPHA;
+    CATEGORIES[2].formulas[10] = &FORMULA_CIRC_N;
+    CATEGORIES[2].formulas[11] = &FORMULA_CIRC_PHI;
+    CATEGORIES[2].formulas[12] = &FORMULA_CIRC_FREQ;
 
-    CATEGORIES[3].name = "4. Work / Energy / Power";
-    CATEGORIES[3].formula_count = 8;
-    CATEGORIES[3].formulas[0] = &FORMULA_EN_W_DEK;
-    CATEGORIES[3].formulas[1] = &FORMULA_EN_EK;
-    CATEGORIES[3].formulas[2] = &FORMULA_EN_W;
-    CATEGORIES[3].formulas[3] = &FORMULA_EN_P;
-    CATEGORIES[3].formulas[4] = &FORMULA_EN_EP;
-    CATEGORIES[3].formulas[5] = &FORMULA_EN_E;
-    CATEGORIES[3].formulas[6] = &FORMULA_EN_PAVG;
-    CATEGORIES[3].formulas[7] = &FORMULA_EN_SPRING;
+    CATEGORIES[3].name = "4. Dynamics";
+    CATEGORIES[3].formula_count = 4;
+    CATEGORIES[3].formulas[0] = &FORMULA_DYN_F;
+    CATEGORIES[3].formulas[1] = &FORMULA_DYN_A;
+    CATEGORIES[3].formulas[2] = &FORMULA_DYN_P;
+    CATEGORIES[3].formulas[3] = &FORMULA_DYN_I;
 
-    CATEGORIES[4].name = "5. Derivatives / Integrals";
-    CATEGORIES[4].formula_count = 14;
-    CATEGORIES[4].formulas[0] = &FORMULA_CALC_EXPR;
-    CATEGORIES[4].formulas[1] = &FORMULA_CALC_FORCE_LINEAR;
-    CATEGORIES[4].formulas[2] = &FORMULA_CALC_V;
-    CATEGORIES[4].formulas[3] = &FORMULA_CALC_A;
-    CATEGORIES[4].formulas[4] = &FORMULA_CALC_DISP;
-    CATEGORIES[4].formulas[5] = &FORMULA_CALC_FORCE;
-    CATEGORIES[4].formulas[6] = &FORMULA_CALC_POWER;
-    CATEGORIES[4].formulas[7] = &FORMULA_CALC_I;
-    CATEGORIES[4].formulas[8] = &FORMULA_CALC_W;
-    CATEGORIES[4].formulas[9] = &FORMULA_CALC_OMEGA;
-    CATEGORIES[4].formulas[10] = &FORMULA_CALC_ALPHA;
-    CATEGORIES[4].formulas[11] = &FORMULA_CALC_DV;
-    CATEGORIES[4].formulas[12] = &FORMULA_CALC_DPHI;
-    CATEGORIES[4].formulas[13] = &FORMULA_CALC_DOMEGA;
+    CATEGORIES[4].name = "5. Work / Energy / Power";
+    CATEGORIES[4].formula_count = 8;
+    CATEGORIES[4].formulas[0] = &FORMULA_EN_W_DEK;
+    CATEGORIES[4].formulas[1] = &FORMULA_EN_EK;
+    CATEGORIES[4].formulas[2] = &FORMULA_EN_W;
+    CATEGORIES[4].formulas[3] = &FORMULA_EN_P;
+    CATEGORIES[4].formulas[4] = &FORMULA_EN_EP;
+    CATEGORIES[4].formulas[5] = &FORMULA_EN_E;
+    CATEGORIES[4].formulas[6] = &FORMULA_EN_PAVG;
+    CATEGORIES[4].formulas[7] = &FORMULA_EN_SPRING;
+
+    CATEGORIES[5].name = "6. Derivatives / Integrals";
+    CATEGORIES[5].formula_count = 14;
+    CATEGORIES[5].formulas[0] = &FORMULA_CALC_EXPR;
+    CATEGORIES[5].formulas[1] = &FORMULA_CALC_FORCE_LINEAR;
+    CATEGORIES[5].formulas[2] = &FORMULA_CALC_V;
+    CATEGORIES[5].formulas[3] = &FORMULA_CALC_A;
+    CATEGORIES[5].formulas[4] = &FORMULA_CALC_DISP;
+    CATEGORIES[5].formulas[5] = &FORMULA_CALC_FORCE;
+    CATEGORIES[5].formulas[6] = &FORMULA_CALC_POWER;
+    CATEGORIES[5].formulas[7] = &FORMULA_CALC_I;
+    CATEGORIES[5].formulas[8] = &FORMULA_CALC_W;
+    CATEGORIES[5].formulas[9] = &FORMULA_CALC_OMEGA;
+    CATEGORIES[5].formulas[10] = &FORMULA_CALC_ALPHA;
+    CATEGORIES[5].formulas[11] = &FORMULA_CALC_DV;
+    CATEGORIES[5].formulas[12] = &FORMULA_CALC_DPHI;
+    CATEGORIES[5].formulas[13] = &FORMULA_CALC_DOMEGA;
 }
 
 const category_def_t *formula_get_categories(uint8_t *count_out) {
@@ -1034,6 +1150,7 @@ const char *formula_variable_name(variable_id_t id) {
         "Work W", "Distance d", "Average power P_avg", "Power P",
         "Potential-energy change dEp", "Gravity g", "Height h", "Mechanical energy E",
         "Potential energy Ep", "Change in kinetic energy dEk", "Spring constant k"
+        , "Dot product v.a", "Speed magnitude |v|", "Accel magnitude |a|", "Angle phi"
     };
     return names[id];
 }
@@ -1049,6 +1166,7 @@ const char *formula_variable_prompt(variable_id_t id) {
         "distance d", "average power P_avg", "power P", "potential-energy change dEp",
         "gravity g", "height h", "mechanical energy E", "potential energy Ep",
         "change in kinetic energy dEk", "spring constant k"
+        , "dot product v.a", "speed magnitude |v|", "acceleration magnitude |a|", "angle phi"
     };
     return prompts[id];
 }
@@ -1063,8 +1181,262 @@ const char *formula_variable_unit(variable_id_t id) {
         "J", "m", "W", "W",
         "J", "m/s^2", "m", "J",
         "J", "J", "N/m"
+        , "m^2/s^3", "m/s", "m/s^2", "deg"
     };
     return units[id];
+}
+
+static bool formula_can_solve_variable(const formula_def_t *formula, variable_id_t variable) {
+    uint8_t i;
+    for (i = 0; i < formula->option_count; ++i) {
+        if (formula->options[i].target == variable) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static bool formula_match_exists(const formula_def_t *const *matches, uint8_t count, const formula_def_t *formula) {
+    uint8_t i;
+    for (i = 0; i < count; ++i) {
+        if (matches[i] == formula) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static uint8_t collect_formula_variables(const formula_def_t *formula, variable_id_t *variables, uint8_t max_variables) {
+    uint8_t count = 0;
+    uint8_t i;
+    for (i = 0; i < formula->option_count; ++i) {
+        uint8_t j;
+        bool found = false;
+
+        for (j = 0; j < count; ++j) {
+            if (variables[j] == formula->options[i].target) {
+                found = true;
+                break;
+            }
+        }
+        if (!found && count < max_variables) {
+            variables[count++] = formula->options[i].target;
+        }
+
+        for (j = 0; j < formula->options[i].input_count; ++j) {
+            uint8_t k;
+            found = false;
+            for (k = 0; k < count; ++k) {
+                if (variables[k] == formula->options[i].inputs[j]) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found && count < max_variables) {
+                variables[count++] = formula->options[i].inputs[j];
+            }
+        }
+    }
+    return count;
+}
+
+static uint8_t collect_formulas_for_variable(variable_id_t variable, const formula_def_t **matches, uint8_t max_matches) {
+    const category_def_t *categories;
+    uint8_t category_count;
+    uint8_t count = 0;
+    uint8_t i;
+
+    categories = formula_get_categories(&category_count);
+    for (i = 0; i < category_count; ++i) {
+        uint8_t j;
+        for (j = 0; j < categories[i].formula_count; ++j) {
+            const formula_def_t *formula = categories[i].formulas[j];
+            if (formula_can_solve_variable(formula, variable) && !formula_match_exists(matches, count, formula)) {
+                if (count < max_matches) {
+                    matches[count++] = formula;
+                }
+            }
+        }
+    }
+    return count;
+}
+
+static const solve_option_t *first_option_for_variable(const formula_def_t *formula, variable_id_t variable) {
+    uint8_t i;
+    for (i = 0; i < formula->option_count; ++i) {
+        if (formula->options[i].target == variable) {
+            return &formula->options[i];
+        }
+    }
+    return NULL;
+}
+
+static void build_inputs_line(const solve_option_t *option, char *line, size_t line_size) {
+    uint8_t i;
+    size_t used = 0;
+
+    if (option == NULL || option->input_count == 0) {
+        snprintf(line, line_size, "Needs: no inputs");
+        return;
+    }
+
+    used = snprintf(line, line_size, "Needs: ");
+    for (i = 0; i < option->input_count; ++i) {
+        const char *name = formula_variable_name(option->inputs[i]);
+        used += snprintf(line + used, line_size > used ? line_size - used : 0,
+                         "%s%s", i == 0 ? "" : ", ", name);
+    }
+}
+
+static menu_result_t solve_formula_for_variable(variable_id_t variable, const formula_def_t *formula) {
+    const solve_option_t *option = first_option_for_variable(formula, variable);
+    double inputs[MAX_FORMULA_INPUTS] = {0};
+    uint8_t i;
+
+    if (option == NULL) {
+        io_show_message("Solver Error", "Formula cannot solve", "this variable.");
+        return MENU_BACK;
+    }
+
+    for (i = 0; i < option->input_count; ++i) {
+        char prompt[64];
+        const char *var_name = formula_variable_prompt(option->inputs[i]);
+        const char *unit = formula_variable_unit(option->inputs[i]);
+
+        snprintf(prompt, sizeof(prompt), "Enter %s [%s]:", var_name, unit);
+        if (!io_prompt_double(formula->expression, prompt, &inputs[i])) {
+            return MENU_BACK;
+        }
+    }
+
+    {
+        solve_result_t result = option->solve(inputs);
+        char target_line[64];
+
+        if (!result.ok) {
+            io_show_message("Solver Error", result.error, "Check input values.");
+            return MENU_BACK;
+        }
+
+        snprintf(target_line, sizeof(target_line), "%s [%s]", formula_variable_name(option->target), formula_variable_unit(option->target));
+        io_show_result(formula->expression, target_line, result.value, formula->const_note);
+    }
+
+    return MENU_BACK;
+}
+
+static menu_result_t show_formulas_for_variable(variable_id_t variable) {
+    const uint8_t max_matches = 24;
+    const formula_def_t *matches[24];
+    uint8_t match_count = collect_formulas_for_variable(variable, matches, max_matches);
+    uint8_t selected = 0;
+    uint8_t scroll_offset = 0;
+    const uint8_t visible_rows = 5;
+    char title[24];
+
+    snprintf(title, sizeof(title), "For %s", formula_variable_name(variable));
+    if (match_count == 0) {
+        io_show_message(title, "No formulas found", "for this variable.");
+        return MENU_BACK;
+    }
+
+    while (true) {
+        uint8_t i;
+        uint8_t action;
+
+        if (selected < scroll_offset) {
+            scroll_offset = selected;
+        }
+        if (selected >= scroll_offset + visible_rows) {
+            scroll_offset = (uint8_t)(selected - visible_rows + 1);
+        }
+
+        io_clear_screen();
+        io_draw_title(title);
+        io_draw_wrapped_text(1, matches[selected]->expression, 26);
+        {
+            char inputs_line[64];
+            build_inputs_line(first_option_for_variable(matches[selected], variable), inputs_line, sizeof(inputs_line));
+            io_draw_wrapped_text(2, inputs_line, 26);
+        }
+
+        for (i = 0; i < visible_rows && (uint8_t)(scroll_offset + i) < match_count; ++i) {
+            uint8_t item_index = (uint8_t)(scroll_offset + i);
+            char line[27];
+            snprintf(line, sizeof(line), "%c %s", item_index == selected ? '>' : ' ', matches[item_index]->name);
+            io_draw_wrapped_text((uint8_t)(3 + i), line, 26);
+        }
+
+        io_draw_footer("OK solve MODE back");
+        action = io_read_menu_key();
+        if (action == IO_MENU_UP && selected > 0) {
+            --selected;
+        } else if (action == IO_MENU_DOWN && selected + 1 < match_count) {
+            ++selected;
+        } else if (action == IO_MENU_SELECT) {
+            menu_result_t solve_result = solve_formula_for_variable(variable, matches[selected]);
+            if (solve_result == MENU_EXIT_APP) {
+                return MENU_EXIT_APP;
+            }
+        } else if (action == IO_MENU_BACK) {
+            return MENU_BACK;
+        } else if (action == IO_MENU_EXIT) {
+            return MENU_EXIT_APP;
+        }
+    }
+}
+
+static menu_result_t select_variable_lookup(const formula_def_t *formula) {
+    variable_id_t variables[VAR_COUNT];
+    uint8_t variable_count = collect_formula_variables(formula, variables, VAR_COUNT);
+    uint8_t selected = 0;
+    uint8_t scroll_offset = 0;
+    const uint8_t visible_rows = 6;
+
+    if (variable_count == 0) {
+        io_show_message("Formulas", "No variables found", "for this formula.");
+        return MENU_BACK;
+    }
+
+    while (true) {
+        uint8_t i;
+        uint8_t action;
+
+        if (selected < scroll_offset) {
+            scroll_offset = selected;
+        }
+        if (selected >= scroll_offset + visible_rows) {
+            scroll_offset = (uint8_t)(selected - visible_rows + 1);
+        }
+
+        io_clear_screen();
+        io_draw_title("Find formulas for");
+        io_draw_wrapped_text(1, formula->expression, 26);
+
+        for (i = 0; i < visible_rows && (uint8_t)(scroll_offset + i) < variable_count; ++i) {
+            uint8_t item_index = (uint8_t)(scroll_offset + i);
+            char line[27];
+            snprintf(line, sizeof(line), "%c %s", item_index == selected ? '>' : ' ', formula_variable_name(variables[item_index]));
+            io_draw_wrapped_text((uint8_t)(3 + i), line, 26);
+        }
+
+        io_draw_footer("OK show MODE back");
+        action = io_read_menu_key();
+        if (action == IO_MENU_UP && selected > 0) {
+            --selected;
+        } else if (action == IO_MENU_DOWN && selected + 1 < variable_count) {
+            ++selected;
+        } else if (action == IO_MENU_SELECT) {
+            menu_result_t lookup_result = show_formulas_for_variable(variables[selected]);
+            if (lookup_result == MENU_EXIT_APP) {
+                return MENU_EXIT_APP;
+            }
+        } else if (action == IO_MENU_BACK) {
+            return MENU_BACK;
+        } else if (action == IO_MENU_EXIT) {
+            return MENU_EXIT_APP;
+        }
+    }
 }
 
 static menu_result_t select_solve_option(const formula_def_t *formula, uint8_t *selected_index, const solve_option_t **option_out) {
@@ -1072,6 +1444,7 @@ static menu_result_t select_solve_option(const formula_def_t *formula, uint8_t *
     uint8_t i = 0;
     uint8_t scroll_offset = 0;
     const uint8_t visible_rows = 5;
+    uint8_t item_count = (uint8_t)(formula->option_count + 1);
 
     for (i = 0; i < formula->option_count; ++i) {
         labels[i] = formula_variable_name(formula->options[i].target);
@@ -1084,6 +1457,9 @@ static menu_result_t select_solve_option(const formula_def_t *formula, uint8_t *
         if (*selected_index < scroll_offset) {
             scroll_offset = *selected_index;
         }
+        if (*selected_index >= item_count) {
+            *selected_index = 0;
+        }
         if (*selected_index >= scroll_offset + visible_rows) {
             scroll_offset = (uint8_t)(*selected_index - visible_rows + 1);
         }
@@ -1093,31 +1469,39 @@ static menu_result_t select_solve_option(const formula_def_t *formula, uint8_t *
         io_draw_wrapped_text(1, formula->name, 26);
         io_draw_wrapped_text(2, formula->const_note, 26);
 
-        for (j = 0; j < visible_rows && (uint8_t)(scroll_offset + j) < formula->option_count; ++j) {
+        for (j = 0; j < visible_rows && (uint8_t)(scroll_offset + j) < item_count; ++j) {
             char line[27];
             size_t label_len = 0;
             uint8_t option_index = (uint8_t)(scroll_offset + j);
+            const char *label = option_index < formula->option_count ? labels[option_index] : "Find formulas...";
 
             line[0] = option_index == *selected_index ? '>' : ' ';
             line[1] = ' ';
-            line[2] = 'F';
-            line[3] = 'i';
-            line[4] = 'n';
-            line[5] = 'd';
-            line[6] = ' ';
-
-            label_len = strlen(labels[option_index]);
-            if (label_len > sizeof(line) - 8) {
-                label_len = sizeof(line) - 8;
+            if (option_index < formula->option_count) {
+                line[2] = 'F';
+                line[3] = 'i';
+                line[4] = 'n';
+                line[5] = 'd';
+                line[6] = ' ';
+                label_len = strlen(label);
+                if (label_len > sizeof(line) - 8) {
+                    label_len = sizeof(line) - 8;
+                }
+                memcpy(&line[7], label, label_len);
+                line[7 + label_len] = '\0';
+            } else {
+                label_len = strlen(label);
+                if (label_len > sizeof(line) - 3) {
+                    label_len = sizeof(line) - 3;
+                }
+                memcpy(&line[2], label, label_len);
+                line[2 + label_len] = '\0';
             }
-
-            memcpy(&line[7], labels[option_index], label_len);
-            line[7 + label_len] = '\0';
 
             io_draw_wrapped_text((uint8_t)(4 + j), line, 26);
         }
 
-        if (formula->option_count > visible_rows) {
+        if (item_count > visible_rows) {
             io_draw_footer("UP/DN scroll OK select");
         } else {
             io_draw_footer("UP/DN OK MODE BACK");
@@ -1125,11 +1509,18 @@ static menu_result_t select_solve_option(const formula_def_t *formula, uint8_t *
         action = io_read_menu_key();
         if (action == IO_MENU_UP && *selected_index > 0) {
             --(*selected_index);
-        } else if (action == IO_MENU_DOWN && *selected_index + 1 < formula->option_count) {
+        } else if (action == IO_MENU_DOWN && *selected_index + 1 < item_count) {
             ++(*selected_index);
         } else if (action == IO_MENU_SELECT) {
-            *option_out = &formula->options[*selected_index];
-            return MENU_STAY;
+            if (*selected_index < formula->option_count) {
+                *option_out = &formula->options[*selected_index];
+                return MENU_STAY;
+            } else {
+                menu_result_t lookup_result = select_variable_lookup(formula);
+                if (lookup_result == MENU_EXIT_APP) {
+                    return MENU_EXIT_APP;
+                }
+            }
         } else if (action == IO_MENU_BACK) {
             return MENU_BACK;
         } else if (action == IO_MENU_EXIT) {

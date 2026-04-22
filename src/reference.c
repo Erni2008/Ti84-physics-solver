@@ -30,12 +30,11 @@ static const reference_entry_t QUICK_ACCESS_ENTRIES[] = {
         "Accel grows with t",
         {
             "a = a0 + k*t",
-            "decelerates: a = a0 - k*t",
+            "decel: a = a0 - k*t",
             "k = (a-a0)/t",
-            "v = int a dt = int(k*t)dt + C",
-            "s = int v dt + C",
-            "If a0 = 0: a = +/-k*t",
-            "Ex: s=int(t^2+1)dt=t^3/3+t+C"
+            "v = S a*dt = S(k*t)*dt + C",
+            "s = S v*dt + C",
+            "ex: S(t^2+1)dt=t^3/3+t+C"
         }
     },
     {
@@ -46,7 +45,7 @@ static const reference_entry_t QUICK_ACCESS_ENTRIES[] = {
             "v = r*omega",
             "a_t = r*alpha",
             "a_c = r*omega^2 = v^2/r",
-            "N = phi / (2*pi)"
+            "a = sqrt(a_t^2 + a_c^2)"
         }
     },
     {
@@ -55,7 +54,7 @@ static const reference_entry_t QUICK_ACCESS_ENTRIES[] = {
             "p = m*v",
             "F = dp / dt",
             "F = m*a if m const",
-            "I = S F dt = dp",
+            "I = S F*dt = dp",
             "F21 = -F12",
             ""
         }
@@ -64,7 +63,7 @@ static const reference_entry_t QUICK_ACCESS_ENTRIES[] = {
         "Core work/energy",
         {
             "dW = F.dr",
-            "W = S F.dr",
+            "W = S F*dr",
             "W = dEk",
             "P = dW/dt = F.v",
             "dEp = m*g*h",
@@ -75,10 +74,10 @@ static const reference_entry_t QUICK_ACCESS_ENTRIES[] = {
         "Core calculus",
         {
             "v = dr / dt, a = dv / dt",
-            "v = S a dt, r = S v dt",
-            "F = dp / dt, I = S F dt",
+            "v = S a*dt, r = S v*dt",
+            "F = dp / dt, I = S F*dt",
             "omega = dphi / dt",
-            "phi = S omega dt",
+            "phi = S omega*dt",
             ""
         }
     }
@@ -240,7 +239,7 @@ static const reference_entry_t DYNAMICS_ENTRIES[] = {
             "p = m*v",
             "F = dp / dt",
             "If m const: F = m*a",
-            "I = integral(F dt) = dp",
+            "I = integral(F*dt) = dp",
             "F21 = -F12",
             ""
         }
@@ -261,7 +260,7 @@ static const reference_entry_t DYNAMICS_ENTRIES[] = {
         {
             "p = m*v",
             "F = dp / dt",
-            "I = integral(F dt)",
+            "I = integral(F*dt)",
             "F const => I = F*t",
             "I = dp = p2 - p1",
             ""
@@ -297,7 +296,7 @@ static const reference_entry_t ENERGY_ENTRIES[] = {
         {
             "W = F*d if F || d",
             "W = F*d*cos(phi)",
-            "W = integral(F.dr)",
+            "W = integral(F*dr)",
             "dW = F.dr",
             "unit: J = N*m",
             ""
@@ -354,11 +353,11 @@ static const reference_entry_t CALCULUS_ENTRIES[] = {
         "Most used calc forms",
         {
             "v = dr / dt, a = dv / dt",
-            "v = S a dt, r = S v dt",
-            "F = dp / dt, I = S F dt",
-            "P = dW / dt, W = S F.dr",
+            "v = S a*dt, r = S v*dt",
+            "F = dp / dt, I = S F*dt",
+            "P = dW / dt, W = S F*dr",
             "omega = dphi / dt",
-            "phi = S omega dt"
+            "phi = S omega*dt"
         }
     },
     {
@@ -375,12 +374,12 @@ static const reference_entry_t CALCULUS_ENTRIES[] = {
     {
         "Physics integrals",
         {
-            "Velocity: v = S a dt",
-            "Position: r = S v dt",
-            "Angular speed: omega = S alpha dt",
-            "Impulse: I = S F dt",
-            "Work: W = S F.dr",
-            "Angle: phi = S omega dt"
+            "Velocity: v = S a*dt",
+            "Position: r = S v*dt",
+            "Angular speed: omega = S alpha*dt",
+            "Impulse: I = S F*dt",
+            "Work: W = S F*dr",
+            "Angle: phi = S omega*dt"
         }
     },
     {
@@ -398,11 +397,11 @@ static const reference_entry_t CALCULUS_ENTRIES[] = {
         "Test formulas",
         {
             "v = dr / dt, a = dv / dt",
-            "v = S a dt, r = S v dt",
-            "F = dp / dt, I = S F dt",
-            "P = dW / dt, W = S F.dr",
+            "v = S a*dt, r = S v*dt",
+            "F = dp / dt, I = S F*dt",
+            "P = dW / dt, W = S F*dr",
             "omega = dphi / dt",
-            "phi = S omega dt"
+            "phi = S omega*dt"
         }
     }
 };

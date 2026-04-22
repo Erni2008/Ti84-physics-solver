@@ -1,6 +1,6 @@
 NAME = PHYSOLVE
 DESCRIPTION = "Physics Formula Solver"
-COMPRESSED = NO
+COMPRESSED = YES
 
 CFLAGS = -Wall -Wextra -Oz -Iinclude
 LDFLAGS = -lm
