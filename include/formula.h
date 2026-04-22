@@ -4,8 +4,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define MAX_FORMULA_INPUTS 3
-#define MAX_FORMULAS_PER_CATEGORY 23
+#define MAX_FORMULA_INPUTS 4
+#define MAX_FORMULAS_PER_CATEGORY 29
 #define CATEGORY_COUNT 6
 
 typedef enum {
@@ -46,6 +46,14 @@ typedef enum {
     VAR_V_MAG,
     VAR_A_MAG,
     VAR_PHI_DEG,
+    VAR_K_FORCE_TIME,
+    VAR_X,
+    VAR_Y,
+    VAR_Z,
+    VAR_X1,
+    VAR_X2,
+    VAR_T1,
+    VAR_T2,
     VAR_COUNT
 } variable_id_t;
 

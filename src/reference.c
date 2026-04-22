@@ -18,12 +18,12 @@ static const reference_entry_t QUICK_ACCESS_ENTRIES[] = {
     {
         "Core kinematics",
         {
-            "v = dr / dt",
-            "a = dv / dt",
+            "v=dr/dt, a=dv/dt",
+            "v_avg=(x2-x1)/(t2-t1)",
             "v = v0 + a*t",
             "s = s0 + v0*t + 0.5*a*t^2",
             "v^2 = v0^2 + 2*a*(s-s0)",
-            "cos(phi)=(v.a)/(|v||a|)"
+            "d = |r1| = sqrt(x^2+y^2+z^2)"
         }
     },
     {
@@ -40,12 +40,12 @@ static const reference_entry_t QUICK_ACCESS_ENTRIES[] = {
     {
         "Core circular motion",
         {
-            "omega = dphi / dt",
-            "alpha = domega / dt",
+            "omega = 2*pi*f",
+            "omega = 2*pi/T",
+            "T = 1/f, f = 1/T",
             "v = r*omega",
             "a_t = r*alpha",
-            "a_c = r*omega^2 = v^2/r",
-            "a = sqrt(a_t^2 + a_c^2)"
+            "a_c = r*omega^2 = v^2/r"
         }
     },
     {
@@ -239,9 +239,9 @@ static const reference_entry_t DYNAMICS_ENTRIES[] = {
             "p = m*v",
             "F = dp / dt",
             "If m const: F = m*a",
+            "F = k*t",
             "I = integral(F*dt) = dp",
-            "F21 = -F12",
-            ""
+            "F21 = -F12"
         }
     },
     {

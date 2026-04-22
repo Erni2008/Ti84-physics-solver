@@ -207,7 +207,7 @@ bool io_prompt_text(const char *title, const char *prompt, char *buffer, size_t 
         io_clear_screen();
         io_draw_title(title);
         io_draw_wrapped_text(1, prompt, 26);
-        io_draw_wrapped_text(3, "X,T key=t  ALPHA+X,T=x", 26);
+        io_draw_wrapped_text(3, "X,T=t  ALPHA+X,T=x", 26);
         snprintf(line, sizeof(line), "> %s", buffer);
         io_put_line(6, line);
         io_draw_footer("ENTER ok DEL MODE back");
@@ -235,7 +235,16 @@ bool io_prompt_text(const char *title, const char *prompt, char *buffer, size_t 
             continue;
         }
 
-        if (key == sk_GraphVar) {
+        if (alpha_mode && key == sk_1) {
+            append_char_limited(buffer, &length, buffer_size, 'i');
+            alpha_mode = false;
+        } else if (alpha_mode && key == sk_2) {
+            append_char_limited(buffer, &length, buffer_size, 'j');
+            alpha_mode = false;
+        } else if (alpha_mode && key == sk_3) {
+            append_char_limited(buffer, &length, buffer_size, 'k');
+            alpha_mode = false;
+        } else if (key == sk_GraphVar) {
             append_char_limited(buffer, &length, buffer_size, alpha_mode ? 'x' : 't');
             alpha_mode = false;
         } else if (key == sk_Add) {
@@ -248,6 +257,10 @@ bool io_prompt_text(const char *title, const char *prompt, char *buffer, size_t 
             append_char_limited(buffer, &length, buffer_size, '/');
         } else if (key == sk_Power) {
             append_char_limited(buffer, &length, buffer_size, '^');
+        } else if (key == sk_LParen) {
+            append_char_limited(buffer, &length, buffer_size, '(');
+        } else if (key == sk_RParen) {
+            append_char_limited(buffer, &length, buffer_size, ')');
         } else if (key == sk_Square) {
             if (append_char_limited(buffer, &length, buffer_size, '^')) {
                 append_char_limited(buffer, &length, buffer_size, '2');

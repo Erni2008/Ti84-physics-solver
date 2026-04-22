@@ -86,6 +86,18 @@ static solve_result_t solve_t_from_s_v(const double *in) {
     return ok_result(in[0] / in[1]);
 }
 
+static solve_result_t solve_vavg_from_x2_x1_t2_t1(const double *in) {
+    double dt = in[2] - in[3];
+    if (!math_can_divide(dt)) return error_result("t2-t1 cannot be zero.");
+    return ok_result((in[0] - in[1]) / dt);
+}
+static solve_result_t solve_x2_from_vavg_x1_t2_t1(const double *in) {
+    return ok_result(in[1] + in[0] * (in[2] - in[3]));
+}
+static solve_result_t solve_x1_from_vavg_x2_t2_t1(const double *in) {
+    return ok_result(in[1] - in[0] * (in[2] - in[3]));
+}
+
 static solve_result_t solve_a_from_v_v0_dt(const double *in) {
     if (!math_can_divide(in[2])) return error_result("t cannot be zero.");
     return ok_result((in[0] - in[1]) / in[2]);
@@ -121,6 +133,10 @@ static solve_result_t solve_phi_deg_from_dot_vmag_amag(const double *in) {
 static solve_result_t solve_dot_from_phi_deg_vmag_amag(const double *in) {
     double phi_rad = in[0] * PHYSICS_PI / 180.0;
     return ok_result(in[1] * in[2] * cos(phi_rad));
+}
+
+static solve_result_t solve_d_from_xyz(const double *in) {
+    return ok_result(sqrt(in[0] * in[0] + in[1] * in[1] + in[2] * in[2]));
 }
 
 static solve_result_t solve_v_from_r_omega(const double *in) { return ok_result(in[0] * in[1]); }
@@ -289,6 +305,15 @@ static solve_result_t solve_dp_from_force_t(const double *in) { return ok_result
 static solve_result_t solve_t_from_force_dp(const double *in) {
     if (!math_can_divide(in[0])) return error_result("F cannot be zero.");
     return ok_result(in[1] / in[0]);
+}
+static solve_result_t solve_f_from_k_time(const double *in) { return ok_result(in[0] * in[1]); }
+static solve_result_t solve_k_from_f_time(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("t cannot be zero.");
+    return ok_result(in[0] / in[1]);
+}
+static solve_result_t solve_t_from_f_k_time(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("k cannot be zero.");
+    return ok_result(in[0] / in[1]);
 }
 
 static solve_result_t solve_p_from_m_v(const double *in) { return ok_result(in[0] * in[1]); }
@@ -495,6 +520,12 @@ static const solve_option_t OPT_V_S_T[] = {
     { VAR_T, 2, { VAR_S, VAR_V }, solve_t_from_s_v }
 };
 
+static const solve_option_t OPT_VAVG_X2_X1_T2_T1[] = {
+    { VAR_V, 4, { VAR_X2, VAR_X1, VAR_T2, VAR_T1 }, solve_vavg_from_x2_x1_t2_t1 },
+    { VAR_X2, 4, { VAR_V, VAR_X1, VAR_T2, VAR_T1 }, solve_x2_from_vavg_x1_t2_t1 },
+    { VAR_X1, 4, { VAR_V, VAR_X2, VAR_T2, VAR_T1 }, solve_x1_from_vavg_x2_t2_t1 }
+};
+
 static const solve_option_t OPT_A_V_V0_T[] = {
     { VAR_A, 3, { VAR_V, VAR_V0, VAR_T }, solve_a_from_v_v0_dt },
     { VAR_V, 3, { VAR_V0, VAR_A, VAR_T }, solve_v_from_v0_a_t },
@@ -512,6 +543,10 @@ static const solve_option_t OPT_V2_V0_A_S[] = {
 static const solve_option_t OPT_PHI_DOT_VMAG_AMAG[] = {
     { VAR_PHI_DEG, 3, { VAR_DOT_VA, VAR_V_MAG, VAR_A_MAG }, solve_phi_deg_from_dot_vmag_amag },
     { VAR_DOT_VA, 3, { VAR_PHI_DEG, VAR_V_MAG, VAR_A_MAG }, solve_dot_from_phi_deg_vmag_amag }
+};
+
+static const solve_option_t OPT_D_XYZ[] = {
+    { VAR_D, 3, { VAR_X, VAR_Y, VAR_Z }, solve_d_from_xyz }
 };
 
 static const solve_option_t OPT_V_R_OMEGA[] = {
@@ -595,6 +630,12 @@ static const solve_option_t OPT_FORCE_DP_T[] = {
     { VAR_F, 2, { VAR_DP, VAR_T }, solve_force_from_dp_t },
     { VAR_DP, 2, { VAR_F, VAR_T }, solve_dp_from_force_t },
     { VAR_T, 2, { VAR_F, VAR_DP }, solve_t_from_force_dp }
+};
+
+static const solve_option_t OPT_F_KTIME_T[] = {
+    { VAR_F, 2, { VAR_K_FORCE_TIME, VAR_T }, solve_f_from_k_time },
+    { VAR_K_FORCE_TIME, 2, { VAR_F, VAR_T }, solve_k_from_f_time },
+    { VAR_T, 2, { VAR_F, VAR_K_FORCE_TIME }, solve_t_from_f_k_time }
 };
 
 static const solve_option_t OPT_P_M_V[] = {
@@ -848,6 +889,14 @@ static const formula_def_t FORMULA_DYN_I = {
     OPT_I_F_T
 };
 
+static const formula_def_t FORMULA_DYN_F_KT = {
+    "F=k*t",
+    "F = k*t",
+    "Force grows linearly with time",
+    ARRAY_LEN(OPT_F_KTIME_T),
+    OPT_F_KTIME_T
+};
+
 static const formula_def_t FORMULA_EN_EK = {
     "Ek = 0.5*m*v^2",
     "Ek = 0.5*m*v^2",
@@ -926,6 +975,22 @@ static const formula_def_t FORMULA_KIN_ANGLE_VA = {
     "Angle between v and a",
     ARRAY_LEN(OPT_PHI_DOT_VMAG_AMAG),
     OPT_PHI_DOT_VMAG_AMAG
+};
+
+static const formula_def_t FORMULA_KIN_R_MAG = {
+    "d=|r1|",
+    "d = |r1| = sqrt(x^2+y^2+z^2)",
+    "Magnitude of position vector",
+    ARRAY_LEN(OPT_D_XYZ),
+    OPT_D_XYZ
+};
+
+static const formula_def_t FORMULA_KIN_VAVG_X = {
+    "v_avg=(x2-x1)/(t2-t1)",
+    "v_avg = (x2 - x1) / (t2 - t1)",
+    "Average velocity",
+    ARRAY_LEN(OPT_VAVG_X2_X1_T2_T1),
+    OPT_VAVG_X2_X1_T2_T1
 };
 
 static const formula_def_t FORMULA_CALC_V = {
@@ -1048,7 +1113,7 @@ static category_def_t CATEGORIES[CATEGORY_COUNT];
 
 void formula_registry_init(void) {
     CATEGORIES[0].name = "1. Quick Solver";
-    CATEGORIES[0].formula_count = 23;
+    CATEGORIES[0].formula_count = 29;
     CATEGORIES[0].formulas[0] = &FORMULA_CALC_EXPR;
     CATEGORIES[0].formulas[1] = &FORMULA_CALC_FORCE_LINEAR;
     CATEGORIES[0].formulas[2] = &FORMULA_CALC_V;
@@ -1057,24 +1122,30 @@ void formula_registry_init(void) {
     CATEGORIES[0].formulas[5] = &FORMULA_KIN_S2;
     CATEGORIES[0].formulas[6] = &FORMULA_KIN_V2;
     CATEGORIES[0].formulas[7] = &FORMULA_KIN_ANGLE_VA;
-    CATEGORIES[0].formulas[8] = &FORMULA_CIRC_N_ALPHA;
-    CATEGORIES[0].formulas[9] = &FORMULA_CIRC_OMEGA_ALPHA;
-    CATEGORIES[0].formulas[10] = &FORMULA_CIRC_PHI_ALPHA;
-    CATEGORIES[0].formulas[11] = &FORMULA_CIRC_V;
-    CATEGORIES[0].formulas[12] = &FORMULA_CIRC_AC_OMEGA;
-    CATEGORIES[0].formulas[13] = &FORMULA_CIRC_AT;
-    CATEGORIES[0].formulas[14] = &FORMULA_CIRC_A_TOTAL;
-    CATEGORIES[0].formulas[15] = &FORMULA_DYN_F;
-    CATEGORIES[0].formulas[16] = &FORMULA_DYN_P;
-    CATEGORIES[0].formulas[17] = &FORMULA_DYN_I;
-    CATEGORIES[0].formulas[18] = &FORMULA_EN_W_DEK;
-    CATEGORIES[0].formulas[19] = &FORMULA_EN_EK;
-    CATEGORIES[0].formulas[20] = &FORMULA_EN_W;
-    CATEGORIES[0].formulas[21] = &FORMULA_EN_P;
-    CATEGORIES[0].formulas[22] = &FORMULA_EN_EP;
+    CATEGORIES[0].formulas[8] = &FORMULA_KIN_R_MAG;
+    CATEGORIES[0].formulas[9] = &FORMULA_KIN_VAVG_X;
+    CATEGORIES[0].formulas[10] = &FORMULA_CIRC_N_ALPHA;
+    CATEGORIES[0].formulas[11] = &FORMULA_CIRC_OMEGA_ALPHA;
+    CATEGORIES[0].formulas[12] = &FORMULA_CIRC_PHI_ALPHA;
+    CATEGORIES[0].formulas[13] = &FORMULA_CIRC_V;
+    CATEGORIES[0].formulas[14] = &FORMULA_CIRC_AC_OMEGA;
+    CATEGORIES[0].formulas[15] = &FORMULA_CIRC_AT;
+    CATEGORIES[0].formulas[16] = &FORMULA_CIRC_A_TOTAL;
+    CATEGORIES[0].formulas[17] = &FORMULA_CIRC_OMEGA_F;
+    CATEGORIES[0].formulas[18] = &FORMULA_CIRC_OMEGA_T;
+    CATEGORIES[0].formulas[19] = &FORMULA_CIRC_FREQ;
+    CATEGORIES[0].formulas[20] = &FORMULA_DYN_F;
+    CATEGORIES[0].formulas[21] = &FORMULA_DYN_F_KT;
+    CATEGORIES[0].formulas[22] = &FORMULA_DYN_P;
+    CATEGORIES[0].formulas[23] = &FORMULA_DYN_I;
+    CATEGORIES[0].formulas[24] = &FORMULA_EN_W_DEK;
+    CATEGORIES[0].formulas[25] = &FORMULA_EN_EK;
+    CATEGORIES[0].formulas[26] = &FORMULA_EN_W;
+    CATEGORIES[0].formulas[27] = &FORMULA_EN_P;
+    CATEGORIES[0].formulas[28] = &FORMULA_EN_EP;
 
     CATEGORIES[1].name = "2. Kinematics";
-    CATEGORIES[1].formula_count = 7;
+    CATEGORIES[1].formula_count = 9;
     CATEGORIES[1].formulas[0] = &FORMULA_KIN_V;
     CATEGORIES[1].formulas[1] = &FORMULA_KIN_S2;
     CATEGORIES[1].formulas[2] = &FORMULA_KIN_V2;
@@ -1082,6 +1153,8 @@ void formula_registry_init(void) {
     CATEGORIES[1].formulas[4] = &FORMULA_KIN_VAVG;
     CATEGORIES[1].formulas[5] = &FORMULA_KIN_A;
     CATEGORIES[1].formulas[6] = &FORMULA_KIN_ANGLE_VA;
+    CATEGORIES[1].formulas[7] = &FORMULA_KIN_R_MAG;
+    CATEGORIES[1].formulas[8] = &FORMULA_KIN_VAVG_X;
 
     CATEGORIES[2].name = "3. Circular Motion";
     CATEGORIES[2].formula_count = 13;
@@ -1100,11 +1173,12 @@ void formula_registry_init(void) {
     CATEGORIES[2].formulas[12] = &FORMULA_CIRC_FREQ;
 
     CATEGORIES[3].name = "4. Dynamics";
-    CATEGORIES[3].formula_count = 4;
+    CATEGORIES[3].formula_count = 5;
     CATEGORIES[3].formulas[0] = &FORMULA_DYN_F;
-    CATEGORIES[3].formulas[1] = &FORMULA_DYN_A;
-    CATEGORIES[3].formulas[2] = &FORMULA_DYN_P;
-    CATEGORIES[3].formulas[3] = &FORMULA_DYN_I;
+    CATEGORIES[3].formulas[1] = &FORMULA_DYN_F_KT;
+    CATEGORIES[3].formulas[2] = &FORMULA_DYN_A;
+    CATEGORIES[3].formulas[3] = &FORMULA_DYN_P;
+    CATEGORIES[3].formulas[4] = &FORMULA_DYN_I;
 
     CATEGORIES[4].name = "5. Work / Energy / Power";
     CATEGORIES[4].formula_count = 8;
@@ -1141,49 +1215,156 @@ const category_def_t *formula_get_categories(uint8_t *count_out) {
 }
 
 const char *formula_variable_name(variable_id_t id) {
-    static const char *names[VAR_COUNT] = {
-        "Velocity v", "Initial velocity v0", "Acceleration a", "Time t",
-        "Displacement s", "Initial position s0", "Radius r", "Angular speed omega",
-        "Angular acceleration alpha", "Tangential accel a_t", "Centripetal accel a_c",
-        "Force F", "Period T", "Frequency f", "Angle phi", "Initial ang. speed omega0",
-        "Revolutions N", "Change in momentum dp", "Momentum p", "Mass m", "Impulse I", "Kinetic energy Ek",
-        "Work W", "Distance d", "Average power P_avg", "Power P",
-        "Potential-energy change dEp", "Gravity g", "Height h", "Mechanical energy E",
-        "Potential energy Ep", "Change in kinetic energy dEk", "Spring constant k"
-        , "Dot product v.a", "Speed magnitude |v|", "Accel magnitude |a|", "Angle phi"
-    };
-    return names[id];
+    switch (id) {
+        case VAR_V: return "Velocity v";
+        case VAR_V0: return "Initial velocity v0";
+        case VAR_A: return "Acceleration a";
+        case VAR_T: return "Time t";
+        case VAR_S: return "Displacement s";
+        case VAR_S0: return "Initial position s0";
+        case VAR_R: return "Radius r";
+        case VAR_OMEGA: return "Angular speed omega";
+        case VAR_ALPHA: return "Angular acceleration alpha";
+        case VAR_AT: return "Tangential accel a_t";
+        case VAR_AC: return "Centripetal accel a_c";
+        case VAR_F: return "Force F";
+        case VAR_PERIOD: return "Period T";
+        case VAR_FREQ: return "Frequency f";
+        case VAR_PHI: return "Angle phi";
+        case VAR_OMEGA0: return "Initial ang. speed omega0";
+        case VAR_N: return "Revolutions N";
+        case VAR_DP: return "Change in momentum dp";
+        case VAR_P: return "Momentum p";
+        case VAR_M: return "Mass m";
+        case VAR_I: return "Impulse I";
+        case VAR_EK: return "Kinetic energy Ek";
+        case VAR_W: return "Work W";
+        case VAR_D: return "Distance d";
+        case VAR_PAVG: return "Average power P_avg";
+        case VAR_POWER: return "Power P";
+        case VAR_EP_DELTA: return "Potential-energy change dEp";
+        case VAR_G: return "Gravity g";
+        case VAR_H: return "Height h";
+        case VAR_E_TOTAL: return "Mechanical energy E";
+        case VAR_EP: return "Potential energy Ep";
+        case VAR_DELTA_EK: return "Change in kinetic energy dEk";
+        case VAR_K: return "Spring constant k";
+        case VAR_DOT_VA: return "Dot product v.a";
+        case VAR_V_MAG: return "Speed magnitude |v|";
+        case VAR_A_MAG: return "Accel magnitude |a|";
+        case VAR_PHI_DEG: return "Angle phi";
+        case VAR_K_FORCE_TIME: return "Force-time slope k";
+        case VAR_X: return "x component";
+        case VAR_Y: return "y component";
+        case VAR_Z: return "z component";
+        case VAR_X1: return "Position x1";
+        case VAR_X2: return "Position x2";
+        case VAR_T1: return "Time t1";
+        case VAR_T2: return "Time t2";
+        default: return "?";
+    }
 }
 
 const char *formula_variable_prompt(variable_id_t id) {
-    static const char *prompts[VAR_COUNT] = {
-        "velocity v", "initial velocity v0", "acceleration a", "time t",
-        "displacement s", "initial position s0", "radius r", "angular speed omega",
-        "angular acceleration alpha", "tangential acceleration a_t",
-        "centripetal acceleration a_c", "force F", "period T", "frequency f",
-        "angle phi", "initial angular speed omega0", "number of revolutions N",
-        "change in momentum dp", "momentum p", "mass m", "impulse I", "kinetic energy Ek", "work W",
-        "distance d", "average power P_avg", "power P", "potential-energy change dEp",
-        "gravity g", "height h", "mechanical energy E", "potential energy Ep",
-        "change in kinetic energy dEk", "spring constant k"
-        , "dot product v.a", "speed magnitude |v|", "acceleration magnitude |a|", "angle phi"
-    };
-    return prompts[id];
+    switch (id) {
+        case VAR_V: return "velocity v";
+        case VAR_V0: return "initial velocity v0";
+        case VAR_A: return "acceleration a";
+        case VAR_T: return "time t";
+        case VAR_S: return "displacement s";
+        case VAR_S0: return "initial position s0";
+        case VAR_R: return "radius r";
+        case VAR_OMEGA: return "angular speed omega";
+        case VAR_ALPHA: return "angular acceleration alpha";
+        case VAR_AT: return "tangential acceleration a_t";
+        case VAR_AC: return "centripetal acceleration a_c";
+        case VAR_F: return "force F";
+        case VAR_PERIOD: return "period T";
+        case VAR_FREQ: return "frequency f";
+        case VAR_PHI: return "angle phi";
+        case VAR_OMEGA0: return "initial angular speed omega0";
+        case VAR_N: return "number of revolutions N";
+        case VAR_DP: return "change in momentum dp";
+        case VAR_P: return "momentum p";
+        case VAR_M: return "mass m";
+        case VAR_I: return "impulse I";
+        case VAR_EK: return "kinetic energy Ek";
+        case VAR_W: return "work W";
+        case VAR_D: return "distance d";
+        case VAR_PAVG: return "average power P_avg";
+        case VAR_POWER: return "power P";
+        case VAR_EP_DELTA: return "potential-energy change dEp";
+        case VAR_G: return "gravity g";
+        case VAR_H: return "height h";
+        case VAR_E_TOTAL: return "mechanical energy E";
+        case VAR_EP: return "potential energy Ep";
+        case VAR_DELTA_EK: return "change in kinetic energy dEk";
+        case VAR_K: return "spring constant k";
+        case VAR_DOT_VA: return "dot product v.a";
+        case VAR_V_MAG: return "speed magnitude |v|";
+        case VAR_A_MAG: return "acceleration magnitude |a|";
+        case VAR_PHI_DEG: return "angle phi";
+        case VAR_K_FORCE_TIME: return "force-time slope k";
+        case VAR_X: return "x component";
+        case VAR_Y: return "y component";
+        case VAR_Z: return "z component";
+        case VAR_X1: return "position x1";
+        case VAR_X2: return "position x2";
+        case VAR_T1: return "time t1";
+        case VAR_T2: return "time t2";
+        default: return "?";
+    }
 }
 
 const char *formula_variable_unit(variable_id_t id) {
-    static const char *units[VAR_COUNT] = {
-        "m/s", "m/s", "m/s^2", "s",
-        "m", "m", "m", "rad/s",
-        "rad/s^2", "m/s^2", "m/s^2",
-        "N", "s", "Hz", "rad", "rad/s",
-        "rev", "kg*m/s", "kg*m/s", "kg", "N*s", "J",
-        "J", "m", "W", "W",
-        "J", "m/s^2", "m", "J",
-        "J", "J", "N/m"
-        , "m^2/s^3", "m/s", "m/s^2", "deg"
-    };
-    return units[id];
+    switch (id) {
+        case VAR_V: return "m/s";
+        case VAR_V0: return "m/s";
+        case VAR_A: return "m/s^2";
+        case VAR_T: return "s";
+        case VAR_S: return "m";
+        case VAR_S0: return "m";
+        case VAR_R: return "m";
+        case VAR_OMEGA: return "rad/s";
+        case VAR_ALPHA: return "rad/s^2";
+        case VAR_AT: return "m/s^2";
+        case VAR_AC: return "m/s^2";
+        case VAR_F: return "N";
+        case VAR_PERIOD: return "s";
+        case VAR_FREQ: return "Hz";
+        case VAR_PHI: return "rad";
+        case VAR_OMEGA0: return "rad/s";
+        case VAR_N: return "rev";
+        case VAR_DP: return "kg*m/s";
+        case VAR_P: return "kg*m/s";
+        case VAR_M: return "kg";
+        case VAR_I: return "N*s";
+        case VAR_EK: return "J";
+        case VAR_W: return "J";
+        case VAR_D: return "m";
+        case VAR_PAVG: return "W";
+        case VAR_POWER: return "W";
+        case VAR_EP_DELTA: return "J";
+        case VAR_G: return "m/s^2";
+        case VAR_H: return "m";
+        case VAR_E_TOTAL: return "J";
+        case VAR_EP: return "J";
+        case VAR_DELTA_EK: return "J";
+        case VAR_K: return "N/m";
+        case VAR_DOT_VA: return "m^2/s^3";
+        case VAR_V_MAG: return "m/s";
+        case VAR_A_MAG: return "m/s^2";
+        case VAR_PHI_DEG: return "deg";
+        case VAR_K_FORCE_TIME: return "N/s";
+        case VAR_X: return "m";
+        case VAR_Y: return "m";
+        case VAR_Z: return "m";
+        case VAR_X1: return "m";
+        case VAR_X2: return "m";
+        case VAR_T1: return "s";
+        case VAR_T2: return "s";
+        default: return "";
+    }
 }
 
 static bool formula_can_solve_variable(const formula_def_t *formula, variable_id_t variable) {
