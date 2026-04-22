@@ -298,14 +298,41 @@ bool io_prompt_text(const char *title, const char *prompt, char *buffer, size_t 
 }
 
 void io_show_result(const char *formula_name, const char *target_name, double result, const char *const_note) {
-    char result_line[32];
+    char target_line[48];
+    char result_line[48];
+    char unit[16];
+    const char *unit_start = strchr(target_name, '[');
+    const char *unit_end = unit_start != NULL ? strchr(unit_start, ']') : NULL;
 
-    snprintf(result_line, sizeof(result_line), "%s = %.8g", target_name, result);
+    if (unit_start != NULL && unit_end != NULL && unit_end > unit_start + 1) {
+        size_t target_len = (size_t)(unit_start - target_name);
+        size_t unit_len = (size_t)(unit_end - unit_start - 1);
+
+        while (target_len > 0 && target_name[target_len - 1] == ' ') {
+            --target_len;
+        }
+        if (target_len >= sizeof(target_line)) {
+            target_len = sizeof(target_line) - 1;
+        }
+        if (unit_len >= sizeof(unit)) {
+            unit_len = sizeof(unit) - 1;
+        }
+
+        memcpy(target_line, target_name, target_len);
+        target_line[target_len] = '\0';
+        memcpy(unit, unit_start + 1, unit_len);
+        unit[unit_len] = '\0';
+        snprintf(result_line, sizeof(result_line), "Result = %.8g %s", result, unit);
+    } else {
+        snprintf(target_line, sizeof(target_line), "%s", target_name);
+        snprintf(result_line, sizeof(result_line), "Result = %.8g", result);
+    }
 
     io_clear_screen();
     io_draw_title("Result");
     io_draw_wrapped_text(2, formula_name, 26);
-    io_draw_wrapped_text(4, result_line, 26);
+    io_draw_wrapped_text(4, target_line, 26);
+    io_draw_wrapped_text(5, result_line, 26);
     io_draw_wrapped_text(6, const_note, 26);
     io_draw_footer("ENTER/CLEAR continue");
 

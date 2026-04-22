@@ -336,6 +336,16 @@ static solve_result_t solve_a_from_f_m(const double *in) {
     return ok_result(in[0] / in[1]);
 }
 
+static solve_result_t solve_weight_from_m_g(const double *in) { return ok_result(in[0] * in[1]); }
+static solve_result_t solve_m_from_weight_g(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("g cannot be zero.");
+    return ok_result(in[0] / in[1]);
+}
+static solve_result_t solve_g_from_weight_m(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("m cannot be zero.");
+    return ok_result(in[0] / in[1]);
+}
+
 static solve_result_t solve_i_from_f_t(const double *in) { return ok_result(in[0] * in[1]); }
 static solve_result_t solve_f_from_i_t(const double *in) {
     if (!math_can_divide(in[1])) return error_result("t cannot be zero.");
@@ -357,6 +367,152 @@ static solve_result_t solve_v_from_ek_m(const double *in) {
     double radicand = (2.0 * in[0]) / in[1];
     if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
     return ok_result(sqrt(radicand));
+}
+
+static solve_result_t solve_s_stop_from_f_m_v0(const double *in) {
+    if (!math_can_divide(in[0])) return error_result("F cannot be zero.");
+    return ok_result((0.5 * in[1] * in[2] * in[2]) / in[0]);
+}
+static solve_result_t solve_f_stop_from_s_m_v0(const double *in) {
+    if (!math_can_divide(in[0])) return error_result("s cannot be zero.");
+    return ok_result((0.5 * in[1] * in[2] * in[2]) / in[0]);
+}
+static solve_result_t solve_m_stop_from_f_s_v0(const double *in) {
+    double denominator = in[2] * in[2];
+    if (!math_can_divide(denominator)) return error_result("v0 cannot be zero.");
+    return ok_result((2.0 * in[0] * in[1]) / denominator);
+}
+static solve_result_t solve_v0_stop_from_f_s_m(const double *in) {
+    double radicand;
+    if (!math_can_divide(in[2])) return error_result("m cannot be zero.");
+    radicand = (2.0 * in[0] * in[1]) / in[2];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+
+static solve_result_t solve_h_from_v0_g_energy_ratio(const double *in) {
+    double denominator = 3.0 * in[1];
+    if (!math_can_divide(denominator)) return error_result("g cannot be zero.");
+    return ok_result((in[0] * in[0]) / denominator);
+}
+static solve_result_t solve_v0_from_h_g_energy_ratio(const double *in) {
+    double radicand = 3.0 * in[1] * in[0];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+static solve_result_t solve_g_from_v0_h_energy_ratio(const double *in) {
+    double denominator = 3.0 * in[1];
+    if (!math_can_divide(denominator)) return error_result("h cannot be zero.");
+    return ok_result((in[0] * in[0]) / denominator);
+}
+
+static solve_result_t solve_v_from_vertical_height(const double *in) {
+    double radicand = in[0] * in[0] - 2.0 * in[1] * in[2];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+static solve_result_t solve_v0_from_vertical_height(const double *in) {
+    double radicand = in[0] * in[0] + 2.0 * in[1] * in[2];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+static solve_result_t solve_h_from_vertical_speeds(const double *in) {
+    double denominator = 2.0 * in[2];
+    if (!math_can_divide(denominator)) return error_result("g cannot be zero.");
+    return ok_result((in[0] * in[0] - in[1] * in[1]) / denominator);
+}
+static solve_result_t solve_g_from_vertical_speeds_h(const double *in) {
+    double denominator = 2.0 * in[2];
+    if (!math_can_divide(denominator)) return error_result("h cannot be zero.");
+    return ok_result((in[0] * in[0] - in[1] * in[1]) / denominator);
+}
+
+static solve_result_t solve_hmax_from_v0_g(const double *in) {
+    double denominator = 2.0 * in[1];
+    if (!math_can_divide(denominator)) return error_result("g cannot be zero.");
+    return ok_result((in[0] * in[0]) / denominator);
+}
+static solve_result_t solve_v0_from_hmax_g(const double *in) {
+    double radicand = 2.0 * in[1] * in[0];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+static solve_result_t solve_g_from_v0_hmax(const double *in) {
+    double denominator = 2.0 * in[1];
+    if (!math_can_divide(denominator)) return error_result("h cannot be zero.");
+    return ok_result((in[0] * in[0]) / denominator);
+}
+
+static solve_result_t solve_hmax_from_h0_v0_g(const double *in) {
+    double denominator = 2.0 * in[2];
+    if (!math_can_divide(denominator)) return error_result("g cannot be zero.");
+    return ok_result(in[0] + (in[1] * in[1]) / denominator);
+}
+static solve_result_t solve_h0_from_hmax_v0_g(const double *in) {
+    double denominator = 2.0 * in[2];
+    if (!math_can_divide(denominator)) return error_result("g cannot be zero.");
+    return ok_result(in[0] - (in[1] * in[1]) / denominator);
+}
+static solve_result_t solve_v0_from_hmax_h0_g(const double *in) {
+    double radicand = 2.0 * in[2] * (in[0] - in[1]);
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+static solve_result_t solve_g_from_hmax_h0_v0(const double *in) {
+    double denominator = 2.0 * (in[0] - in[1]);
+    if (!math_can_divide(denominator)) return error_result("hmax-h0 cannot be zero.");
+    return ok_result((in[2] * in[2]) / denominator);
+}
+
+static solve_result_t solve_v_from_energy_two_heights(const double *in) {
+    double radicand = in[0] * in[0] + 2.0 * in[1] * (in[2] - in[3]);
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+static solve_result_t solve_v0_from_energy_two_heights(const double *in) {
+    double radicand = in[0] * in[0] + 2.0 * in[1] * (in[3] - in[2]);
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+static solve_result_t solve_h2_from_energy_two_heights(const double *in) {
+    if (!math_can_divide(in[2])) return error_result("g cannot be zero.");
+    return ok_result(in[3] + (in[0] * in[0] - in[1] * in[1]) / (2.0 * in[2]));
+}
+static solve_result_t solve_h1_from_energy_two_heights(const double *in) {
+    if (!math_can_divide(in[2])) return error_result("g cannot be zero.");
+    return ok_result(in[3] + (in[1] * in[1] - in[0] * in[0]) / (2.0 * in[2]));
+}
+
+static solve_result_t solve_h_from_ek_eq_ep(const double *in) {
+    double denominator = 2.0 * in[1];
+    if (!math_can_divide(denominator)) return error_result("g cannot be zero.");
+    return ok_result((in[0] * in[0]) / denominator);
+}
+static solve_result_t solve_v_from_ek_eq_ep(const double *in) {
+    double radicand = 2.0 * in[1] * in[0];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+static solve_result_t solve_g_from_ek_eq_ep(const double *in) {
+    double denominator = 2.0 * in[1];
+    if (!math_can_divide(denominator)) return error_result("h cannot be zero.");
+    return ok_result((in[0] * in[0]) / denominator);
+}
+
+static solve_result_t solve_h_from_ek_third_ep(const double *in) {
+    double denominator = 8.0 * in[1];
+    if (!math_can_divide(denominator)) return error_result("g cannot be zero.");
+    return ok_result((3.0 * in[0] * in[0]) / denominator);
+}
+static solve_result_t solve_v0_from_h_g_ek_third_ep(const double *in) {
+    double radicand = (8.0 * in[1] * in[0]) / 3.0;
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+static solve_result_t solve_g_from_v0_h_ek_third_ep(const double *in) {
+    double denominator = 8.0 * in[1];
+    if (!math_can_divide(denominator)) return error_result("h cannot be zero.");
+    return ok_result((3.0 * in[0] * in[0]) / denominator);
 }
 
 static solve_result_t solve_w_from_f_d(const double *in) { return ok_result(in[0] * in[1]); }
@@ -650,6 +806,12 @@ static const solve_option_t OPT_F_M_A[] = {
     { VAR_A, 2, { VAR_F, VAR_M }, solve_a_from_f_m }
 };
 
+static const solve_option_t OPT_WEIGHT_M_G[] = {
+    { VAR_WEIGHT_G, 2, { VAR_M, VAR_G }, solve_weight_from_m_g },
+    { VAR_M, 2, { VAR_WEIGHT_G, VAR_G }, solve_m_from_weight_g },
+    { VAR_G, 2, { VAR_WEIGHT_G, VAR_M }, solve_g_from_weight_m }
+};
+
 static const solve_option_t OPT_I_F_T[] = {
     { VAR_I, 2, { VAR_F, VAR_T }, solve_i_from_f_t },
     { VAR_F, 2, { VAR_I, VAR_T }, solve_f_from_i_t },
@@ -660,6 +822,58 @@ static const solve_option_t OPT_EK_M_V[] = {
     { VAR_EK, 2, { VAR_M, VAR_V }, solve_ek_from_m_v },
     { VAR_M, 2, { VAR_EK, VAR_V }, solve_m_from_ek_v },
     { VAR_V, 2, { VAR_EK, VAR_M }, solve_v_from_ek_m }
+};
+
+static const solve_option_t OPT_STOP_F_S_M_V0[] = {
+    { VAR_S, 3, { VAR_F, VAR_M, VAR_V0 }, solve_s_stop_from_f_m_v0 },
+    { VAR_F, 3, { VAR_S, VAR_M, VAR_V0 }, solve_f_stop_from_s_m_v0 },
+    { VAR_M, 3, { VAR_F, VAR_S, VAR_V0 }, solve_m_stop_from_f_s_v0 },
+    { VAR_V0, 3, { VAR_F, VAR_S, VAR_M }, solve_v0_stop_from_f_s_m }
+};
+
+static const solve_option_t OPT_H_EK_HALF_EP[] = {
+    { VAR_H, 2, { VAR_V0, VAR_G }, solve_h_from_v0_g_energy_ratio },
+    { VAR_V0, 2, { VAR_H, VAR_G }, solve_v0_from_h_g_energy_ratio },
+    { VAR_G, 2, { VAR_V0, VAR_H }, solve_g_from_v0_h_energy_ratio }
+};
+
+static const solve_option_t OPT_VERTICAL_V2[] = {
+    { VAR_V, 3, { VAR_V0, VAR_G, VAR_H }, solve_v_from_vertical_height },
+    { VAR_V0, 3, { VAR_V, VAR_G, VAR_H }, solve_v0_from_vertical_height },
+    { VAR_H, 3, { VAR_V0, VAR_V, VAR_G }, solve_h_from_vertical_speeds },
+    { VAR_G, 3, { VAR_V0, VAR_V, VAR_H }, solve_g_from_vertical_speeds_h }
+};
+
+static const solve_option_t OPT_HMAX_V0_G[] = {
+    { VAR_H, 2, { VAR_V0, VAR_G }, solve_hmax_from_v0_g },
+    { VAR_V0, 2, { VAR_H, VAR_G }, solve_v0_from_hmax_g },
+    { VAR_G, 2, { VAR_V0, VAR_H }, solve_g_from_v0_hmax }
+};
+
+static const solve_option_t OPT_HMAX_H0_V0_G[] = {
+    { VAR_HMAX, 3, { VAR_H0, VAR_V0, VAR_G }, solve_hmax_from_h0_v0_g },
+    { VAR_H0, 3, { VAR_HMAX, VAR_V0, VAR_G }, solve_h0_from_hmax_v0_g },
+    { VAR_V0, 3, { VAR_HMAX, VAR_H0, VAR_G }, solve_v0_from_hmax_h0_g },
+    { VAR_G, 3, { VAR_HMAX, VAR_H0, VAR_V0 }, solve_g_from_hmax_h0_v0 }
+};
+
+static const solve_option_t OPT_ENERGY_TWO_HEIGHTS[] = {
+    { VAR_V, 4, { VAR_V0, VAR_G, VAR_H1, VAR_H2 }, solve_v_from_energy_two_heights },
+    { VAR_V0, 4, { VAR_V, VAR_G, VAR_H1, VAR_H2 }, solve_v0_from_energy_two_heights },
+    { VAR_H2, 4, { VAR_V0, VAR_V, VAR_G, VAR_H1 }, solve_h2_from_energy_two_heights },
+    { VAR_H1, 4, { VAR_V0, VAR_V, VAR_G, VAR_H2 }, solve_h1_from_energy_two_heights }
+};
+
+static const solve_option_t OPT_EK_EQ_EP[] = {
+    { VAR_H, 2, { VAR_V, VAR_G }, solve_h_from_ek_eq_ep },
+    { VAR_V, 2, { VAR_H, VAR_G }, solve_v_from_ek_eq_ep },
+    { VAR_G, 2, { VAR_V, VAR_H }, solve_g_from_ek_eq_ep }
+};
+
+static const solve_option_t OPT_EK_THIRD_EP[] = {
+    { VAR_H, 2, { VAR_V0, VAR_G }, solve_h_from_ek_third_ep },
+    { VAR_V0, 2, { VAR_H, VAR_G }, solve_v0_from_h_g_ek_third_ep },
+    { VAR_G, 2, { VAR_V0, VAR_H }, solve_g_from_v0_h_ek_third_ep }
 };
 
 static const solve_option_t OPT_W_F_D[] = {
@@ -897,12 +1111,92 @@ static const formula_def_t FORMULA_DYN_F_KT = {
     OPT_F_KTIME_T
 };
 
+static const formula_def_t FORMULA_DYN_WEIGHT = {
+    "G = m*g",
+    "G = m*g",
+    "Weight force near Earth",
+    ARRAY_LEN(OPT_WEIGHT_M_G),
+    OPT_WEIGHT_M_G
+};
+
 static const formula_def_t FORMULA_EN_EK = {
     "Ek = 0.5*m*v^2",
     "Ek = 0.5*m*v^2",
     "Condition: constant m",
     ARRAY_LEN(OPT_EK_M_V),
     OPT_EK_M_V
+};
+
+static const formula_def_t FORMULA_EN_STOP = {
+    "F*s=0.5*m*v0^2",
+    "F*s = 0.5*m*v0^2",
+    "Use: stopping, final v=0",
+    ARRAY_LEN(OPT_STOP_F_S_M_V0),
+    OPT_STOP_F_S_M_V0
+};
+
+static const formula_def_t FORMULA_EN_EK_HALF_EP_HEIGHT = {
+    "Ek=0.5Ep: h=v0^2/(3g)",
+    "h = v0^2 / (3*g)",
+    "Use: when Ek=0.5Ep",
+    ARRAY_LEN(OPT_H_EK_HALF_EP),
+    OPT_H_EK_HALF_EP
+};
+
+static const formula_def_t FORMULA_VERT_V2 = {
+    "v^2=v0^2-2gh",
+    "v^2 = v0^2 - 2*g*h",
+    "Use: upward, v not 0",
+    ARRAY_LEN(OPT_VERTICAL_V2),
+    OPT_VERTICAL_V2
+};
+
+static const formula_def_t FORMULA_VERT_H_FROM_V = {
+    "h=(v0^2-v^2)/(2g)",
+    "h = (v0^2 - v^2)/(2*g)",
+    "Use: height, known v",
+    ARRAY_LEN(OPT_VERTICAL_V2),
+    OPT_VERTICAL_V2
+};
+
+static const formula_def_t FORMULA_VERT_HMAX = {
+    "hmax=v0^2/(2g)",
+    "hmax = v0^2 / (2*g)",
+    "Use: max height, v=0",
+    ARRAY_LEN(OPT_HMAX_V0_G),
+    OPT_HMAX_V0_G
+};
+
+static const formula_def_t FORMULA_VERT_HMAX_H0 = {
+    "hmax=h0+v0^2/(2g)",
+    "hmax = h0 + v0^2/(2*g)",
+    "Use: max height from h0",
+    ARRAY_LEN(OPT_HMAX_H0_V0_G),
+    OPT_HMAX_H0_V0_G
+};
+
+static const formula_def_t FORMULA_EN_TWO_HEIGHTS = {
+    "0.5mv0^2+mgh1=0.5mv^2+mgh2",
+    "0.5*m*v0^2 + m*g*h1 = 0.5*m*v^2 + m*g*h2",
+    "Use: same body, two heights",
+    ARRAY_LEN(OPT_ENERGY_TWO_HEIGHTS),
+    OPT_ENERGY_TWO_HEIGHTS
+};
+
+static const formula_def_t FORMULA_EN_EK_EQ_EP = {
+    "Ek=Ep: h=v^2/(2g)",
+    "Ek = Ep, so h = v^2/(2*g)",
+    "Use: when Ek=Ep",
+    ARRAY_LEN(OPT_EK_EQ_EP),
+    OPT_EK_EQ_EP
+};
+
+static const formula_def_t FORMULA_EN_EK_THIRD_EP_HEIGHT = {
+    "Ek=(1/3)Ep: h=3v0^2/(8g)",
+    "h = 3*v0^2 / (8*g)",
+    "Use: when Ek=(1/3)Ep",
+    ARRAY_LEN(OPT_EK_THIRD_EP),
+    OPT_EK_THIRD_EP
 };
 
 static const formula_def_t FORMULA_EN_W = {
@@ -1113,36 +1407,48 @@ static category_def_t CATEGORIES[CATEGORY_COUNT];
 
 void formula_registry_init(void) {
     CATEGORIES[0].name = "1. Quick Solver";
-    CATEGORIES[0].formula_count = 29;
+    CATEGORIES[0].formula_count = 41;
     CATEGORIES[0].formulas[0] = &FORMULA_CALC_EXPR;
-    CATEGORIES[0].formulas[1] = &FORMULA_CALC_FORCE_LINEAR;
-    CATEGORIES[0].formulas[2] = &FORMULA_CALC_V;
-    CATEGORIES[0].formulas[3] = &FORMULA_CALC_A;
-    CATEGORIES[0].formulas[4] = &FORMULA_KIN_V;
-    CATEGORIES[0].formulas[5] = &FORMULA_KIN_S2;
-    CATEGORIES[0].formulas[6] = &FORMULA_KIN_V2;
-    CATEGORIES[0].formulas[7] = &FORMULA_KIN_ANGLE_VA;
-    CATEGORIES[0].formulas[8] = &FORMULA_KIN_R_MAG;
-    CATEGORIES[0].formulas[9] = &FORMULA_KIN_VAVG_X;
-    CATEGORIES[0].formulas[10] = &FORMULA_CIRC_N_ALPHA;
-    CATEGORIES[0].formulas[11] = &FORMULA_CIRC_OMEGA_ALPHA;
-    CATEGORIES[0].formulas[12] = &FORMULA_CIRC_PHI_ALPHA;
-    CATEGORIES[0].formulas[13] = &FORMULA_CIRC_V;
-    CATEGORIES[0].formulas[14] = &FORMULA_CIRC_AC_OMEGA;
-    CATEGORIES[0].formulas[15] = &FORMULA_CIRC_AT;
-    CATEGORIES[0].formulas[16] = &FORMULA_CIRC_A_TOTAL;
-    CATEGORIES[0].formulas[17] = &FORMULA_CIRC_OMEGA_F;
-    CATEGORIES[0].formulas[18] = &FORMULA_CIRC_OMEGA_T;
-    CATEGORIES[0].formulas[19] = &FORMULA_CIRC_FREQ;
-    CATEGORIES[0].formulas[20] = &FORMULA_DYN_F;
-    CATEGORIES[0].formulas[21] = &FORMULA_DYN_F_KT;
-    CATEGORIES[0].formulas[22] = &FORMULA_DYN_P;
-    CATEGORIES[0].formulas[23] = &FORMULA_DYN_I;
-    CATEGORIES[0].formulas[24] = &FORMULA_EN_W_DEK;
-    CATEGORIES[0].formulas[25] = &FORMULA_EN_EK;
-    CATEGORIES[0].formulas[26] = &FORMULA_EN_W;
-    CATEGORIES[0].formulas[27] = &FORMULA_EN_P;
+    CATEGORIES[0].formulas[1] = &FORMULA_CALC_FORCE;
+    CATEGORIES[0].formulas[2] = &FORMULA_CALC_FORCE_LINEAR;
+    CATEGORIES[0].formulas[3] = &FORMULA_CALC_V;
+    CATEGORIES[0].formulas[4] = &FORMULA_CALC_A;
+    CATEGORIES[0].formulas[5] = &FORMULA_KIN_V;
+    CATEGORIES[0].formulas[6] = &FORMULA_KIN_S2;
+    CATEGORIES[0].formulas[7] = &FORMULA_KIN_V2;
+    CATEGORIES[0].formulas[8] = &FORMULA_KIN_ANGLE_VA;
+    CATEGORIES[0].formulas[9] = &FORMULA_KIN_R_MAG;
+    CATEGORIES[0].formulas[10] = &FORMULA_KIN_VAVG_X;
+    CATEGORIES[0].formulas[11] = &FORMULA_CIRC_N_ALPHA;
+    CATEGORIES[0].formulas[12] = &FORMULA_CIRC_OMEGA_ALPHA;
+    CATEGORIES[0].formulas[13] = &FORMULA_CIRC_PHI_ALPHA;
+    CATEGORIES[0].formulas[14] = &FORMULA_CIRC_V;
+    CATEGORIES[0].formulas[15] = &FORMULA_CIRC_AC_OMEGA;
+    CATEGORIES[0].formulas[16] = &FORMULA_CIRC_AT;
+    CATEGORIES[0].formulas[17] = &FORMULA_CIRC_A_TOTAL;
+    CATEGORIES[0].formulas[18] = &FORMULA_CIRC_OMEGA_F;
+    CATEGORIES[0].formulas[19] = &FORMULA_CIRC_OMEGA_T;
+    CATEGORIES[0].formulas[20] = &FORMULA_CIRC_FREQ;
+    CATEGORIES[0].formulas[21] = &FORMULA_DYN_F;
+    CATEGORIES[0].formulas[22] = &FORMULA_DYN_WEIGHT;
+    CATEGORIES[0].formulas[23] = &FORMULA_DYN_F_KT;
+    CATEGORIES[0].formulas[24] = &FORMULA_DYN_P;
+    CATEGORIES[0].formulas[25] = &FORMULA_DYN_I;
+    CATEGORIES[0].formulas[26] = &FORMULA_EN_W_DEK;
+    CATEGORIES[0].formulas[27] = &FORMULA_EN_EK;
     CATEGORIES[0].formulas[28] = &FORMULA_EN_EP;
+    CATEGORIES[0].formulas[29] = &FORMULA_EN_E;
+    CATEGORIES[0].formulas[30] = &FORMULA_VERT_V2;
+    CATEGORIES[0].formulas[31] = &FORMULA_VERT_H_FROM_V;
+    CATEGORIES[0].formulas[32] = &FORMULA_VERT_HMAX;
+    CATEGORIES[0].formulas[33] = &FORMULA_VERT_HMAX_H0;
+    CATEGORIES[0].formulas[34] = &FORMULA_EN_TWO_HEIGHTS;
+    CATEGORIES[0].formulas[35] = &FORMULA_EN_EK_EQ_EP;
+    CATEGORIES[0].formulas[36] = &FORMULA_EN_EK_HALF_EP_HEIGHT;
+    CATEGORIES[0].formulas[37] = &FORMULA_EN_EK_THIRD_EP_HEIGHT;
+    CATEGORIES[0].formulas[38] = &FORMULA_EN_STOP;
+    CATEGORIES[0].formulas[39] = &FORMULA_EN_W;
+    CATEGORIES[0].formulas[40] = &FORMULA_EN_P;
 
     CATEGORIES[1].name = "2. Kinematics";
     CATEGORIES[1].formula_count = 9;
@@ -1173,23 +1479,33 @@ void formula_registry_init(void) {
     CATEGORIES[2].formulas[12] = &FORMULA_CIRC_FREQ;
 
     CATEGORIES[3].name = "4. Dynamics";
-    CATEGORIES[3].formula_count = 5;
+    CATEGORIES[3].formula_count = 6;
     CATEGORIES[3].formulas[0] = &FORMULA_DYN_F;
-    CATEGORIES[3].formulas[1] = &FORMULA_DYN_F_KT;
-    CATEGORIES[3].formulas[2] = &FORMULA_DYN_A;
-    CATEGORIES[3].formulas[3] = &FORMULA_DYN_P;
-    CATEGORIES[3].formulas[4] = &FORMULA_DYN_I;
+    CATEGORIES[3].formulas[1] = &FORMULA_DYN_WEIGHT;
+    CATEGORIES[3].formulas[2] = &FORMULA_DYN_F_KT;
+    CATEGORIES[3].formulas[3] = &FORMULA_DYN_A;
+    CATEGORIES[3].formulas[4] = &FORMULA_DYN_P;
+    CATEGORIES[3].formulas[5] = &FORMULA_DYN_I;
 
     CATEGORIES[4].name = "5. Work / Energy / Power";
-    CATEGORIES[4].formula_count = 8;
+    CATEGORIES[4].formula_count = 17;
     CATEGORIES[4].formulas[0] = &FORMULA_EN_W_DEK;
     CATEGORIES[4].formulas[1] = &FORMULA_EN_EK;
-    CATEGORIES[4].formulas[2] = &FORMULA_EN_W;
-    CATEGORIES[4].formulas[3] = &FORMULA_EN_P;
-    CATEGORIES[4].formulas[4] = &FORMULA_EN_EP;
-    CATEGORIES[4].formulas[5] = &FORMULA_EN_E;
-    CATEGORIES[4].formulas[6] = &FORMULA_EN_PAVG;
-    CATEGORIES[4].formulas[7] = &FORMULA_EN_SPRING;
+    CATEGORIES[4].formulas[2] = &FORMULA_EN_EP;
+    CATEGORIES[4].formulas[3] = &FORMULA_EN_E;
+    CATEGORIES[4].formulas[4] = &FORMULA_VERT_V2;
+    CATEGORIES[4].formulas[5] = &FORMULA_VERT_H_FROM_V;
+    CATEGORIES[4].formulas[6] = &FORMULA_VERT_HMAX;
+    CATEGORIES[4].formulas[7] = &FORMULA_VERT_HMAX_H0;
+    CATEGORIES[4].formulas[8] = &FORMULA_EN_TWO_HEIGHTS;
+    CATEGORIES[4].formulas[9] = &FORMULA_EN_EK_EQ_EP;
+    CATEGORIES[4].formulas[10] = &FORMULA_EN_EK_HALF_EP_HEIGHT;
+    CATEGORIES[4].formulas[11] = &FORMULA_EN_EK_THIRD_EP_HEIGHT;
+    CATEGORIES[4].formulas[12] = &FORMULA_EN_STOP;
+    CATEGORIES[4].formulas[13] = &FORMULA_EN_W;
+    CATEGORIES[4].formulas[14] = &FORMULA_EN_P;
+    CATEGORIES[4].formulas[15] = &FORMULA_EN_PAVG;
+    CATEGORIES[4].formulas[16] = &FORMULA_EN_SPRING;
 
     CATEGORIES[5].name = "6. Derivatives / Integrals";
     CATEGORIES[5].formula_count = 14;
@@ -1244,7 +1560,12 @@ const char *formula_variable_name(variable_id_t id) {
         case VAR_POWER: return "Power P";
         case VAR_EP_DELTA: return "Potential-energy change dEp";
         case VAR_G: return "Gravity g";
+        case VAR_WEIGHT_G: return "Weight G";
         case VAR_H: return "Height h";
+        case VAR_H0: return "Initial height h0";
+        case VAR_H1: return "Height h1";
+        case VAR_H2: return "Height h2";
+        case VAR_HMAX: return "Maximum height hmax";
         case VAR_E_TOTAL: return "Mechanical energy E";
         case VAR_EP: return "Potential energy Ep";
         case VAR_DELTA_EK: return "Change in kinetic energy dEk";
@@ -1295,7 +1616,12 @@ const char *formula_variable_prompt(variable_id_t id) {
         case VAR_POWER: return "power P";
         case VAR_EP_DELTA: return "potential-energy change dEp";
         case VAR_G: return "gravity g";
+        case VAR_WEIGHT_G: return "weight G";
         case VAR_H: return "height h";
+        case VAR_H0: return "initial height h0";
+        case VAR_H1: return "height h1";
+        case VAR_H2: return "height h2";
+        case VAR_HMAX: return "maximum height hmax";
         case VAR_E_TOTAL: return "mechanical energy E";
         case VAR_EP: return "potential energy Ep";
         case VAR_DELTA_EK: return "change in kinetic energy dEk";
@@ -1346,7 +1672,12 @@ const char *formula_variable_unit(variable_id_t id) {
         case VAR_POWER: return "W";
         case VAR_EP_DELTA: return "J";
         case VAR_G: return "m/s^2";
+        case VAR_WEIGHT_G: return "N";
         case VAR_H: return "m";
+        case VAR_H0: return "m";
+        case VAR_H1: return "m";
+        case VAR_H2: return "m";
+        case VAR_HMAX: return "m";
         case VAR_E_TOTAL: return "J";
         case VAR_EP: return "J";
         case VAR_DELTA_EK: return "J";
