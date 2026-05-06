@@ -14,7 +14,9 @@ typedef enum {
 typedef enum {
     APP_SECTION_SOLVER = 0,
     APP_SECTION_REFERENCE,
-    APP_SECTION_SYMBOLS
+    APP_SECTION_SYMBOLS,
+    APP_SECTION_THEORY,
+    APP_SECTION_PHYSEX
 } app_section_t;
 
 menu_result_t menu_select_home(uint8_t *selected_index, app_section_t *section_out);

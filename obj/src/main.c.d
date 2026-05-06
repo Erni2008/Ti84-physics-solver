@@ -21,4 +21,4 @@ obj/src/main.c.bc: src/main.c /Users/erni/Desktop/CEdev/include/tice.h \
   /Users/erni/Desktop/CEdev/include/ti/ui.h \
   /Users/erni/Desktop/CEdev/include/ti/tokens.h \
   /Users/erni/Desktop/CEdev/include/ti/vars.h include/formula.h \
-  include/menu.h include/reference.h include/symbols.h
+  include/menu.h include/reference.h include/symbols.h include/theory.h

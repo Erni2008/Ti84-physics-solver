@@ -515,6 +515,32 @@ static solve_result_t solve_g_from_v0_h_ek_third_ep(const double *in) {
     return ok_result((3.0 * in[0] * in[0]) / denominator);
 }
 
+static solve_result_t solve_h_from_e_m_g(const double *in) {
+    double denominator = in[1] * in[2];
+    if (!math_can_divide(denominator)) return error_result("m*g cannot be zero.");
+    return ok_result(in[0] / denominator);
+}
+static solve_result_t solve_e_from_m_g_h(const double *in) { return ok_result(in[0] * in[1] * in[2]); }
+static solve_result_t solve_m_from_e_g_h(const double *in) {
+    double denominator = in[1] * in[2];
+    if (!math_can_divide(denominator)) return error_result("g*h cannot be zero.");
+    return ok_result(in[0] / denominator);
+}
+static solve_result_t solve_g_from_e_m_h(const double *in) {
+    double denominator = in[1] * in[2];
+    if (!math_can_divide(denominator)) return error_result("m*h cannot be zero.");
+    return ok_result(in[0] / denominator);
+}
+
+static solve_result_t solve_h_from_e_ek_m_g(const double *in) {
+    double denominator = in[2] * in[3];
+    if (!math_can_divide(denominator)) return error_result("m*g cannot be zero.");
+    return ok_result((in[0] - in[1]) / denominator);
+}
+static solve_result_t solve_e_from_ek_m_g_h(const double *in) {
+    return ok_result(in[0] + in[1] * in[2] * in[3]);
+}
+
 static solve_result_t solve_i0_cylinder_from_m_r(const double *in) { return ok_result(0.5 * in[0] * in[1] * in[1]); }
 static solve_result_t solve_m_from_i0_cylinder_r(const double *in) {
     double denominator = 0.5 * in[1] * in[1];
@@ -557,10 +583,153 @@ static solve_result_t solve_omega_from_ek_rot_irot(const double *in) {
     if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
     return ok_result(sqrt(radicand));
 }
+static solve_result_t solve_freq_from_ek_rot_irot(const double *in) {
+    solve_result_t omega = solve_omega_from_ek_rot_irot(in);
+    if (!omega.ok) return omega;
+    return ok_result(omega.value / (2.0 * PHYSICS_PI));
+}
 
 static solve_result_t solve_ek_rot_cylinder_offset_from_m_r_a_omega(const double *in) {
     double irot = 0.5 * in[0] * in[1] * in[1] + in[0] * in[2] * in[2];
     return ok_result(0.5 * irot * in[3] * in[3]);
+}
+
+static solve_result_t solve_shm_force_from_k_x(const double *in) { return ok_result(-in[0] * in[1]); }
+static solve_result_t solve_shm_k_from_force_x(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("x cannot be zero.");
+    return ok_result(-in[0] / in[1]);
+}
+static solve_result_t solve_shm_x_from_force_k(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("k cannot be zero.");
+    return ok_result(-in[0] / in[1]);
+}
+
+static solve_result_t solve_k_from_m_omega2(const double *in) { return ok_result(in[0] * in[1] * in[1]); }
+static solve_result_t solve_m_from_k_omega2(const double *in) {
+    double denominator = in[1] * in[1];
+    if (!math_can_divide(denominator)) return error_result("omega cannot be zero.");
+    return ok_result(in[0] / denominator);
+}
+static solve_result_t solve_omega_from_k_m_shm(const double *in) {
+    double radicand;
+    if (!math_can_divide(in[1])) return error_result("m cannot be zero.");
+    radicand = in[0] / in[1];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+
+static solve_result_t solve_x_from_amp_omega_t_phi(const double *in) {
+    return ok_result(in[0] * cos(in[1] * in[2] + in[3]));
+}
+static solve_result_t solve_v_from_amp_omega_t_phi(const double *in) {
+    return ok_result(-in[0] * in[1] * sin(in[1] * in[2] + in[3]));
+}
+static solve_result_t solve_a_from_amp_omega_t_phi(const double *in) {
+    return ok_result(-in[0] * in[1] * in[1] * cos(in[1] * in[2] + in[3]));
+}
+
+static solve_result_t solve_a_from_omega_x_shm(const double *in) { return ok_result(-in[0] * in[0] * in[1]); }
+static solve_result_t solve_x_from_a_omega_shm(const double *in) {
+    double denominator = in[1] * in[1];
+    if (!math_can_divide(denominator)) return error_result("omega cannot be zero.");
+    return ok_result(-in[0] / denominator);
+}
+static solve_result_t solve_omega_from_a_x_shm(const double *in) {
+    double radicand;
+    if (!math_can_divide(in[1])) return error_result("x cannot be zero.");
+    radicand = -in[0] / in[1];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+
+static solve_result_t solve_vmax_from_amp_omega(const double *in) { return ok_result(in[0] * in[1]); }
+static solve_result_t solve_amp_from_vmax_omega(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("omega cannot be zero.");
+    return ok_result(in[0] / in[1]);
+}
+static solve_result_t solve_omega_from_vmax_amp(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("A cannot be zero.");
+    return ok_result(in[0] / in[1]);
+}
+
+static solve_result_t solve_amax_from_amp_omega(const double *in) { return ok_result(in[0] * in[1] * in[1]); }
+static solve_result_t solve_amp_from_amax_omega(const double *in) {
+    double denominator = in[1] * in[1];
+    if (!math_can_divide(denominator)) return error_result("omega cannot be zero.");
+    return ok_result(in[0] / denominator);
+}
+static solve_result_t solve_omega_from_amax_amp(const double *in) {
+    double radicand;
+    if (!math_can_divide(in[1])) return error_result("A cannot be zero.");
+    radicand = in[0] / in[1];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+
+static solve_result_t solve_ep_from_k_x_shm(const double *in) { return ok_result(0.5 * in[0] * in[1] * in[1]); }
+static solve_result_t solve_k_from_ep_x_shm(const double *in) {
+    double denominator = 0.5 * in[1] * in[1];
+    if (!math_can_divide(denominator)) return error_result("x cannot be zero.");
+    return ok_result(in[0] / denominator);
+}
+static solve_result_t solve_x_from_ep_k_shm(const double *in) {
+    double radicand;
+    if (!math_can_divide(in[1])) return error_result("k cannot be zero.");
+    radicand = (2.0 * in[0]) / in[1];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+
+static solve_result_t solve_e_from_k_amp(const double *in) { return ok_result(0.5 * in[0] * in[1] * in[1]); }
+static solve_result_t solve_k_from_e_amp(const double *in) {
+    double denominator = 0.5 * in[1] * in[1];
+    if (!math_can_divide(denominator)) return error_result("A cannot be zero.");
+    return ok_result(in[0] / denominator);
+}
+static solve_result_t solve_amp_from_e_k(const double *in) {
+    double radicand;
+    if (!math_can_divide(in[1])) return error_result("k cannot be zero.");
+    radicand = (2.0 * in[0]) / in[1];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+
+static solve_result_t solve_x_from_amp_omega_t_phi_sin(const double *in) {
+    return ok_result(in[0] * sin(in[1] * in[2] + in[3]));
+}
+static solve_result_t solve_v_from_amp_omega_t_phi_cos(const double *in) {
+    return ok_result(in[0] * in[1] * cos(in[1] * in[2] + in[3]));
+}
+static solve_result_t solve_a_from_amp_omega_t_phi_sin(const double *in) {
+    return ok_result(-in[0] * in[1] * in[1] * sin(in[1] * in[2] + in[3]));
+}
+
+static solve_result_t solve_fmax_from_k_amp(const double *in) { return ok_result(in[0] * in[1]); }
+static solve_result_t solve_k_from_fmax_amp(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("A cannot be zero.");
+    return ok_result(in[0] / in[1]);
+}
+static solve_result_t solve_amp_from_fmax_k(const double *in) {
+    if (!math_can_divide(in[1])) return error_result("k cannot be zero.");
+    return ok_result(in[0] / in[1]);
+}
+
+static solve_result_t solve_e_from_m_omega_amp(const double *in) {
+    return ok_result(0.5 * in[0] * in[1] * in[1] * in[2] * in[2]);
+}
+static solve_result_t solve_amp_from_e_m_omega(const double *in) {
+    double denominator = in[1] * in[2] * in[2];
+    double radicand;
+    if (!math_can_divide(denominator)) return error_result("m*omega^2 cannot be zero.");
+    radicand = (2.0 * in[0]) / denominator;
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(sqrt(radicand));
+}
+
+static solve_result_t solve_v_from_omega_amp_x(const double *in) {
+    double radicand = in[1] * in[1] - in[2] * in[2];
+    if (!math_can_sqrt(radicand)) return error_result("Invalid square root.");
+    return ok_result(in[0] * sqrt(radicand));
 }
 
 static solve_result_t solve_torque_from_irot_alpha(const double *in) { return ok_result(in[0] * in[1]); }
@@ -926,6 +1095,18 @@ static const solve_option_t OPT_H_EK_HALF_EP[] = {
     { VAR_G, 2, { VAR_V0, VAR_H }, solve_g_from_v0_h_energy_ratio }
 };
 
+static const solve_option_t OPT_H_E_M_G[] = {
+    { VAR_H, 3, { VAR_E_TOTAL, VAR_M, VAR_G }, solve_h_from_e_m_g },
+    { VAR_E_TOTAL, 3, { VAR_M, VAR_G, VAR_H }, solve_e_from_m_g_h },
+    { VAR_M, 3, { VAR_E_TOTAL, VAR_G, VAR_H }, solve_m_from_e_g_h },
+    { VAR_G, 3, { VAR_E_TOTAL, VAR_M, VAR_H }, solve_g_from_e_m_h }
+};
+
+static const solve_option_t OPT_H_E_EK_M_G[] = {
+    { VAR_H, 4, { VAR_E_TOTAL, VAR_EK, VAR_M, VAR_G }, solve_h_from_e_ek_m_g },
+    { VAR_E_TOTAL, 4, { VAR_EK, VAR_M, VAR_G, VAR_H }, solve_e_from_ek_m_g_h }
+};
+
 static const solve_option_t OPT_VERTICAL_V2[] = {
     { VAR_V, 3, { VAR_V0, VAR_G, VAR_H }, solve_v_from_vertical_height },
     { VAR_V0, 3, { VAR_V, VAR_G, VAR_H }, solve_v0_from_vertical_height },
@@ -982,6 +1163,92 @@ static const solve_option_t OPT_EK_ROT[] = {
     { VAR_EK, 2, { VAR_IROT, VAR_OMEGA }, solve_ek_rot_from_irot_omega },
     { VAR_IROT, 2, { VAR_EK, VAR_OMEGA }, solve_irot_from_ek_rot_omega },
     { VAR_OMEGA, 2, { VAR_EK, VAR_IROT }, solve_omega_from_ek_rot_irot }
+};
+
+static const solve_option_t OPT_OMEGA_FREQ_FROM_EK_I[] = {
+    { VAR_OMEGA, 2, { VAR_EK, VAR_IROT }, solve_omega_from_ek_rot_irot },
+    { VAR_FREQ, 2, { VAR_EK, VAR_IROT }, solve_freq_from_ek_rot_irot }
+};
+
+static const solve_option_t OPT_SHM_F_K_X[] = {
+    { VAR_F, 2, { VAR_K, VAR_X }, solve_shm_force_from_k_x },
+    { VAR_K, 2, { VAR_F, VAR_X }, solve_shm_k_from_force_x },
+    { VAR_X, 2, { VAR_F, VAR_K }, solve_shm_x_from_force_k }
+};
+
+static const solve_option_t OPT_SHM_K_M_OMEGA[] = {
+    { VAR_K, 2, { VAR_M, VAR_OMEGA }, solve_k_from_m_omega2 },
+    { VAR_M, 2, { VAR_K, VAR_OMEGA }, solve_m_from_k_omega2 },
+    { VAR_OMEGA, 2, { VAR_K, VAR_M }, solve_omega_from_k_m_shm }
+};
+
+static const solve_option_t OPT_SHM_X_A_OMEGA_T_PHI[] = {
+    { VAR_X, 4, { VAR_AMP, VAR_OMEGA, VAR_T, VAR_PHI }, solve_x_from_amp_omega_t_phi }
+};
+
+static const solve_option_t OPT_SHM_V_A_OMEGA_T_PHI[] = {
+    { VAR_V, 4, { VAR_AMP, VAR_OMEGA, VAR_T, VAR_PHI }, solve_v_from_amp_omega_t_phi }
+};
+
+static const solve_option_t OPT_SHM_A_A_OMEGA_T_PHI[] = {
+    { VAR_A, 4, { VAR_AMP, VAR_OMEGA, VAR_T, VAR_PHI }, solve_a_from_amp_omega_t_phi }
+};
+
+static const solve_option_t OPT_SHM_A_OMEGA_X[] = {
+    { VAR_A, 2, { VAR_OMEGA, VAR_X }, solve_a_from_omega_x_shm },
+    { VAR_X, 2, { VAR_A, VAR_OMEGA }, solve_x_from_a_omega_shm },
+    { VAR_OMEGA, 2, { VAR_A, VAR_X }, solve_omega_from_a_x_shm }
+};
+
+static const solve_option_t OPT_SHM_VMAX_A_OMEGA[] = {
+    { VAR_VMAX, 2, { VAR_AMP, VAR_OMEGA }, solve_vmax_from_amp_omega },
+    { VAR_AMP, 2, { VAR_VMAX, VAR_OMEGA }, solve_amp_from_vmax_omega },
+    { VAR_OMEGA, 2, { VAR_VMAX, VAR_AMP }, solve_omega_from_vmax_amp }
+};
+
+static const solve_option_t OPT_SHM_AMAX_A_OMEGA[] = {
+    { VAR_AMAX, 2, { VAR_AMP, VAR_OMEGA }, solve_amax_from_amp_omega },
+    { VAR_AMP, 2, { VAR_AMAX, VAR_OMEGA }, solve_amp_from_amax_omega },
+    { VAR_OMEGA, 2, { VAR_AMAX, VAR_AMP }, solve_omega_from_amax_amp }
+};
+
+static const solve_option_t OPT_SHM_EP_K_X[] = {
+    { VAR_EP, 2, { VAR_K, VAR_X }, solve_ep_from_k_x_shm },
+    { VAR_K, 2, { VAR_EP, VAR_X }, solve_k_from_ep_x_shm },
+    { VAR_X, 2, { VAR_EP, VAR_K }, solve_x_from_ep_k_shm }
+};
+
+static const solve_option_t OPT_SHM_E_K_A[] = {
+    { VAR_E_TOTAL, 2, { VAR_K, VAR_AMP }, solve_e_from_k_amp },
+    { VAR_K, 2, { VAR_E_TOTAL, VAR_AMP }, solve_k_from_e_amp },
+    { VAR_AMP, 2, { VAR_E_TOTAL, VAR_K }, solve_amp_from_e_k }
+};
+
+static const solve_option_t OPT_SHM_X_SIN_A_OMEGA_T_PHI[] = {
+    { VAR_X, 4, { VAR_AMP, VAR_OMEGA, VAR_T, VAR_PHI }, solve_x_from_amp_omega_t_phi_sin }
+};
+
+static const solve_option_t OPT_SHM_V_COS_A_OMEGA_T_PHI[] = {
+    { VAR_V, 4, { VAR_AMP, VAR_OMEGA, VAR_T, VAR_PHI }, solve_v_from_amp_omega_t_phi_cos }
+};
+
+static const solve_option_t OPT_SHM_A_SIN_A_OMEGA_T_PHI[] = {
+    { VAR_A, 4, { VAR_AMP, VAR_OMEGA, VAR_T, VAR_PHI }, solve_a_from_amp_omega_t_phi_sin }
+};
+
+static const solve_option_t OPT_SHM_FMAX_K_A[] = {
+    { VAR_F, 2, { VAR_K, VAR_AMP }, solve_fmax_from_k_amp },
+    { VAR_K, 2, { VAR_F, VAR_AMP }, solve_k_from_fmax_amp },
+    { VAR_AMP, 2, { VAR_F, VAR_K }, solve_amp_from_fmax_k }
+};
+
+static const solve_option_t OPT_SHM_E_M_OMEGA_A[] = {
+    { VAR_E_TOTAL, 3, { VAR_M, VAR_OMEGA, VAR_AMP }, solve_e_from_m_omega_amp },
+    { VAR_AMP, 3, { VAR_E_TOTAL, VAR_M, VAR_OMEGA }, solve_amp_from_e_m_omega }
+};
+
+static const solve_option_t OPT_SHM_V_OMEGA_A_X[] = {
+    { VAR_V, 3, { VAR_OMEGA, VAR_AMP, VAR_X }, solve_v_from_omega_amp_x }
 };
 
 static const solve_option_t OPT_EK_ROT_CYLINDER_OFFSET[] = {
@@ -1186,9 +1453,9 @@ static const formula_def_t FORMULA_CIRC_PHI_ALPHA = {
 };
 
 static const formula_def_t FORMULA_CIRC_N = {
-    "N=phi/(2*pi)",
+    "phi=2*pi*N",
     "phi = 2*pi*N",
-    "No extra condition",
+    "Use: revolutions to angle",
     ARRAY_LEN(OPT_PHI_N),
     OPT_PHI_N
 };
@@ -1273,6 +1540,22 @@ static const formula_def_t FORMULA_EN_EK_HALF_EP_HEIGHT = {
     OPT_H_EK_HALF_EP
 };
 
+static const formula_def_t FORMULA_VERT_H_FROM_E = {
+    "h=E/(m*g)",
+    "h = E / (m*g)",
+    "Use: top point only, v=0",
+    ARRAY_LEN(OPT_H_E_M_G),
+    OPT_H_E_M_G
+};
+
+static const formula_def_t FORMULA_VERT_H_FROM_E_EK = {
+    "h=(E-Ek)/(m*g)",
+    "h = (E - Ek)/(m*g)",
+    "Use: not top point, v!=0",
+    ARRAY_LEN(OPT_H_E_EK_M_G),
+    OPT_H_E_EK_M_G
+};
+
 static const formula_def_t FORMULA_VERT_V2 = {
     "v^2=v0^2-2gh",
     "v^2 = v0^2 - 2*g*h",
@@ -1351,6 +1634,158 @@ static const formula_def_t FORMULA_ROT_EK = {
     "Use: rotational kinetic energy",
     ARRAY_LEN(OPT_EK_ROT),
     OPT_EK_ROT
+};
+
+static const formula_def_t FORMULA_ROT_OMEGA_FREQ_FROM_EK = {
+    "omega=sqrt(2Ek/I), f=omega/(2pi)",
+    "omega = sqrt(2*Ek/I), f = omega/(2*pi)",
+    "Use: find omega or f from Ek",
+    ARRAY_LEN(OPT_OMEGA_FREQ_FROM_EK_I),
+    OPT_OMEGA_FREQ_FROM_EK_I
+};
+
+static const formula_def_t FORMULA_SHM_FORCE = {
+    "F=-k*x",
+    "F = -k*x",
+    "Use: restoring force",
+    ARRAY_LEN(OPT_SHM_F_K_X),
+    OPT_SHM_F_K_X
+};
+
+static const formula_def_t FORMULA_SHM_K_M_OMEGA = {
+    "k=m*omega^2",
+    "k = m*omega^2",
+    "Use: spring and mass",
+    ARRAY_LEN(OPT_SHM_K_M_OMEGA),
+    OPT_SHM_K_M_OMEGA
+};
+
+static const formula_def_t FORMULA_SHM_X_SIN = {
+    "x=A*sin(omega*t+phi)",
+    "x = A*sin(omega*t + phi)",
+    "Use: SHM displacement",
+    ARRAY_LEN(OPT_SHM_X_SIN_A_OMEGA_T_PHI),
+    OPT_SHM_X_SIN_A_OMEGA_T_PHI
+};
+
+static const formula_def_t FORMULA_SHM_X = {
+    "x=A*cos(omega*t+phi)",
+    "x = A*cos(omega*t + phi)",
+    "Use: SHM displacement",
+    ARRAY_LEN(OPT_SHM_X_A_OMEGA_T_PHI),
+    OPT_SHM_X_A_OMEGA_T_PHI
+};
+
+static const formula_def_t FORMULA_SHM_V_COS = {
+    "v=A*omega*cos(omega*t+phi)",
+    "v = A*omega*cos(omega*t + phi)",
+    "Use: SHM velocity",
+    ARRAY_LEN(OPT_SHM_V_COS_A_OMEGA_T_PHI),
+    OPT_SHM_V_COS_A_OMEGA_T_PHI
+};
+
+static const formula_def_t FORMULA_SHM_V = {
+    "v=-A*omega*sin(omega*t+phi)",
+    "v = -A*omega*sin(omega*t + phi)",
+    "Use: SHM velocity",
+    ARRAY_LEN(OPT_SHM_V_A_OMEGA_T_PHI),
+    OPT_SHM_V_A_OMEGA_T_PHI
+};
+
+static const formula_def_t FORMULA_SHM_A_SIN = {
+    "a=-A*omega^2*sin(omega*t+phi)",
+    "a = -A*omega^2*sin(omega*t + phi)",
+    "Use: SHM acceleration",
+    ARRAY_LEN(OPT_SHM_A_SIN_A_OMEGA_T_PHI),
+    OPT_SHM_A_SIN_A_OMEGA_T_PHI
+};
+
+static const formula_def_t FORMULA_SHM_A = {
+    "a=-A*omega^2*cos(omega*t+phi)",
+    "a = -A*omega^2*cos(omega*t + phi)",
+    "Use: SHM acceleration",
+    ARRAY_LEN(OPT_SHM_A_A_OMEGA_T_PHI),
+    OPT_SHM_A_A_OMEGA_T_PHI
+};
+
+static const formula_def_t FORMULA_SHM_A_X = {
+    "a=-omega^2*x",
+    "a = -omega^2*x",
+    "Use: accel from displacement",
+    ARRAY_LEN(OPT_SHM_A_OMEGA_X),
+    OPT_SHM_A_OMEGA_X
+};
+
+static const formula_def_t FORMULA_SHM_VMAX = {
+    "vmax=A*omega",
+    "vmax = A*omega",
+    "Use: max speed",
+    ARRAY_LEN(OPT_SHM_VMAX_A_OMEGA),
+    OPT_SHM_VMAX_A_OMEGA
+};
+
+static const formula_def_t FORMULA_SHM_AMAX = {
+    "amax=A*omega^2",
+    "amax = A*omega^2",
+    "Use: max acceleration",
+    ARRAY_LEN(OPT_SHM_AMAX_A_OMEGA),
+    OPT_SHM_AMAX_A_OMEGA
+};
+
+static const formula_def_t FORMULA_SHM_FMAX = {
+    "Fmax=k*A",
+    "Fmax = k*A",
+    "Use: max restoring force",
+    ARRAY_LEN(OPT_SHM_FMAX_K_A),
+    OPT_SHM_FMAX_K_A
+};
+
+static const formula_def_t FORMULA_SHM_EP = {
+    "Ep=0.5*k*x^2",
+    "Ep = 0.5*k*x^2",
+    "Use: SHM potential energy",
+    ARRAY_LEN(OPT_SHM_EP_K_X),
+    OPT_SHM_EP_K_X
+};
+
+static const formula_def_t FORMULA_SHM_E = {
+    "E=0.5*k*A^2",
+    "E = 0.5*k*A^2",
+    "Use: total SHM energy",
+    ARRAY_LEN(OPT_SHM_E_K_A),
+    OPT_SHM_E_K_A
+};
+
+static const formula_def_t FORMULA_SHM_E_M_OMEGA_A = {
+    "E=0.5*m*omega^2*A^2",
+    "E = 0.5*m*omega^2*A^2",
+    "Use: total SHM energy",
+    ARRAY_LEN(OPT_SHM_E_M_OMEGA_A),
+    OPT_SHM_E_M_OMEGA_A
+};
+
+static const formula_def_t FORMULA_SHM_V_FROM_AX = {
+    "v=omega*sqrt(A^2-x^2)",
+    "v = omega*sqrt(A^2 - x^2)",
+    "Use: speed from x",
+    ARRAY_LEN(OPT_SHM_V_OMEGA_A_X),
+    OPT_SHM_V_OMEGA_A_X
+};
+
+static const formula_def_t FORMULA_SHM_PERIOD_FROM_OMEGA = {
+    "T=2*pi/omega",
+    "T = 2*pi / omega",
+    "Use: period from omega",
+    ARRAY_LEN(OPT_OMEGA_T),
+    OPT_OMEGA_T
+};
+
+static const formula_def_t FORMULA_SHM_FREQ_FROM_OMEGA = {
+    "f=omega/(2*pi)",
+    "f = omega / (2*pi)",
+    "Use: frequency from omega",
+    ARRAY_LEN(OPT_OMEGA_F),
+    OPT_OMEGA_F
 };
 
 static const formula_def_t FORMULA_ROT_EK_CYLINDER_OFFSET = {
@@ -1593,7 +2028,7 @@ static category_def_t CATEGORIES[CATEGORY_COUNT];
 
 void formula_registry_init(void) {
     CATEGORIES[0].name = "1. Quick Solver";
-    CATEGORIES[0].formula_count = 49;
+    CATEGORIES[0].formula_count = 53;
     CATEGORIES[0].formulas[0] = &FORMULA_CALC_EXPR;
     CATEGORIES[0].formulas[1] = &FORMULA_CALC_FORCE;
     CATEGORIES[0].formulas[2] = &FORMULA_CALC_FORCE_LINEAR;
@@ -1608,41 +2043,45 @@ void formula_registry_init(void) {
     CATEGORIES[0].formulas[11] = &FORMULA_CIRC_N_ALPHA;
     CATEGORIES[0].formulas[12] = &FORMULA_CIRC_OMEGA_ALPHA;
     CATEGORIES[0].formulas[13] = &FORMULA_CIRC_PHI_ALPHA;
-    CATEGORIES[0].formulas[14] = &FORMULA_CIRC_V;
-    CATEGORIES[0].formulas[15] = &FORMULA_CIRC_AC_OMEGA;
-    CATEGORIES[0].formulas[16] = &FORMULA_CIRC_AT;
-    CATEGORIES[0].formulas[17] = &FORMULA_CIRC_A_TOTAL;
-    CATEGORIES[0].formulas[18] = &FORMULA_CIRC_OMEGA_F;
-    CATEGORIES[0].formulas[19] = &FORMULA_CIRC_OMEGA_T;
-    CATEGORIES[0].formulas[20] = &FORMULA_CIRC_FREQ;
-    CATEGORIES[0].formulas[21] = &FORMULA_DYN_F;
-    CATEGORIES[0].formulas[22] = &FORMULA_DYN_WEIGHT;
-    CATEGORIES[0].formulas[23] = &FORMULA_DYN_F_KT;
-    CATEGORIES[0].formulas[24] = &FORMULA_DYN_P;
-    CATEGORIES[0].formulas[25] = &FORMULA_DYN_I;
-    CATEGORIES[0].formulas[26] = &FORMULA_EN_W_DEK;
-    CATEGORIES[0].formulas[27] = &FORMULA_EN_EK;
-    CATEGORIES[0].formulas[28] = &FORMULA_ROT_I0_CYLINDER;
-    CATEGORIES[0].formulas[29] = &FORMULA_ROT_PARALLEL_AXIS;
-    CATEGORIES[0].formulas[30] = &FORMULA_ROT_EK;
-    CATEGORIES[0].formulas[31] = &FORMULA_ROT_EK_CYLINDER_OFFSET;
-    CATEGORIES[0].formulas[32] = &FORMULA_ROT_TORQUE;
-    CATEGORIES[0].formulas[33] = &FORMULA_CIRC_OMEGA_ALPHA;
-    CATEGORIES[0].formulas[34] = &FORMULA_ROT_WORK_DELTA_EK;
-    CATEGORIES[0].formulas[35] = &FORMULA_ROT_TORQUE_TASK;
-    CATEGORIES[0].formulas[36] = &FORMULA_EN_EP;
-    CATEGORIES[0].formulas[37] = &FORMULA_EN_E;
-    CATEGORIES[0].formulas[38] = &FORMULA_VERT_V2;
-    CATEGORIES[0].formulas[39] = &FORMULA_VERT_H_FROM_V;
-    CATEGORIES[0].formulas[40] = &FORMULA_VERT_HMAX;
-    CATEGORIES[0].formulas[41] = &FORMULA_VERT_HMAX_H0;
-    CATEGORIES[0].formulas[42] = &FORMULA_EN_TWO_HEIGHTS;
-    CATEGORIES[0].formulas[43] = &FORMULA_EN_EK_EQ_EP;
-    CATEGORIES[0].formulas[44] = &FORMULA_EN_EK_HALF_EP_HEIGHT;
-    CATEGORIES[0].formulas[45] = &FORMULA_EN_EK_THIRD_EP_HEIGHT;
-    CATEGORIES[0].formulas[46] = &FORMULA_EN_STOP;
-    CATEGORIES[0].formulas[47] = &FORMULA_EN_W;
-    CATEGORIES[0].formulas[48] = &FORMULA_EN_P;
+    CATEGORIES[0].formulas[14] = &FORMULA_CIRC_N;
+    CATEGORIES[0].formulas[15] = &FORMULA_CIRC_V;
+    CATEGORIES[0].formulas[16] = &FORMULA_CIRC_AC_OMEGA;
+    CATEGORIES[0].formulas[17] = &FORMULA_CIRC_AT;
+    CATEGORIES[0].formulas[18] = &FORMULA_CIRC_A_TOTAL;
+    CATEGORIES[0].formulas[19] = &FORMULA_CIRC_OMEGA_F;
+    CATEGORIES[0].formulas[20] = &FORMULA_CIRC_OMEGA_T;
+    CATEGORIES[0].formulas[21] = &FORMULA_CIRC_FREQ;
+    CATEGORIES[0].formulas[22] = &FORMULA_DYN_F;
+    CATEGORIES[0].formulas[23] = &FORMULA_DYN_WEIGHT;
+    CATEGORIES[0].formulas[24] = &FORMULA_DYN_F_KT;
+    CATEGORIES[0].formulas[25] = &FORMULA_DYN_P;
+    CATEGORIES[0].formulas[26] = &FORMULA_DYN_I;
+    CATEGORIES[0].formulas[27] = &FORMULA_EN_W_DEK;
+    CATEGORIES[0].formulas[28] = &FORMULA_EN_EK;
+    CATEGORIES[0].formulas[29] = &FORMULA_ROT_I0_CYLINDER;
+    CATEGORIES[0].formulas[30] = &FORMULA_ROT_PARALLEL_AXIS;
+    CATEGORIES[0].formulas[31] = &FORMULA_ROT_EK;
+    CATEGORIES[0].formulas[32] = &FORMULA_ROT_OMEGA_FREQ_FROM_EK;
+    CATEGORIES[0].formulas[33] = &FORMULA_ROT_EK_CYLINDER_OFFSET;
+    CATEGORIES[0].formulas[34] = &FORMULA_ROT_TORQUE;
+    CATEGORIES[0].formulas[35] = &FORMULA_CIRC_OMEGA_ALPHA;
+    CATEGORIES[0].formulas[36] = &FORMULA_ROT_WORK_DELTA_EK;
+    CATEGORIES[0].formulas[37] = &FORMULA_ROT_TORQUE_TASK;
+    CATEGORIES[0].formulas[38] = &FORMULA_EN_EP;
+    CATEGORIES[0].formulas[39] = &FORMULA_EN_E;
+    CATEGORIES[0].formulas[40] = &FORMULA_VERT_V2;
+    CATEGORIES[0].formulas[41] = &FORMULA_VERT_H_FROM_V;
+    CATEGORIES[0].formulas[42] = &FORMULA_VERT_H_FROM_E;
+    CATEGORIES[0].formulas[43] = &FORMULA_VERT_H_FROM_E_EK;
+    CATEGORIES[0].formulas[44] = &FORMULA_VERT_HMAX;
+    CATEGORIES[0].formulas[45] = &FORMULA_VERT_HMAX_H0;
+    CATEGORIES[0].formulas[46] = &FORMULA_EN_TWO_HEIGHTS;
+    CATEGORIES[0].formulas[47] = &FORMULA_EN_EK_EQ_EP;
+    CATEGORIES[0].formulas[48] = &FORMULA_EN_EK_HALF_EP_HEIGHT;
+    CATEGORIES[0].formulas[49] = &FORMULA_EN_EK_THIRD_EP_HEIGHT;
+    CATEGORIES[0].formulas[50] = &FORMULA_EN_STOP;
+    CATEGORIES[0].formulas[51] = &FORMULA_EN_W;
+    CATEGORIES[0].formulas[52] = &FORMULA_EN_P;
 
     CATEGORIES[1].name = "2. Kinematics";
     CATEGORIES[1].formula_count = 9;
@@ -1682,31 +2121,34 @@ void formula_registry_init(void) {
     CATEGORIES[3].formulas[5] = &FORMULA_DYN_I;
 
     CATEGORIES[4].name = "5. Work / Energy / Power";
-    CATEGORIES[4].formula_count = 24;
+    CATEGORIES[4].formula_count = 27;
     CATEGORIES[4].formulas[0] = &FORMULA_EN_W_DEK;
     CATEGORIES[4].formulas[1] = &FORMULA_EN_EK;
     CATEGORIES[4].formulas[2] = &FORMULA_ROT_I0_CYLINDER;
     CATEGORIES[4].formulas[3] = &FORMULA_ROT_PARALLEL_AXIS;
     CATEGORIES[4].formulas[4] = &FORMULA_ROT_EK;
-    CATEGORIES[4].formulas[5] = &FORMULA_ROT_EK_CYLINDER_OFFSET;
-    CATEGORIES[4].formulas[6] = &FORMULA_ROT_TORQUE;
-    CATEGORIES[4].formulas[7] = &FORMULA_ROT_WORK_DELTA_EK;
-    CATEGORIES[4].formulas[8] = &FORMULA_ROT_TORQUE_TASK;
-    CATEGORIES[4].formulas[9] = &FORMULA_EN_EP;
-    CATEGORIES[4].formulas[10] = &FORMULA_EN_E;
-    CATEGORIES[4].formulas[11] = &FORMULA_VERT_V2;
-    CATEGORIES[4].formulas[12] = &FORMULA_VERT_H_FROM_V;
-    CATEGORIES[4].formulas[13] = &FORMULA_VERT_HMAX;
-    CATEGORIES[4].formulas[14] = &FORMULA_VERT_HMAX_H0;
-    CATEGORIES[4].formulas[15] = &FORMULA_EN_TWO_HEIGHTS;
-    CATEGORIES[4].formulas[16] = &FORMULA_EN_EK_EQ_EP;
-    CATEGORIES[4].formulas[17] = &FORMULA_EN_EK_HALF_EP_HEIGHT;
-    CATEGORIES[4].formulas[18] = &FORMULA_EN_EK_THIRD_EP_HEIGHT;
-    CATEGORIES[4].formulas[19] = &FORMULA_EN_STOP;
-    CATEGORIES[4].formulas[20] = &FORMULA_EN_W;
-    CATEGORIES[4].formulas[21] = &FORMULA_EN_P;
-    CATEGORIES[4].formulas[22] = &FORMULA_EN_PAVG;
-    CATEGORIES[4].formulas[23] = &FORMULA_EN_SPRING;
+    CATEGORIES[4].formulas[5] = &FORMULA_ROT_OMEGA_FREQ_FROM_EK;
+    CATEGORIES[4].formulas[6] = &FORMULA_ROT_EK_CYLINDER_OFFSET;
+    CATEGORIES[4].formulas[7] = &FORMULA_ROT_TORQUE;
+    CATEGORIES[4].formulas[8] = &FORMULA_ROT_WORK_DELTA_EK;
+    CATEGORIES[4].formulas[9] = &FORMULA_ROT_TORQUE_TASK;
+    CATEGORIES[4].formulas[10] = &FORMULA_EN_EP;
+    CATEGORIES[4].formulas[11] = &FORMULA_EN_E;
+    CATEGORIES[4].formulas[12] = &FORMULA_VERT_V2;
+    CATEGORIES[4].formulas[13] = &FORMULA_VERT_H_FROM_V;
+    CATEGORIES[4].formulas[14] = &FORMULA_VERT_H_FROM_E;
+    CATEGORIES[4].formulas[15] = &FORMULA_VERT_H_FROM_E_EK;
+    CATEGORIES[4].formulas[16] = &FORMULA_VERT_HMAX;
+    CATEGORIES[4].formulas[17] = &FORMULA_VERT_HMAX_H0;
+    CATEGORIES[4].formulas[18] = &FORMULA_EN_TWO_HEIGHTS;
+    CATEGORIES[4].formulas[19] = &FORMULA_EN_EK_EQ_EP;
+    CATEGORIES[4].formulas[20] = &FORMULA_EN_EK_HALF_EP_HEIGHT;
+    CATEGORIES[4].formulas[21] = &FORMULA_EN_EK_THIRD_EP_HEIGHT;
+    CATEGORIES[4].formulas[22] = &FORMULA_EN_STOP;
+    CATEGORIES[4].formulas[23] = &FORMULA_EN_W;
+    CATEGORIES[4].formulas[24] = &FORMULA_EN_P;
+    CATEGORIES[4].formulas[25] = &FORMULA_EN_PAVG;
+    CATEGORIES[4].formulas[26] = &FORMULA_EN_SPRING;
 
     CATEGORIES[5].name = "6. Derivatives / Integrals";
     CATEGORIES[5].formula_count = 14;
@@ -1724,6 +2166,61 @@ void formula_registry_init(void) {
     CATEGORIES[5].formulas[11] = &FORMULA_CALC_DV;
     CATEGORIES[5].formulas[12] = &FORMULA_CALC_DPHI;
     CATEGORIES[5].formulas[13] = &FORMULA_CALC_DOMEGA;
+
+    CATEGORIES[6].name = "7. Phys.ex";
+    CATEGORIES[6].formula_count = 52;
+    CATEGORIES[6].formulas[0] = &FORMULA_SHM_X;
+    CATEGORIES[6].formulas[1] = &FORMULA_SHM_V;
+    CATEGORIES[6].formulas[2] = &FORMULA_SHM_A;
+    CATEGORIES[6].formulas[3] = &FORMULA_SHM_X_SIN;
+    CATEGORIES[6].formulas[4] = &FORMULA_SHM_V_COS;
+    CATEGORIES[6].formulas[5] = &FORMULA_SHM_A_SIN;
+    CATEGORIES[6].formulas[6] = &FORMULA_SHM_FORCE;
+    CATEGORIES[6].formulas[7] = &FORMULA_SHM_K_M_OMEGA;
+    CATEGORIES[6].formulas[8] = &FORMULA_SHM_A_X;
+    CATEGORIES[6].formulas[9] = &FORMULA_SHM_VMAX;
+    CATEGORIES[6].formulas[10] = &FORMULA_SHM_AMAX;
+    CATEGORIES[6].formulas[11] = &FORMULA_SHM_FMAX;
+    CATEGORIES[6].formulas[12] = &FORMULA_SHM_EP;
+    CATEGORIES[6].formulas[13] = &FORMULA_SHM_E;
+    CATEGORIES[6].formulas[14] = &FORMULA_SHM_E_M_OMEGA_A;
+    CATEGORIES[6].formulas[15] = &FORMULA_SHM_V_FROM_AX;
+    CATEGORIES[6].formulas[16] = &FORMULA_SHM_PERIOD_FROM_OMEGA;
+    CATEGORIES[6].formulas[17] = &FORMULA_SHM_FREQ_FROM_OMEGA;
+    CATEGORIES[6].formulas[18] = &FORMULA_CIRC_OMEGA_F;
+    CATEGORIES[6].formulas[19] = &FORMULA_CIRC_OMEGA_T;
+    CATEGORIES[6].formulas[20] = &FORMULA_CIRC_FREQ;
+    CATEGORIES[6].formulas[21] = &FORMULA_CIRC_PHI;
+    CATEGORIES[6].formulas[22] = &FORMULA_CIRC_OMEGA_ALPHA;
+    CATEGORIES[6].formulas[23] = &FORMULA_CIRC_PHI_ALPHA;
+    CATEGORIES[6].formulas[24] = &FORMULA_CIRC_N;
+    CATEGORIES[6].formulas[25] = &FORMULA_CIRC_N_ALPHA;
+    CATEGORIES[6].formulas[26] = &FORMULA_CIRC_V;
+    CATEGORIES[6].formulas[27] = &FORMULA_CIRC_AT;
+    CATEGORIES[6].formulas[28] = &FORMULA_CIRC_AC_OMEGA;
+    CATEGORIES[6].formulas[29] = &FORMULA_CIRC_A_TOTAL;
+    CATEGORIES[6].formulas[30] = &FORMULA_KIN_V;
+    CATEGORIES[6].formulas[31] = &FORMULA_KIN_A;
+    CATEGORIES[6].formulas[32] = &FORMULA_KIN_VAVG;
+    CATEGORIES[6].formulas[33] = &FORMULA_KIN_S2;
+    CATEGORIES[6].formulas[34] = &FORMULA_KIN_V2;
+    CATEGORIES[6].formulas[35] = &FORMULA_KIN_VAVG_X;
+    CATEGORIES[6].formulas[36] = &FORMULA_KIN_ANGLE_VA;
+    CATEGORIES[6].formulas[37] = &FORMULA_DYN_P;
+    CATEGORIES[6].formulas[38] = &FORMULA_CALC_FORCE;
+    CATEGORIES[6].formulas[39] = &FORMULA_DYN_F;
+    CATEGORIES[6].formulas[40] = &FORMULA_DYN_I;
+    CATEGORIES[6].formulas[41] = &FORMULA_DYN_F_KT;
+    CATEGORIES[6].formulas[42] = &FORMULA_EN_W;
+    CATEGORIES[6].formulas[43] = &FORMULA_EN_W_DEK;
+    CATEGORIES[6].formulas[44] = &FORMULA_EN_EK;
+    CATEGORIES[6].formulas[45] = &FORMULA_EN_EP;
+    CATEGORIES[6].formulas[46] = &FORMULA_EN_E;
+    CATEGORIES[6].formulas[47] = &FORMULA_EN_P;
+    CATEGORIES[6].formulas[48] = &FORMULA_VERT_HMAX;
+    CATEGORIES[6].formulas[49] = &FORMULA_VERT_H_FROM_E;
+    CATEGORIES[6].formulas[50] = &FORMULA_ROT_TORQUE;
+    CATEGORIES[6].formulas[51] = &FORMULA_ROT_EK;
 }
 
 const category_def_t *formula_get_categories(uint8_t *count_out) {
@@ -1787,6 +2284,9 @@ const char *formula_variable_name(variable_id_t id) {
         case VAR_I0: return "Center-axis inertia I0";
         case VAR_AXIS_A: return "Axis offset a";
         case VAR_TORQUE_M: return "Torque M";
+        case VAR_AMP: return "Amplitude A";
+        case VAR_VMAX: return "Maximum speed vmax";
+        case VAR_AMAX: return "Maximum accel amax";
         default: return "?";
     }
 }
@@ -1847,6 +2347,9 @@ const char *formula_variable_prompt(variable_id_t id) {
         case VAR_I0: return "center-axis inertia I0";
         case VAR_AXIS_A: return "axis offset a";
         case VAR_TORQUE_M: return "torque M";
+        case VAR_AMP: return "amplitude A";
+        case VAR_VMAX: return "maximum speed vmax";
+        case VAR_AMAX: return "maximum accel amax";
         default: return "?";
     }
 }
@@ -1907,6 +2410,9 @@ const char *formula_variable_unit(variable_id_t id) {
         case VAR_I0: return "kg*m^2";
         case VAR_AXIS_A: return "m";
         case VAR_TORQUE_M: return "N*m";
+        case VAR_AMP: return "m";
+        case VAR_VMAX: return "m/s";
+        case VAR_AMAX: return "m/s^2";
         default: return "";
     }
 }
@@ -2092,7 +2598,7 @@ static menu_result_t show_formulas_for_variable(variable_id_t variable) {
             io_draw_wrapped_text((uint8_t)(3 + i), line, 26);
         }
 
-        io_draw_footer("OK solve MODE back");
+        io_draw_footer("OK solve MD/CLR BK");
         action = io_read_menu_key();
         if (action == IO_MENU_UP && selected > 0) {
             --selected;
@@ -2145,7 +2651,7 @@ static menu_result_t select_variable_lookup(const formula_def_t *formula) {
             io_draw_wrapped_text((uint8_t)(3 + i), line, 26);
         }
 
-        io_draw_footer("OK show MODE back");
+        io_draw_footer("OK show MD/CLR BK");
         action = io_read_menu_key();
         if (action == IO_MENU_UP && selected > 0) {
             --selected;
@@ -2229,7 +2735,7 @@ static menu_result_t select_solve_option(const formula_def_t *formula, uint8_t *
         if (item_count > visible_rows) {
             io_draw_footer("UP/DN scroll OK select");
         } else {
-            io_draw_footer("UP/DN OK MODE BACK");
+            io_draw_footer("UP/DN OK MD/CLR BK");
         }
         action = io_read_menu_key();
         if (action == IO_MENU_UP && *selected_index > 0) {

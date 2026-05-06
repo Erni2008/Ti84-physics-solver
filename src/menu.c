@@ -47,7 +47,7 @@ static menu_result_t run_menu(const char *title, const char *const *items, uint8
         if (item_count > visible_rows) {
             io_draw_footer("UP/DN scroll OK select");
         } else {
-            io_draw_footer("UP/DN OK MODE BACK");
+            io_draw_footer("UP/DN OK MD/CLR BK");
         }
         action = io_read_menu_key();
 
@@ -69,9 +69,11 @@ menu_result_t menu_select_home(uint8_t *selected_index, app_section_t *section_o
     static const char *labels[] = {
         "Solve formulas",
         "Browse formulas",
-        "Symbols + units"
+        "Symbols + units",
+        "Theory",
+        "Phys.ex"
     };
-    menu_result_t result = run_menu("Physics Tools", labels, 3, selected_index);
+    menu_result_t result = run_menu("Physics Tools", labels, 5, selected_index);
 
     if (result == MENU_STAY) {
         *section_out = (app_section_t)(*selected_index);
@@ -126,7 +128,7 @@ menu_result_t menu_select_formula(const category_def_t *category, uint8_t *selec
             draw_menu_line((uint8_t)(4 + i), item_index == *selected_index, category->formulas[item_index]->name);
         }
 
-        io_draw_footer("UP/DN OK MODE BACK");
+        io_draw_footer("UP/DN OK MD/CLR BK");
         action = io_read_menu_key();
 
         if (action == IO_MENU_UP && *selected_index > 0) {

@@ -428,7 +428,7 @@ formula_run_result_t expr_calc_run(const formula_def_t *formula) {
             snprintf(line, sizeof(line), "%c %s", i == selected ? '>' : ' ', actions[i]);
             io_draw_wrapped_text((uint8_t)(4 + i), line, 26);
         }
-        io_draw_footer("UP/DN OK MODE BACK");
+        io_draw_footer("UP/DN OK MD/CLR BK");
 
         switch (io_read_menu_key()) {
             case IO_MENU_UP:

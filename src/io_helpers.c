@@ -162,7 +162,7 @@ bool io_prompt_double(const char *title, const char *prompt, double *out_value) 
         io_draw_wrapped_text(2, prompt, 26);
         snprintf(line, sizeof(line), "> %s", buffer);
         io_put_line(5, line);
-        io_draw_footer("ENTER ok MODE back");
+        io_draw_footer("ENTER ok MD/CLR BK");
 
         key = read_key();
         if (key == sk_Enter) {
@@ -210,7 +210,7 @@ bool io_prompt_text(const char *title, const char *prompt, char *buffer, size_t 
         io_draw_wrapped_text(3, "X,T=t  ALPHA+X,T=x", 26);
         snprintf(line, sizeof(line), "> %s", buffer);
         io_put_line(6, line);
-        io_draw_footer("ENTER ok DEL MODE back");
+        io_draw_footer("ENTER ok DEL CLR BK");
 
         key = read_key();
         if (key == sk_Enter) {
@@ -359,11 +359,17 @@ uint8_t io_read_menu_key(void) {
     if (key == sk_Enter) {
         return IO_MENU_SELECT;
     }
+    if (key == sk_Left) {
+        return IO_MENU_LEFT;
+    }
+    if (key == sk_Right) {
+        return IO_MENU_RIGHT;
+    }
     if (key == sk_Mode) {
         return IO_MENU_BACK;
     }
     if (key == sk_Clear) {
-        return IO_MENU_EXIT;
+        return IO_MENU_BACK;
     }
 
     return 0;

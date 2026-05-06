@@ -10,6 +10,8 @@
 #define IO_MENU_SELECT 3
 #define IO_MENU_BACK 4
 #define IO_MENU_EXIT 5
+#define IO_MENU_LEFT 6
+#define IO_MENU_RIGHT 7
 
 bool io_wait_for_key_release(void);
 void io_clear_screen(void);
